@@ -1,0 +1,312 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-green: var(--green);
+  --color-green-l: var(--green-l);
+  --color-green-d: var(--green-d);
+  --color-indigo: var(--indigo);
+  --color-indigo-l: var(--indigo-l);
+
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-border: var(--bdr);
+  --color-border-m: var(--bdr-m);
+
+  --color-bg2: var(--bg2);
+  --color-bg3: var(--bg3);
+  --color-fg-b: var(--fg-b);
+  --color-fg-m: var(--fg-m);
+  --color-fg-d: var(--fg-d);
+
+  --color-glass: var(--glass);
+  --color-glass-b: var(--glass-b);
+  --color-card: var(--card);
+  --color-stat: var(--stat);
+
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --ease-custom: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root {
+  --green: #6ab220;
+  --green-l: #8fd43a;
+  --green-d: #4a8010;
+  --indigo: #3a3ab8;
+  --indigo-l: #7272d8;
+  --ease: cubic-bezier(.4, 0, .2, 1);
+
+  /* Light mode defaults */
+  --bg: #f3f5ee;
+  --bg2: #e9ece3;
+  --bg3: #e0e4d8;
+  --fg: #1c201a;
+  --fg-b: #0c0f0a;
+  --fg-m: #8a9285;
+  --fg-d: #ccd4c4;
+  --bdr: rgba(28, 32, 26, .07);
+  --bdr-m: rgba(28, 32, 26, .14);
+  --glass: rgba(243, 245, 238, .82);
+  --glass-b: rgba(28, 32, 26, .11);
+  --card: rgba(248, 250, 244, .96);
+  --stat: #2a3228;
+}
+
+.dark {
+  --bg: #07090f;
+  --bg2: #0d1118;
+  --bg3: #111822;
+  --fg: #d8e2d0;
+  --fg-b: #edf4e5;
+  --fg-m: #536050;
+  --fg-d: #222c20;
+  --bdr: rgba(216, 226, 208, .07);
+  --bdr-m: rgba(216, 226, 208, .13);
+  --glass: rgba(8, 11, 18, .76);
+  --glass-b: rgba(216, 226, 208, .11);
+  --card: rgba(12, 16, 24, .92);
+  --stat: #b8ccb0;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
+    overflow-x: hidden;
+  }
+
+  @media (pointer: fine) {
+    body {
+      cursor: none;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+}
+
+/* Background elements */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 68% 46%, rgba(106, 178, 32, .09), transparent 58%),
+    radial-gradient(circle at 28% 22%, rgba(58, 58, 184, .07), transparent 55%);
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url('https://www.transparenttextures.com/patterns/noise.png');
+  opacity: .035;
+  pointer-events: none;
+}
+
+/* Keyframes */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes waPulse {
+  0% {
+    transform: scale(1);
+    opacity: .6;
+  }
+
+  70% {
+    transform: scale(1.14);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.14);
+    opacity: 0;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes chev {
+
+  0%,
+  100% {
+    opacity: .15;
+    transform: rotate(45deg);
+  }
+
+  50% {
+    opacity: .7;
+    transform: rotate(45deg) translate(3px, 3px);
+  }
+}
+
+@keyframes floatGlow {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(-8%, 9%);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+
+.reveal.from-left {
+  transform: translateX(-28px);
+}
+
+.reveal.from-right {
+  transform: translateX(28px);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* HERO LETTER TWIRL — ANSEL = green, BIOTECH = indigo */
+.wa-word .ltr-a,
+.wb-word .ltr-b {
+  transition: color .22s, transform .3s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.wa-word .ltr-a:hover {
+  color: var(--green);
+  transform: scale(1.14) rotateY(15deg);
+}
+
+.wb-word .ltr-b:hover {
+  color: var(--indigo-l);
+  transform: scale(1.14) rotateY(-15deg);
+}
+
+/* HERO BUTTON shimmer (btn-p) */
+.btn-p::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, .12);
+  transform: translateX(-110%) skewX(-14deg);
+  transition: transform .4s;
+  pointer-events: none;
+}
+
+.btn-p:hover::after {
+  transform: translateX(110%) skewX(-14deg);
+}
+
+/* ANIMATED HERO GLOW */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 62% 44%, rgba(106, 178, 32, .18), transparent 58%);
+  filter: blur(70px);
+  animation: floatGlow 9s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero.dna-hot::before {
+  filter: blur(76px) saturate(1.35);
+  opacity: 1;
+}
+
+.hero.dna-press::before {
+  filter: blur(96px) saturate(1.7);
+  opacity: 1;
+}
+
+.hero.dna-hot canvas {
+  filter: contrast(1.06) saturate(1.08);
+}
+
+/* STAT hover indigo for even */
+.stat-cell:hover .sv {
+  color: var(--green);
+}
+
+.stat-cell:nth-child(even):hover .sv {
+  color: var(--indigo-l);
+}
+
+/* CHIPS (about hero) */
+.chip:hover {
+  background: rgba(106, 178, 32, .08);
+  border-color: rgba(106, 178, 32, .35);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+
+.chip.chip-ind:hover {
+  background: rgba(58, 58, 184, .07);
+  border-color: rgba(114, 114, 216, .35);
+  color: var(--indigo-l);
+}
+
+/* MOLECULE bg in light mode (subtle) */
+.mol-wrap {
+  background: radial-gradient(ellipse at 55% 45%, rgba(106, 178, 32, .06), transparent 65%);
+}
