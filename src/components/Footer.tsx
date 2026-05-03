@@ -5,15 +5,26 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-border mt-20">
-      {/* subtle green glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 0%, rgba(106,178,32,0.08), transparent 60%)",
-        }}
-      />
+    <footer className="relative border-t border-border mt-0">
+      <div className="relative w-full mb-10">
+        {/* sharp line */}
+        <div
+          className="h-[1.5px]"
+          style={{
+            background:
+              "linear-gradient(to right, transparent, rgba(106,178,32,0.25) 20%, rgba(106,178,32,0.65) 50%, rgba(106,178,32,0.25) 80%, transparent)",
+          }}
+        />
+
+        {/* glow */}
+        <div
+          className="absolute inset-0 blur-[8px] opacity-70"
+          style={{
+            background:
+              "linear-gradient(to right, transparent, rgba(106,178,32,0.3) 50%, transparent)",
+          }}
+        />
+      </div>
 
       <div className="relative z-10 max-w-[1160px] mx-auto px-5 lg:px-8 py-14 lg:py-16 flex flex-col gap-12">
 

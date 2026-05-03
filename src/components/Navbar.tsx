@@ -21,8 +21,8 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(() =>
     typeof window !== "undefined"
-      ? localStorage.getItem("ab-theme") || "dark"
-      : "dark"
+      ? localStorage.getItem("ab-theme") || "light"
+      : "light"
   );
 
   // Sliding pill state
@@ -173,6 +173,7 @@ export function Navbar() {
           <button
             onClick={() => {
               toggleTheme();
+              setMobileMenuOpen(false)
             }}
             className="flex items-center justify-between px-3.5 py-3 mt-2 rounded-lg border border-border transition-all hover:border-green"
           >

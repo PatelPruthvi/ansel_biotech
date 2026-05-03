@@ -69,8 +69,8 @@ export default function Contact() {
               {
                 ico: "📍",
                 lbl: "Address",
-                val: "196/4, Makarpura GIDC",
-                sub: "Vadodara, Gujarat 390010",
+                val: "196 GIDC, Makarpura",
+                sub: "Vadodara 390014",
               },
               {
                 ico: "🕐",

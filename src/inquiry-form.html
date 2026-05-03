@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3a3ab8 0%, #6ab220 100%);
+            color: white;
+            padding: 28px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        .content {
+            background: #f8f9fa;
+            padding: 28px;
+            border: 1px solid #e9ecef;
+        }
+
+        .field {
+            margin-bottom: 18px;
+            padding: 14px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #3a3ab8;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #3a3ab8;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .field-value {
+            font-size: 15px;
+            color: #2c3e50;
+        }
+
+        .highlight {
+            background: #eef2ff;
+            border-left: 4px solid #6ab220;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 18px;
+            color: #6c757d;
+            font-size: 12px;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>New Product Inquiry</h1>
+        <div class="badge">Ansel Biotech</div>
+    </div>
+
+    <div class="content">
+        <div class="field">
+            <div class="field-label">📌 Subject</div>
+            <div class="field-value">{{subject}}</div>
+        </div>
+
+        <div class="field">
+            <div class="field-label">📱 Phone Number</div>
+            <div class="field-value">{{phone}}</div>
+        </div>
+
+        <div class="field highlight">
+            <div class="field-label">🧪 Product Code</div>
+            <div class="field-value">{{code}}</div>
+        </div>
+
+        <div class="field">
+            <div class="field-label">🔬 Enzyme</div>
+            <div class="field-value">{{enzyme}}</div>
+        </div>
+
+        <div class="field">
+            <div class="field-label">⚙️ Application</div>
+            <div class="field-value">{{application}}</div>
+        </div>
+
+        <div class="field highlight">
+            <div class="field-label">📦 Quantity Required</div>
+            <div class="field-value">{{quantity}}</div>
+        </div>
+
+        <div class="field">
+            <div class="field-label">💬 Additional Notes</div>
+            <div class="field-value">{{message}}</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>This inquiry was submitted via Ansel Biotech product request</p>
+        <p>📍 Gujarat, India</p>
+    </div>
+</body>
+
+</html>

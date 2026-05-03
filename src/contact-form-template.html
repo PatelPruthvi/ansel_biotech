@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6ab220 0%, #3a3ab8 100%);
+            color: white;
+            padding: 28px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        .content {
+            background: #f8f9fa;
+            padding: 28px;
+            border: 1px solid #e9ecef;
+        }
+
+        .field {
+            margin-bottom: 18px;
+            padding: 14px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #6ab220;
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #6ab220;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .field-value {
+            font-size: 15px;
+            color: #2c3e50;
+        }
+
+        .message-box {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            margin-top: 6px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 18px;
+            color: #6c757d;
+            font-size: 12px;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>New Contact Inquiry</h1>
+        <div class="badge">Ansel Biotech</div>
+    </div>
+
+    <div class="content">
+        <div class="field">
+            <div class="field-label">👤 Full Name</div>
+            <div class="field-value">{{name}}</div>
+        </div>
+
+        <div class="field">
+            <div class="field-label">📧 Email</div>
+            <div class="field-value">{{email}}</div>
+        </div>
+
+        <div class="field">
+            <div class="field-label">📱 Phone (Optional)</div>
+            <div class="field-value">{{phone}}</div>
+        </div>
+
+        <div class="field">
+            <div class="field-label">💬 Message</div>
+            <div class="message-box">{{message}}</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>This inquiry was submitted via Ansel Biotech contact form</p>
+        <p>📍 Gujarat, India</p>
+    </div>
+</body>
+
+</html>
