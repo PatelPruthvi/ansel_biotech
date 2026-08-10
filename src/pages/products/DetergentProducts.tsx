@@ -1,110 +1,142 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
+/**
+ * Detergent content from client PDF §10–11.
+ * Individual enzymes for stain types + custom blend options (not a product category).
+ */
 const content: IndustryPageContent = {
-    industry: "Detergent Industry",
-    headline: ["Detergent", "Enzymes"],
-    accentLine: 1,
-    subtitle:
-        "Bio-active catalysts for high-performance cleaning — achieving superior stain removal at lower temperatures and pH levels while maintaining fabric integrity.",
-    imageUrl: "../assets/products/Detergent.png",
-    imageAlt: "Clean laundry and specialized detergent enzymes",
-    slug: "detergent",
+  industry: "Detergent",
+  headline: ["Detergent", "Enzymes"],
+  accentLine: 1,
+  subtitle:
+    "Enzymes for detergent manufacturing — different stains require different enzymes.",
+  imageUrl: "../assets/products/Detergent.png",
+  imageAlt: "Detergent enzyme applications",
+  slug: "detergent",
 
-    quickStats: [
-        { val: "7", label: "Specialized Products" },
-        { val: "Eco", label: "Friendly" },
-        { val: "SELZYME", label: "Brand" },
-    ],
+  quickStats: [
+    { val: "5", label: "Individual Enzymes" },
+    { val: "3+", label: "Blend Options" },
+  ],
 
-    processSteps: [
-        {
-            step: "01",
-            title: "Substrate Targeting",
-            desc: "Specific enzymes target distinct soil types—proteins, lipids, or starches—breaking them down at a molecular level.",
-        },
-        {
-            step: "02",
-            title: "Solubilization",
-            desc: "Insoluble stains are converted into water-soluble components, allowing them to be easily rinsed away during the wash cycle.",
-        },
-        {
-            step: "03",
-            title: "Fiber Rejuvenation",
-            desc: "Cellulases specifically target micro-fibrils on cotton fabrics, removing fuzz and pills to restore color brightness and smoothness.",
-        },
-        {
-            step: "04",
-            title: "Optimized Efficiency",
-            desc: "Advanced blends reduce the need for high heat or harsh chemicals, significantly lowering energy and water consumption.",
-        },
-    ],
+  productsEyebrow: "Detergent Enzymes",
+  productsTitle: "Individual enzymes & blends",
+  processEyebrow: "Stain Targeting",
+  processTitle: "Different stains, different enzymes",
 
-    products: [
-        {
-            code: "SELZYME – PROT",
-            enzyme: "Alkaline Protease",
-            application: "Laundry Detergents",
-            purpose: "Effectively targets and breaks down protein-based stains such as blood, mucus, and organic cells.",
-            tags: ["Protein Removal", "Organic Stains"],
-        },
-        {
-            code: "SELZYME – LIP",
-            enzyme: "Alkaline Lipase",
-            application: "Oil & Grease Removal",
-            purpose: "Treats oil and fat content, breaking it down into water-soluble substances for easier removal during washing.",
-            tags: ["Lipid Breakdown", "Grease Control"],
-        },
-        {
-            code: "SELZYME – CL",
-            enzyme: "Alkaline Cellulase",
-            application: "Fabric Care",
-            purpose: "Treats cellulose fibers to rejuvenate fabric appearance and ensure water solubility of cellulosic soil.",
-            tags: ["Color Care", "Fiber Smoothing"],
-        },
-        {
-            code: "SELZYME – AMY",
-            enzyme: "Alkaline Amylase",
-            application: "Starch Removal",
-            purpose: "Targets starch-based residues and food stains, contributing to a smoother feel for the finished laundry.",
-            tags: ["Starch Hydrolysis", "Fabric Feel"],
-        },
-        {
-            code: "SELZYME – WASH P",
-            enzyme: "Powder Enzyme Blend",
-            application: "Powder Formulations",
-            purpose: "A balanced multi-enzyme powder that improves detergent quality while reducing energy and water footprint.",
-            tags: ["Powder Concentrates", "Energy Saving"],
-        },
-        {
-            code: "SELZYME – WASH L",
-            enzyme: "Liquid Enzyme Blend",
-            application: "Liquid Formulations",
-            purpose: "A stabilized liquid blend designed for high-performance liquid detergents and automatic dishwashing.",
-            tags: ["Liquid Detergent", "Stability"],
-        },
-        {
-            code: "SELZYME – WASH G",
-            enzyme: "Multi-Enzyme Granules",
-            application: "High-Performance Granules",
-            purpose: "High-performing enzyme granules designed for consistent dispersion and maximum cleaning efficiency.",
-            tags: ["Granular Tech", "High Performance"],
-        },
-    ],
+  products: [
+    {
+      code: "PROTEASE",
+      enzyme: "Protease",
+      application: "Protein-based stains",
+      purpose: "Protein-based stains.",
+      tags: ["Individual Enzyme"],
+    },
+    {
+      code: "AMYLASE",
+      enzyme: "Amylase",
+      application: "Starch-based stains",
+      purpose: "Starch-based stains.",
+      tags: ["Individual Enzyme"],
+    },
+    {
+      code: "LIPASE",
+      enzyme: "Lipase",
+      application: "Oil and fat stains",
+      purpose: "Oil and fat stains.",
+      tags: ["Individual Enzyme"],
+    },
+    {
+      code: "CELLULASE",
+      enzyme: "Cellulase",
+      application: "Fabric care and surface cleaning",
+      purpose: "Fabric care and surface cleaning.",
+      tags: ["Individual Enzyme"],
+    },
+    {
+      code: "MANNANASE",
+      enzyme: "Mannanase",
+      application: "Mannan-based stains",
+      purpose: "Mannan-based stains.",
+      tags: ["Individual Enzyme"],
+    },
+    {
+      code: "BLEND-4",
+      enzyme: "4-Enzyme Blend",
+      application: "Custom detergent blend",
+      purpose: "Protease + Amylase + Lipase + Cellulase.",
+      tags: ["Custom Blend"],
+    },
+    {
+      code: "BLEND-5",
+      enzyme: "5-Enzyme Blend",
+      application: "Custom detergent blend",
+      purpose: "Protease + Amylase + Lipase + Cellulase + Mannanase.",
+      tags: ["Custom Blend"],
+    },
+    {
+      code: "BLEND-6",
+      enzyme: "6-Enzyme Blend",
+      application: "Custom detergent blend",
+      purpose: "Protease + Amylase + Lipase + Cellulase + Mannanase + Pectinase.",
+      tags: ["Custom Blend"],
+    },
+    {
+      code: "BLEND-CUSTOM",
+      enzyme: "Customized Blend",
+      application: "Application-specific blend",
+      purpose:
+        "Need a different combination? We can develop an application-specific enzyme blend based on your formulation requirements.",
+      tags: ["Custom Blend"],
+    },
+  ],
 
-    aboutTitle: "Sustainable Cleaning Technology",
-    aboutSub: "The science of modern household and industrial detergents.",
-    aboutBody: [
-        "Enzymes have fundamentally changed the landscape of the detergent industry, serving as essential functional ingredients that drive efficiency and environmental sustainability. By replacing traditional chemical surfactants with biological catalysts, manufacturers can deliver professional-grade cleaning results.",
-        "Proteases remain a cornerstone for laundry detergents, providing unmatched removal of organic stains. Meanwhile, Lipases and Amylases allow for effective cleaning in household machines at much lower temperatures, significantly reducing the carbon footprint of every wash cycle.",
-        "Beyond simple cleaning, Cellulases contribute to the longevity of garments. By selectively acting on the cellulose fibers, they maintain the 'new' appearance of clothes and prevent the graying effect caused by repeated washing.",
-        "Ansel Biotech’s range of SELZYME detergent enzymes is engineered for compatibility with various pH levels and temperatures, ensuring that whether in powder, liquid, or granular form, your product delivers a superior, eco-friendly clean.",
-    ],
+  processSteps: [
+    {
+      step: "01",
+      title: "Protease",
+      desc: "Protein-based stains",
+      icon: "🥩",
+    },
+    {
+      step: "02",
+      title: "Amylase",
+      desc: "Starch-based stains",
+      icon: "🌾",
+    },
+    {
+      step: "03",
+      title: "Lipase",
+      desc: "Oil and fat stains",
+      icon: "🫒",
+    },
+    {
+      step: "04",
+      title: "Cellulase",
+      desc: "Fabric care and surface cleaning",
+      icon: "👕",
+    },
+    {
+      step: "05",
+      title: "Mannanase",
+      desc: "Mannan-based stains",
+      icon: "🫘",
+    },
+  ],
 
-    ctaTitle: "Formulate your next\ncleaning solution",
-    ctaBody:
-        "Our technical team can help you select the optimal blend of SELZYME catalysts to improve your detergent's efficacy and sustainability.",
+  aboutTitle: "One Formula Doesn't Fit Every Detergent",
+  aboutSub:
+    "ANSEL BIOTECH develops customized enzyme blends according to detergent formulation, target stains, washing temperature, pH, application and desired cleaning performance.",
+  aboutBody: [
+    "Possible blends include a 4-Enzyme Blend (Protease + Amylase + Lipase + Cellulase), a 5-Enzyme Blend (Protease + Amylase + Lipase + Cellulase + Mannanase), and a 6-Enzyme Blend (Protease + Amylase + Lipase + Cellulase + Mannanase + Pectinase).",
+    "Need a different combination? We can develop an application-specific enzyme blend based on your formulation requirements.",
+  ],
+
+  ctaTitle: "Request Custom Blend",
+  ctaBody:
+    "Request a customized enzyme blend based on your detergent formulation, target stains, washing temperature, pH, application and desired cleaning performance.",
 };
 
 export default function DetergentProducts() {
-    return <IndustryProductPage c={content} />;
+  return <IndustryProductPage c={content} />;
 }

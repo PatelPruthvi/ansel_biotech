@@ -1,147 +1,145 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
+/**
+ * Food Enzymes — client PDF §13.
+ * Only Bakery and Dairy are detailed in the PDF.
+ * Enzyme ↔ application mapping is not 1:1 in the PDF; shared application lists are used.
+ * Chymosin/rennet is listed with PDF note "if part of your actual portfolio".
+ * No Brewing content invented; old non-PDF food products removed.
+ */
+const BAKERY_APPLICATIONS =
+  "Dough handling · Bread volume · Crumb softness · Dough stability · Shelf-life support";
+
+const DAIRY_APPLICATIONS =
+  "Lactose reduction · Cheese processing · Dairy texture · Processing optimization";
+
 const content: IndustryPageContent = {
-  industry: "Food Industry",
-  headline: ["Food Industry", "Enzymes"],
+  industry: "Food",
+  headline: ["Food", "Enzymes"],
   accentLine: 1,
   subtitle:
-    "High-purity enzyme solutions and custom blends designed to enhance efficiency, quality, and sustainability in food and beverage processing.",
+    "Enzymes are naturally occurring biological catalysts that help food manufacturers improve processing efficiency, texture, stability, yield and product quality.",
   imageUrl: "../assets/products/FoodEnzyme.png",
-  imageAlt: "Bakery and dairy food assortment",
+  imageAlt: "Food processing enzymes",
   slug: "food",
 
   quickStats: [
-    { val: "20+", label: "Solutions" },
-    { val: "ISO", label: "Certified" },
-    { val: "SELZYME", label: "Brand" },
+    { val: "2", label: "Applications" },
+    { val: "8", label: "Enzymes" },
   ],
 
-  products: [
-    {
-      code: "SELZYME – FAMY",
-      enzyme: "Fungal Alpha Amylase",
-      application: "Bakery / Bread Improver",
-      purpose: "Increases bread volume by enhancing the fermentation process.",
-      tags: ["Bakery", "Volume"],
-    },
-    {
-      code: "SELZYME – X",
-      enzyme: "Xylanase",
-      application: "Bakery / Bread Improver",
-      purpose: "Improves softness of the bread and maintains bread structure.",
-      tags: ["Bakery", "Texture"],
-    },
-    {
-      code: "SELZYME – LIP",
-      enzyme: "Lipase",
-      application: "Bakery / Bread Improver",
-      purpose: "Improves softness and structure while increasing shelf life.",
-      tags: ["Bakery", "Shelf Life"],
-    },
-    {
-      code: "SELZYME – PROT",
-      enzyme: "Protease",
-      application: "Bakery / Biscuits",
-      purpose: "Improves flavor, nutritional value, and dough extensibility in biscuit production.",
-      tags: ["Bakery", "Conditioning"],
-    },
-    {
-      code: "SELZYME – GLUOXY",
-      enzyme: "Glucose Oxidase",
-      application: "Bakery / Bread Improver",
-      purpose: "Strengthens gluten structure to increase bread volume.",
-      tags: ["Bakery", "Strength"],
-    },
-    {
-      code: "SELZYME – PAPAYA",
-      enzyme: "Papain",
-      application: "Biscuit Industry",
-      purpose: "Hydrolyses gluten structure to reduce dough elasticity.",
-      tags: ["Biscuits", "Elasticity"],
-    },
-    {
-      code: "SELZYME – PLIP",
-      enzyme: "Phospholipase",
-      application: "Bakery / Bread Improver",
-      purpose: "Improves dough stability and crumb structure.",
-      tags: ["Bakery", "Crumb"],
-    },
-    /* Dairy Enzymes */
-    {
-      code: "SELZYME – LPH",
-      enzyme: "Lactase",
-      application: "Milk Production",
-      purpose: "Produces lactose-reduced milk for lactose-intolerant consumers.",
-      tags: ["Dairy", "Lactose-Free"],
-    },
-    {
-      code: "SELZYME – TGase",
-      enzyme: "Transglutaminase",
-      application: "Yoghurt & Cheese",
-      purpose: "Prevents syneresis and creates a firmer, smoother texture.",
-      tags: ["Dairy", "Texture"],
-    },
-    {
-      code: "SELZYME – RENN",
-      enzyme: "Rennet Enzyme",
-      application: "Cheese Production",
-      purpose: "Essential preparation used to clot milk by removing peptide fragments from κ-casein.",
-      tags: ["Dairy", "Coagulation"],
-    },
-    /* Other Food Enzymes */
-    {
-      code: "SELZYME – PECTIC",
-      enzyme: "Pectinase",
-      application: "Juice & Winery",
-      purpose: "Used for extraction and clarification to remove pectin responsible for turbidity.",
-      tags: ["Beverage", "Clarification"],
-    },
-    {
-      code: "SELZYME – SUCRASE",
-      enzyme: "Invertase",
-      application: "Sugar & Syrup",
-      purpose: "Used for inversion of sucrose in the preparation of invert sugar and high fructose syrup.",
-      tags: ["Syrup", "Inversion"],
-    },
-    {
-      code: "SELZYME – BROM",
-      enzyme: "Bromelain",
-      application: "Food Processing",
-      purpose: "Primary application in the tenderization of food products.",
-      tags: ["General Food", "Tenderization"],
-    },
-  ],
-
-  aboutTitle: "Advanced Food Biotechnology",
-  aboutSub: "Enhancing Taste, Texture, and Process Efficiency",
-  aboutBody: [
-    "Enzymes are essential tools in modern food processing, aiding in the manufacturing of cheese, vinegar, wine, and the leavening of bread. These biological catalysts help save energy and resources while significantly improving overall production efficiency.",
-    "In many instances, the use of enzymes has been proven to decrease the volume and toxicity of by-products and effluents, making food production more environmentally friendly. Ansel Biotech provides a wide range of high-purity enzymes and custom blends tailored for specific food and beverage applications.",
-    "In the baking industry, our enzymes revolutionize products by extending shelf-life, improving dough handling, and providing anti-staling properties. This gives manufacturers greater control over crumb texture, color, and volume.",
-    "For the dairy sector, we focus on meeting the demands of health-conscious consumers. Our solutions include lactose hydrolysis for specialized milk products and enzymes for flavor enhancement, cheese ripening, and protein modification.",
-  ],
+  productsEyebrow: "Food Enzymes",
+  productsTitle: "Bakery & Dairy",
+  processEyebrow: "Applications",
+  processTitle: "Bakery and Dairy",
 
   processSteps: [
     {
       step: "01",
-      title: "Substrate Analysis",
-      desc: "We analyze your food matrix (flour, milk, or fruit) to determine the optimal enzyme concentration.",
+      title: "Bakery",
+      desc: `Potential enzymes: Amylase, Xylanase, Protease, Lipase. Applications: ${BAKERY_APPLICATIONS}.`,
+      icon: "🍞",
     },
     {
       step: "02",
-      title: "Custom Blending",
-      desc: "Creating specialized enzyme cocktails to achieve specific texture or shelf-life targets.",
-    },
-    {
-      step: "03",
-      title: "Clean Labeling",
-      desc: "Replacing chemical additives with biological catalysts for a cleaner, safer end product.",
+      title: "Dairy",
+      desc: `Potential enzymes: Lactase, Chymosin/rennet, Protease, Lipase. Applications: ${DAIRY_APPLICATIONS}.`,
+      icon: "🥛",
     },
   ],
 
-  ctaTitle: "Optimize your food\nprocessing today",
+  products: [
+    {
+      code: "BAKERY-AMYLASE",
+      enzyme: "Amylase",
+      application: "Bakery",
+      purpose: BAKERY_APPLICATIONS,
+      tags: ["Bakery"],
+    },
+    {
+      code: "BAKERY-XYLANASE",
+      enzyme: "Xylanase",
+      application: "Bakery",
+      purpose: BAKERY_APPLICATIONS,
+      tags: ["Bakery"],
+    },
+    {
+      code: "BAKERY-PROTEASE",
+      enzyme: "Protease",
+      application: "Bakery",
+      purpose: BAKERY_APPLICATIONS,
+      tags: ["Bakery"],
+    },
+    {
+      code: "BAKERY-LIPASE",
+      enzyme: "Lipase",
+      application: "Bakery",
+      purpose: BAKERY_APPLICATIONS,
+      tags: ["Bakery"],
+    },
+    {
+      code: "DAIRY-LACTASE",
+      enzyme: "Lactase",
+      application: "Dairy",
+      purpose: DAIRY_APPLICATIONS,
+      tags: ["Dairy"],
+    },
+    {
+      code: "DAIRY-CHYMOSIN",
+      enzyme: "Chymosin / Rennet",
+      application: "Dairy",
+      purpose: DAIRY_APPLICATIONS,
+      tags: ["Dairy"],
+    },
+    {
+      code: "DAIRY-PROTEASE",
+      enzyme: "Protease",
+      application: "Dairy",
+      purpose: DAIRY_APPLICATIONS,
+      tags: ["Dairy"],
+    },
+    {
+      code: "DAIRY-LIPASE",
+      enzyme: "Lipase",
+      application: "Dairy",
+      purpose: DAIRY_APPLICATIONS,
+      tags: ["Dairy"],
+    },
+  ],
+
+  aboutTitle: "Food Processing Enzymes",
+  aboutSub:
+    "Enzymes are naturally occurring biological catalysts that help food manufacturers improve processing efficiency, texture, stability, yield and product quality.",
+  aboutBody: [
+    "Bakery — potential enzymes: Amylase, Xylanase, Protease, Lipase. Applications: dough handling, bread volume, crumb softness, dough stability, shelf-life support.",
+    "Dairy — potential enzymes: Lactase, Chymosin/rennet, Protease, Lipase. Applications: lactose reduction, cheese processing, dairy texture, processing optimization.",
+  ],
+  aboutItems: [
+    {
+      icon: "🍞",
+      label: "Bakery",
+      text: "Potential enzymes: Amylase, Xylanase, Protease, Lipase. Applications: dough handling, bread volume, crumb softness, dough stability and shelf-life support.",
+    },
+    {
+      icon: "🥛",
+      label: "Dairy",
+      text: "Potential enzymes: Lactase, Chymosin/rennet, Protease, Lipase. Applications: lactose reduction, cheese processing, dairy texture and processing optimization.",
+    },
+    {
+      icon: "⚙️",
+      label: "Processing Goals",
+      text: "Naturally occurring biological catalysts that help improve processing efficiency, texture, stability, yield and product quality.",
+    },
+    {
+      icon: "🧪",
+      label: "Application Fit",
+      text: "Enzyme selection is matched to bakery or dairy process needs rather than a one-size formulation for every food line.",
+    },
+  ],
+
+  ctaTitle: "Get in touch about\nfood enzymes",
   ctaBody:
-    "Consult with our application specialists to find the perfect SELZYME blend for your specific food or beverage production needs.",
+    "Contact our team about bakery and dairy enzyme applications.",
 };
 
 export default function FoodProducts() {

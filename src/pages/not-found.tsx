@@ -1,5 +1,5 @@
-import { Link } from "wouter";
 import { useEffect, useState } from "react";
+import { CtaButton } from "@/components/CtaButton";
 
 export default function NotFound() {
   const [mounted, setMounted] = useState(false);
@@ -115,32 +115,12 @@ export default function NotFound() {
 
           {/* CTAs */}
           <div className="_f3 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase px-6 py-3 rounded-[10px] text-white bg-green border border-green transition-all hover:bg-green-l hover:shadow-[0_4px_18px_rgba(106,178,32,0.28)] hover:-translate-y-px"
-              style={{ background: "var(--green, #6ab220)" }}
-            >
+            <CtaButton href="/" className="w-full sm:w-auto">
               ← Back to Home
-            </Link>
-            <Link
-              href="/products"
-              className="inline-flex items-center justify-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase px-6 py-3 rounded-[10px] transition-all hover:-translate-y-px"
-              style={{
-                background: "transparent",
-                color: "var(--fg-m, #536050)",
-                border: "1px solid var(--bdr-m, rgba(216,226,208,0.13))",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(106,178,32,0.4)";
-                (e.currentTarget as HTMLElement).style.color = "var(--green, #6ab220)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--bdr-m, rgba(216,226,208,0.13))";
-                (e.currentTarget as HTMLElement).style.color = "var(--fg-m, #536050)";
-              }}
-            >
+            </CtaButton>
+            <CtaButton href="/products" variant="secondary" className="w-full sm:w-auto">
               Browse Products
-            </Link>
+            </CtaButton>
           </div>
         </div>
 

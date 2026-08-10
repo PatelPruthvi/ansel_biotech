@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
+import { CtaButton } from "@/components/CtaButton";
 
 /* ─────────────────────────────────────────
    Types
@@ -145,7 +145,7 @@ export function RequestQuoteModal({ product, onClose }: Props) {
         .rq-input::placeholder { color: var(--fg-m, #536050); opacity:.55; }
         .rq-label {
           display:block;
-          font-family:'DM Mono',monospace;
+          font-family: var(--font-sans);
           font-size: 0.58rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
@@ -238,12 +238,9 @@ export function RequestQuoteModal({ product, onClose }: Props) {
                                         to you within <span className="text-fg-b font-medium">48 hours</span>.
                                     </p>
                                 </div>
-                                <button
-                                    onClick={onClose}
-                                    className="mt-2 inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.14em] uppercase px-5 py-2.5 rounded-[10px] bg-green text-white border border-green transition-all hover:bg-green-l"
-                                >
+                                <CtaButton onClick={onClose} size="sm" className="mt-2">
                                     Done
-                                </button>
+                                </CtaButton>
                             </div>
                         ) : (
                             /* ── FORM ── */
@@ -376,10 +373,10 @@ export function RequestQuoteModal({ product, onClose }: Props) {
                                 <div className="h-[1px] bg-border" />
 
                                 {/* Submit */}
-                                <button
+                                <CtaButton
                                     type="submit"
+                                    size="block"
                                     disabled={status === "submitting"}
-                                    className="w-full flex items-center justify-center gap-2.5 font-mono text-[0.68rem] tracking-[0.16em] uppercase px-5 py-3.5 rounded-[10px] bg-green text-white border border-green transition-all hover:bg-green-l hover:shadow-[0_4px_18px_rgba(106,178,32,0.28)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-green disabled:hover:shadow-none"
                                 >
                                     {status === "submitting" ? (
                                         <>
@@ -395,7 +392,7 @@ export function RequestQuoteModal({ product, onClose }: Props) {
                                             <span>→</span>
                                         </>
                                     )}
-                                </button>
+                                </CtaButton>
 
                                 <p className="font-mono text-[0.54rem] tracking-[0.08em] text-fg-m opacity-45 text-center leading-[1.6]">
                                     Fields marked <span className="text-red-400">*</span> are required.

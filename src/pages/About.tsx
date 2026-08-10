@@ -69,7 +69,7 @@ export default function About() {
             ))}
           </div>
           <div className="font-mono text-[0.6rem] tracking-[0.18em] uppercase text-fg-m opacity-60 mt-2 animate-[fadeUp_0.8s_0.26s_ease-out_both]">
-            Industries: sugar · textile · food · pharma · more
+            Industries: animal healthcare · textile · detergent · leather · food
           </div>
         </div>
 
@@ -121,7 +121,7 @@ export default function About() {
               {
                 n: "01 · Manufacture",
                 t: "Speciality Enzymes<br/>at <span class='text-green'>Scale</span>",
-                d: "Ansel Biotech manufactures speciality enzymes at commercial scales — serving Distillery, Sugar, Brewery, Starch, Waste Water, Food, Animal Feed, Agriculture, Pharmaceuticals, Detergent, Paper & Pulp, and Textile.",
+                d: "Ansel Biotech manufactures speciality enzymes and probiotics at commercial scales — serving Animal Healthcare, Textile, Detergent, Leather, and Food.",
               },
               {
                 n: "02 · Formulate",

@@ -1,5 +1,6 @@
 import { useContact } from "@/components/hooks/use-contact";
 import { useRef } from "react";
+import { CtaButton } from "@/components/CtaButton";
 
 export default function Contact() {
   const mutation = useContact();
@@ -151,7 +152,7 @@ export default function Contact() {
                 placeholder="Rajesh Sharma"
                 required
                 minLength={2}
-                className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-serif text-[0.95rem] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
+                className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-sans text-[0.95rem] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -164,7 +165,7 @@ export default function Contact() {
                   type="email"
                   placeholder="rajesh@company.com"
                   required
-                  className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-serif text-[0.95rem] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
+                  className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-sans text-[0.95rem] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
                 />
               </div>
               <div>
@@ -175,7 +176,7 @@ export default function Contact() {
                   name="phone"
                   type="tel"
                   placeholder="+91 99999 99999"
-                  className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-serif text-[0.95rem] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
+                  className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-sans text-[0.95rem] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
                 />
               </div>
             </div>
@@ -188,13 +189,13 @@ export default function Contact() {
                 placeholder="Industry, product type, volume, location…"
                 required
                 minLength={10}
-                className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-serif text-[0.92rem] leading-[1.65] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] resize-none min-h-[128px] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
+                className="w-full px-3.5 py-2.5 bg-bg2 border border-border-m rounded-[7px] text-fg-b font-sans text-[0.92rem] leading-[1.65] outline-none transition-all focus:border-green focus:shadow-[0_0_0_3px_rgba(106,178,32,0.1)] resize-none min-h-[128px] placeholder:text-fg-m placeholder:opacity-50 placeholder:font-light"
               />
             </div>
-            <button
+            <CtaButton
               type="submit"
+              size="block"
               disabled={mutation.isPending}
-              className="w-full py-3.5 bg-green text-white border-0 rounded-[7px] font-mono text-[0.7rem] tracking-[0.16em] uppercase flex items-center justify-center gap-2 transition-all hover:bg-green-l hover:shadow-[0_4px_16px_rgba(106,178,32,0.28)] hover:-translate-y-px active:translate-y-0 disabled:opacity-70 disabled:hover:translate-y-0"
             >
               {mutation.isPending ? (
                 <>
@@ -212,7 +213,7 @@ export default function Contact() {
                   <span>→</span>
                 </>
               )}
-            </button>
+            </CtaButton>
             <p className="text-center mt-2.5 font-mono text-[0.57rem] text-fg-m opacity-60">
               Fields marked * required
             </p>

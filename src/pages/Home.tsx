@@ -1,24 +1,11 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { DnaCanvas } from "@/components/DnaCanvas";
+import { CtaButton } from "@/components/CtaButton";
+import { industriesWeServe } from "@/data/siteStructure";
 
 const ANSEL = "ANSEL".split("");
 const BIOTECH = "BIOTECH".split("");
-
-const industries = [
-  "🍬 Sugar",
-  "🧵 Textile",
-  "🍞 Food & Beverage",
-  "⚗️ Distillery",
-  "🌾 Starch",
-  "🍺 Brewery",
-  "💊 Pharma",
-  "🧴 Detergent",
-  "💧 Waste Water",
-  "📄 Paper & Pulp",
-  "🐄 Animal Feed",
-  "🌱 Agriculture",
-];
 
 export default function Home() {
   useEffect(() => {
@@ -39,7 +26,10 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const marqueeItems = [...industries, ...industries];
+  // Duplicate enough times so one marquee half stays wider than the viewport
+  // (short industry lists otherwise leave empty space while scrolling).
+  const marqueeHalf = Array.from({ length: 4 }, () => industriesWeServe).flat();
+  const marqueeItems = [...marqueeHalf, ...marqueeHalf];
 
   return (
     <div className="w-full">
@@ -60,7 +50,7 @@ export default function Home() {
         <div className="relative z-10 flex-1 flex items-center px-[6vw] md:px-[9vw] pt-[88px] md:pt-0">
           <div className="flex flex-col gap-5 md:gap-7 max-w-full md:max-w-[560px] w-full">
             <p className="font-mono text-[0.62rem] md:text-[0.72rem] tracking-[0.22em] uppercase text-fg-m animate-[fadeUp_0.8s_ease-out_both]">
-              Vadodara, Gujarat · Enzyme manufacturer
+              Enzymes • Probiotics • Biotechnology Solutions
             </p>
 
             <h1
@@ -101,25 +91,17 @@ export default function Home() {
                 lineHeight: 1.85,
               }}
             >
-              Industrial enzyme manufacturing — biocatalysts engineered for
-              sugar, textile, food, pharma & twelve other industries.
-              Eco-friendly. Precision-made.
+              Science-driven solutions for Animal Health, Food & Industrial
+              Processing.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mt-1 animate-[fadeUp_0.8s_0.3s_ease-out_both]">
-              <Link
-                href="/products"
-                className="btn-p inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.14em] uppercase px-7 py-3 rounded-[3px] text-white border-[1.5px] border-green bg-green relative overflow-hidden transition-all hover:shadow-[0_4px_18px_rgba(106,178,32,0.28)]"
-              >
-                <span className="relative z-[2]">Explore Products</span>
-                <span className="relative z-[2]">→</span>
-              </Link>
-              <Link
-                href="/contact"
-                className="btn-o inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.14em] uppercase px-7 py-3 rounded-[3px] bg-transparent text-fg-m border-[1.5px] border-border-m transition-colors hover:border-indigo-l hover:text-indigo-l"
-              >
+              <CtaButton href="/products">
+                Explore Products <span>→</span>
+              </CtaButton>
+              <CtaButton href="/contact" variant="secondary">
                 Get In Touch
-              </Link>
+              </CtaButton>
             </div>
           </div>
         </div>
@@ -195,8 +177,8 @@ export default function Home() {
               },
               {
                 i: "🏭",
-                t: "12+ Years, 12+ Sectors",
-                d: "Over a decade serving Distillery, Sugar, Brewery, Starch, Textile, Food, Pharma and more. ISO-certified, GIDC-based, and trusted by manufacturers across India and worldwide.",
+                t: "Trusted Across Industries",
+                d: "Serving Animal Healthcare, Textile, Detergent, Leather, and Food. ISO-certified, GIDC-based, and trusted by manufacturers across India and worldwide.",
               },
             ].map((card, i) => (
               <div
@@ -221,14 +203,18 @@ export default function Home() {
             <p className="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-fg-m opacity-60 text-center py-3.5 border-b border-border m-0">
               Industries We Serve
             </p>
-            <div className="flex gap-0 w-max animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused]">
+            <div className="flex w-max animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
               {marqueeItems.map((item, i) => (
-                <span
-                  key={i}
-                  className="font-mono text-[0.7rem] tracking-[0.12em] uppercase text-fg-m px-8 py-3 border-r border-border whitespace-nowrap transition-colors hover:text-green"
+                <Link
+                  key={`${item.id}-${i}`}
+                  href={item.href}
+                  className="inline-flex items-center gap-1.5 font-sans text-[0.7rem] tracking-[0.12em] uppercase text-fg-m px-8 py-3 border-r border-border whitespace-nowrap transition-colors hover:text-green"
                 >
-                  {item}
-                </span>
+                  <span className="text-[0.85rem] leading-none" aria-hidden>
+                    {item.emoji}
+                  </span>
+                  <span>{item.name}</span>
+                </Link>
               ))}
             </div>
           </div>

@@ -1,100 +1,114 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
+/** Textile content from client PDF §9 — process flow + enzymes only. */
 const content: IndustryPageContent = {
   industry: "Textile Processing",
-  headline: ["Textile", "Processing Enzymes"],
+  headline: ["Textile", "Processing"],
   accentLine: 1,
   subtitle:
-    "Eco-friendly biocatalysts for desizing, biopolishing and peroxide killing — reduce energy and water consumption while maintaining consistent, high-quality fabric output.",
+    "Enzyme support across the textile line: desizing, bioscouring, peroxide removal after bleaching, biopolishing and biowashing.",
   imageUrl: "../assets/products/textile_1.png",
   imageAlt: "Textile fabric manufacturing",
   slug: "textile",
 
   quickStats: [
-    { val: "5", label: "Products" },
-    { val: "Eco", label: "Friendly" },
-    { val: "SELZYME", label: "Brand" },
+    { val: "5", label: "Process Steps" },
+    { val: "5", label: "Enzymes" },
   ],
+
+  productsEyebrow: "Process Enzymes",
+  productsTitle: "Enzyme by process step",
+  processEyebrow: "Textile Process Flow",
+  processTitle: "DESIZING → BIOWASHING",
 
   products: [
     {
-      code: "SELZYME – HTA TEX",
-      enzyme: "High-Temp Alpha Amylase",
-      application: "Woven Fabric Desizing",
+      code: "DESIZING",
+      enzyme: "Alpha-Amylase",
+      application: "Desizing",
       purpose:
-        "Desizing of woven fabric at high temperatures without yarn damage. Effectively removes starch sizing agents from cotton and blended fabrics.",
-      tags: ["Desizing", "High Temp"],
+        "Enzymatic removal of starch-based sizing materials from cotton and other suitable fabrics.",
+      tags: ["Desizing", "Alpha-Amylase"],
     },
     {
-      code: "SELZYME – MTA TEX",
-      enzyme: "Mid-Temp Alpha Amylase",
-      application: "Woven Fabric Desizing",
+      code: "BIOSCOURING",
+      enzyme: "Pectinase",
+      application: "Bioscouring",
       purpose:
-        "Versatile desizing enzyme operating at moderate temperatures. Suitable for fabrics that cannot tolerate high-temperature processing.",
-      tags: ["Desizing", "Mid Temp"],
+        "Enzymatic removal/modification of pectic substances to improve fabric wettability and prepare cotton for subsequent processing.",
+      tags: ["Bioscouring", "Pectinase"],
     },
     {
-      code: "SELZYME – BAMY TEX",
-      enzyme: "Bacterial Alpha Amylase",
-      application: "General Desizing",
+      code: "H2O2-REMOVAL",
+      enzyme: "Catalase",
+      application: "Hydrogen Peroxide Removal",
       purpose:
-        "Broad-spectrum bacterial amylase for effective starch hydrolysis across a range of fabric types and process conditions.",
-      tags: ["Desizing", "Bacterial"],
+        "Rapid breakdown of residual hydrogen peroxide after bleaching. Result: H₂O₂ → Water + Oxygen.",
+      tags: ["Bleaching", "Catalase"],
     },
     {
-      code: "SELZYME – CL TEX",
-      enzyme: "Acid Cellulase",
+      code: "BIOPOLISHING",
+      enzyme: "Cellulase",
       application: "Biopolishing",
       purpose:
-        "Removes microfibrils and surface fuzz from cotton fabrics — reduces pilling tendency, improves colour brightness and softness.",
+        "Removes protruding cellulose fibres from the fabric surface to improve smoothness and appearance.",
       tags: ["Biopolishing", "Cellulase"],
     },
     {
-      code: "SELZYME – CAT TEX",
-      enzyme: "Catalase",
-      application: "Peroxide Removal",
+      code: "BIOWASHING",
+      enzyme: "Cellulase",
+      application: "Biowashing",
       purpose:
-        "Efficiently decomposes residual hydrogen peroxide after bleaching — enabling direct dyeing without additional washing steps, saving water and energy.",
-      tags: ["Peroxide Killing", "Catalase"],
+        "Enzymatic treatment used to create a softer hand feel and controlled surface effects in suitable textile applications.",
+      tags: ["Biowashing", "Cellulase"],
     },
   ],
 
   processSteps: [
     {
       step: "01",
-      title: "Sizing Removal",
-      desc: "Amylase enzymes dissolve starch sizing agents applied during weaving, preparing the fabric for subsequent treatments.",
+      title: "Desizing",
+      desc: "Alpha-Amylase — Enzymatic removal of starch-based sizing materials from cotton and other suitable fabrics.",
+      icon: "🧵",
     },
     {
       step: "02",
-      title: "Scouring",
-      desc: "Enzyme-assisted removal of natural impurities from cotton fibres — waxes, pectins and proteins — improving absorbency.",
+      title: "Bioscouring",
+      desc: "Pectinase — Enzymatic removal/modification of pectic substances to improve fabric wettability and prepare cotton for subsequent processing.",
+      icon: "💧",
     },
     {
       step: "03",
-      title: "Bleaching",
-      desc: "Hydrogen peroxide whitens the fabric. Catalase is then applied to neutralise residual peroxide before dyeing.",
+      title: "H₂O₂ Removal",
+      desc: "Catalase — Rapid breakdown of residual hydrogen peroxide after bleaching. Result: H₂O₂ → Water + Oxygen.",
+      icon: "⚗️",
     },
     {
       step: "04",
       title: "Biopolishing",
-      desc: "Cellulase enzymes remove surface microfibrils — improving fabric hand-feel, reducing pilling and enhancing colour depth.",
+      desc: "Cellulase — Removes protruding cellulose fibres from the fabric surface to improve smoothness and appearance.",
+      icon: "✨",
+    },
+    {
+      step: "05",
+      title: "Biowashing",
+      desc: "Cellulase — Enzymatic treatment used to create a softer hand feel and controlled surface effects in suitable textile applications.",
+      icon: "🧴",
     },
   ],
 
-  aboutTitle: "Why Enzymes for Textiles?",
+  aboutTitle: "Desizing benefits",
   aboutSub:
-    "Chemical processing of textiles is water-intensive and polluting. Enzyme technology offers a clean, energy-efficient alternative.",
+    "Rapid breakdown of residual hydrogen peroxide after bleaching. Result: H₂O₂ → Water + Oxygen.",
   aboutBody: [
-    "Traditional textile wet processing relies heavily on harsh chemicals — caustic soda, chlorine bleach and strong acids — that create significant effluent treatment challenges. Enzyme-based processing dramatically reduces the chemical load while achieving equal or superior results.",
-    "Amylases replace chemical desizing, reducing water consumption and eliminating the need for high-temperature washes. The controlled, specific action of enzymes means less fibre damage and more consistent fabric quality across production batches.",
-    "Biopolishing with cellulase addresses a common quality complaint — pilling and surface fuzziness on cotton garments. Unlike mechanical methods, enzyme biopolishing provides a permanent improvement to fabric hand-feel without weakening the fibre structure.",
-    "Ansel Biotech's SELZYME textile range is engineered for compatibility with modern continuous and batch processing equipment. Each enzyme is optimised for stability at the temperature, pH and substrate conditions typical of textile wet processing facilities.",
+    "Desizing with Alpha-Amylase: effective starch degradation; improved fabric absorbency; supports subsequent dyeing and finishing.",
+    "Bioscouring with Pectinase prepares cotton for subsequent processing by improving fabric wettability.",
+    "Catalase is used after bleaching for hydrogen peroxide removal. Biopolishing and biowashing both use Cellulase for surface and hand-feel effects.",
   ],
 
-  ctaTitle: "Optimise your\ntextile process",
+  ctaTitle: "Get in touch about\ntextile processing",
   ctaBody:
-    "Our technical team can recommend the right SELZYME combination for your specific fabric type, process conditions and sustainability targets.",
+    "Contact our team about textile process enzymes — desizing, bioscouring, peroxide removal, biopolishing and biowashing.",
 };
 
 export default function TextileProducts() {

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { type QuoteProduct } from "@/components/RequestQuoteModal";
 import { lazy, Suspense } from "react";
+import { CtaButton } from "@/components/CtaButton";
 
 const RequestQuoteModal = lazy(() =>
     import("@/components/RequestQuoteModal").then((mod) => ({
@@ -40,11 +41,18 @@ export interface IndustryPageContent {
     aboutTitle: string;
     aboutSub: string;
     aboutBody: string[];
+    /** Optional richer background cards (icon + label + text). Falls back to aboutBody. */
+    aboutItems?: { icon: string; label: string; text: string }[];
     processSteps: ProcessStep[];
     products: ProductItem[];
     ctaTitle: string;
     ctaBody: string;
     slug: string;
+    /** Optional section labels — defaults preserve existing industry-page copy */
+    productsEyebrow?: string;
+    productsTitle?: string;
+    processEyebrow?: string;
+    processTitle?: string;
 }
 
 /* ─────────────────────────────────────────
@@ -147,208 +155,248 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
           50%     { opacity:.65; transform:rotate(45deg) translate(2px,2px); }
         }
 
+        /* Mobile hero specific animations */
+        @keyframes _mImgScale {
+          from { transform: scale(1.06); }
+          to   { transform: scale(1); }
+        }
+        @keyframes _mCardUp {
+          from { opacity:0; transform:translateY(28px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes _mStatIn {
+          from { opacity:0; transform:translateX(-8px); }
+          to   { opacity:1; transform:translateX(0); }
+        }
+
         .proc-card:hover .proc-icon {
           transform:scale(1.08);
           box-shadow:0 0 0 6px rgba(106,178,32,0.10);
         }
         .proc-icon { transition:transform .25s ease, box-shadow .25s ease }
         @keyframes spin { to{transform:rotate(360deg)} }
+
+        /* Mobile hero pill badge */
+        ._m-badge {
+          background: rgba(106,178,32,0.15);
+          border: 1px solid rgba(106,178,32,0.38);
+          color: #8fd43a;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* Stat divider */
+        ._m-stat-divider {
+          width: 1px;
+          background: rgba(255,255,255,0.12);
+          align-self: stretch;
+          margin: 0 2px;
+        }
       `}</style>
 
             <div className="_pg w-full">
 
                 {/* ══════════════════════════════════════════════════
             §1 HERO
-            — Mobile: rebuilt with image texture + clean layout
-            — Desktop (≥ lg): original code, unchanged
         ══════════════════════════════════════════════════ */}
 
                 {/* ── MOBILE HERO (< lg) ──
-            Layout: image fills top ~42vh, content card slides up over it.
-            Feels like a native mobile detail page — not a shrunk desktop.
+            Full-bleed image hero with floating content panel.
+            Works from 375px (iPhone SE) → 430px (14 Pro Max).
+            Uses dvh units + clamp() so nothing overflows or gets cut.
         ── */}
                 <section
-                    className="lg:hidden relative flex flex-col overflow-hidden"
-                    style={{ height: "100dvh", background: "var(--bg)" }}
+                    className="lg:hidden relative overflow-hidden"
+                    style={{
+                        height: "100dvh",
+                        minHeight: "600px",
+                        background: "var(--bg)",
+                    }}
                 >
-                    {/* ── TOP: Image block ── */}
-                    <div
-                        className="relative w-full flex-shrink-0 overflow-hidden"
-                        style={{
-                            height: "clamp(220px, 42dvh, 380px)"
-                        }}
-                    >
-                        {/* Actual image — full colour, real presence */}
+                    {/* ── Full-bleed background image ── */}
+                    <div className="absolute inset-0">
                         <img
                             src={c.imageUrl}
                             alt={c.imageAlt}
                             className="w-full h-full object-cover block"
                             style={{
-                                opacity: 0.82,
-                                filter: "saturate(0.75) contrast(1.08) brightness(0.88)",
-                                animation: "_mFu 0.7s ease both",
+                                animation: "_mImgScale 1.2s cubic-bezier(.4,0,.2,1) both",
+                                filter: "saturate(0.7) contrast(1.1) brightness(0.72)",
                             }}
                         />
-
-                        {/* Top nav bar — sits on image */}
-                        <div className="absolute top-0 left-0 right-0 z-20 flex items-center px-5 pt-14 pb-4"
-                            style={{ background: "linear-gradient(to bottom, rgba(7,9,15,0.72) 0%, transparent 100%)" }}
-                        >
-                            <nav className="flex items-center gap-1.5 font-mono text-[0.56rem] tracking-[0.14em] uppercase">
-                                <Link href="/products" className="text-white/60 hover:text-white transition-colors">Products</Link>
-                                <span className="text-white/30">/</span>
-                                <span className="text-green">{c.industry}</span>
-                            </nav>
-                        </div>
-
-                        {/* Green tint overlay — brand colour bleed */}
+                        {/* Multi-layer gradient: darkens bottom strongly for text legibility */}
                         <div
-                            className="absolute inset-0 pointer-events-none"
+                            className="absolute inset-0"
                             style={{
-                                background: "radial-gradient(ellipse 80% 60% at 60% 80%, rgba(106,178,32,0.18), transparent 65%)",
+                                background: [
+                                    "linear-gradient(to bottom, rgba(7,9,15,0.55) 0%, rgba(7,9,15,0.1) 28%, rgba(7,9,15,0.08) 45%, rgba(7,9,15,0.72) 68%, rgba(7,9,15,0.97) 100%)",
+                                    "radial-gradient(ellipse 90% 50% at 60% 85%, rgba(106,178,32,0.14), transparent 65%)",
+                                ].join(","),
                             }}
                         />
-
-                        {/* Bottom fade — image melts into content card below */}
-                        <div
-                            className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
-                            style={{
-                                background: "linear-gradient(to bottom, transparent, var(--bg))",
-                                transform: "translateY(1px)"
-                            }}
-
-                        />
-
-                        {/* Floating industry tag — top right */}
-                        <div
-                            className="absolute top-14 right-5 z-20"
-                            style={{ animation: "_mFu .6s .1s ease both" }}
-                        >
-                            <span
-                                className="font-mono text-[0.52rem] tracking-[0.14em] uppercase px-2.5 py-1.5 rounded-full backdrop-blur-sm"
-                                style={{
-                                    background: "rgba(106,178,32,0.18)",
-                                    border: "1px solid rgba(106,178,32,0.4)",
-                                    color: "#8fd43a",
-                                }}
-                            >
-                                SELZYME
-                            </span>
-                        </div>
                     </div>
 
-                    {/* ── BOTTOM: Content card ── */}
+                    {/* ── Top navigation bar ── */}
+                    <div
+                        className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-5"
+                        style={{ paddingTop: "max(env(safe-area-inset-top, 0px) + 16px, 52px)", paddingBottom: "12px" }}
+                    >
+                        <nav className="flex items-center gap-1.5 font-mono text-[0.56rem] tracking-[0.14em] uppercase">
+                            <Link href="/products" className="text-white/50 hover:text-white/80 transition-colors">Products</Link>
+                            <span className="text-white/25">/</span>
+                            <span style={{ color: "#8fd43a" }}>{c.industry}</span>
+                        </nav>
+
+                        {/* Brand badge — top right */}
+                        <span
+                            className="_m-badge font-mono text-[0.5rem] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full"
+                            style={{ animation: "_mFu .55s .05s ease both" }}
+                        >
+                            SELZYME
+                        </span>
+                    </div>
+
+                    {/* ── Content panel — anchored to bottom ── */}
                     <div
                         ref={contentRef}
-                        className="relative z-10 flex flex-col px-5 pt-4 pb-6 min-h-0"
+                        className="absolute left-0 right-0 bottom-0 z-10 flex flex-col"
+                        style={{
+                            padding: "0 20px max(env(safe-area-inset-bottom, 0px) + 20px, 24px)",
+                            gap: "clamp(14px, 3.5dvh, 24px)",
+                        }}
                     >
-                        {/* ── TOP CONTENT ── */}
-                        <div className="flex flex-col gap-4">
-                            {/* Headline */}
-                            <div>
-                                <h1
-                                    className="font-serif font-bold leading-[0.9] tracking-[-0.02em] text-fg-b mb-2"
-                                    style={{ fontSize: "clamp(2.3rem, 9.5vw, 3.2rem)" }}
-                                >
-                                    {c.headline.map((line, i) => (
-                                        <span key={i} className={`block ${i === c.accentLine ? "text-green" : ""}`}>
-                                            {line}
-                                        </span>
-                                    ))}
-                                </h1>
+                        {/* Headline */}
+                        <div style={{ animation: "_mCardUp .65s .08s cubic-bezier(.4,0,.2,1) both" }}>
+                            <h1
+                                className="font-serif font-bold leading-[0.88] tracking-[-0.025em]"
+                                style={{
+                                    fontSize: "clamp(2.4rem, 10.5vw, 3.4rem)",
+                                    color: "#f0f0ee",
+                                }}
+                            >
+                                {c.headline.map((line, i) => (
+                                    <span
+                                        key={i}
+                                        className="block"
+                                        style={i === c.accentLine ? { color: "#8fd43a" } : {}}
+                                    >
+                                        {line}
+                                    </span>
+                                ))}
+                            </h1>
+                            {/* Green accent rule */}
+                            <div
+                                className="mt-2.5 h-[2px] w-8 rounded-full"
+                                style={{ background: "linear-gradient(to right, #6ab220, rgba(106,178,32,0.12))" }}
+                            />
+                        </div>
 
-                                <div
-                                    className="h-[2px] w-10 rounded-full"
-                                    style={{ background: "linear-gradient(to right, #6ab220, rgba(106,178,32,0.15))" }}
-                                />
-                            </div>
+                        {/* Subtitle */}
+                        <p
+                            className="font-sans font-light leading-[1.6]"
+                            style={{
+                                fontSize: "clamp(0.8rem, 3.4vw, 0.9rem)",
+                                color: "rgba(220,222,218,0.72)",
+                                animation: "_mCardUp .65s .16s cubic-bezier(.4,0,.2,1) both",
+                                maxWidth: "92%",
+                                // Clamp to 2 lines on very small screens
+                                display: "-webkit-box",
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                            }}
+                        >
+                            {c.subtitle}
+                        </p>
 
-                            {/* Subtitle */}
-                            <p className="font-sans font-light text-fg-m leading-[1.65] text-[0.85rem]">
-                                {c.subtitle}
-                            </p>
-
-                            {/* Stats */}
-                            <div className="flex items-center gap-5 flex-wrap">
-                                {c.quickStats.map((s, i) => (
-                                    <div key={s.label} className="flex items-center gap-1.5">
-                                        {i > 0 && <div className="w-[1px] h-3 bg-border-m mr-3" />}
-                                        <span className="font-mono font-semibold text-green text-[0.9rem] leading-none">
+                        {/* Stats row */}
+                        <div
+                            className="flex items-center flex-wrap"
+                            style={{
+                                gap: "clamp(10px, 3vw, 18px)",
+                                animation: "_mCardUp .65s .24s cubic-bezier(.4,0,.2,1) both",
+                            }}
+                        >
+                            {c.quickStats.map((s, i) => (
+                                <div key={s.label} className="flex items-center gap-1.5">
+                                    {i > 0 && <div className="_m-stat-divider" style={{ height: "22px" }} />}
+                                    <div className="flex flex-col gap-0.5" style={{ marginLeft: i > 0 ? "6px" : 0 }}>
+                                        <span
+                                            className="font-mono font-semibold leading-none"
+                                            style={{ fontSize: "clamp(0.85rem, 3.8vw, 1rem)", color: "#8fd43a" }}
+                                        >
                                             {s.val}
                                         </span>
-                                        <span className="font-mono text-[0.5rem] tracking-[0.12em] uppercase text-fg-m opacity-55">
+                                        <span
+                                            className="font-mono uppercase tracking-[0.11em] leading-none"
+                                            style={{ fontSize: "clamp(0.42rem, 1.8vw, 0.5rem)", color: "rgba(200,205,195,0.5)" }}
+                                        >
                                             {s.label}
                                         </span>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
 
-                        {/* ── CTA BLOCK ── */}
+                        {/* CTA buttons */}
                         <div
-                            className="flex flex-col gap-2 mt-6"
+                            className="grid gap-2.5"
                             style={{
-                                marginTop: "clamp(16px, 6vh, 48px)", // 🔥 adaptive spacing
+                                gridTemplateColumns: "1fr 1fr",
+                                animation: "_mCardUp .65s .32s cubic-bezier(.4,0,.2,1) both",
                             }}
                         >
-                            <button
+                            <CtaButton
                                 onClick={() => {
                                     const ourRangeEl = document.getElementById("our-range");
                                     ourRangeEl?.scrollIntoView({ behavior: "smooth" });
                                 }}
-                                className="flex items-center justify-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase px-5 py-3 rounded-[12px] text-white bg-green border border-green transition-all active:scale-[0.98]"
-                                style={{ boxShadow: "0 4px 18px rgba(106,178,32,0.28)" }}
+                                className="w-full px-3"
                             >
                                 View Products ↓
-                            </button>
+                            </CtaButton>
 
-                            <Link
-                                href="/contact"
-                                className="flex items-center justify-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase px-5 py-3 rounded-[12px] text-fg-m border border-border-m transition-all active:scale-[0.98]"
-                            >
+                            <CtaButton href="/contact" variant="secondaryDark" className="w-full px-3">
                                 Get Quote →
-                            </Link>
+                            </CtaButton>
                         </div>
 
-
+                        {/* Scroll chevrons */}
+                        {showChevrons && (
+                            <div
+                                className="flex flex-col items-center pointer-events-none self-center"
+                                style={{ paddingBottom: "2px", gap: "1px" }}
+                            >
+                                <span
+                                    className="font-mono uppercase tracking-[0.2em]"
+                                    style={{ fontSize: "0.42rem", color: "rgba(200,205,195,0.3)", marginBottom: "3px" }}
+                                >
+                                    Scroll
+                                </span>
+                                {[0, 0.18, 0.36].map((d, i) => (
+                                    <div
+                                        key={i}
+                                        style={{
+                                            width: "7px",
+                                            height: "7px",
+                                            borderRight: "1.5px solid rgba(200,205,195,0.45)",
+                                            borderBottom: "1.5px solid rgba(200,205,195,0.45)",
+                                            transform: "rotate(45deg)",
+                                            opacity: 0,
+                                            animation: `_mChev 1.8s ${d}s infinite`,
+                                            marginTop: i > 0 ? "-3px" : 0,
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
 
-                    {/* ── CHEVRONS (always bottom) — positioned absolutely ── */}
-                    {showChevrons && (
-                        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none" style={{ bottom: "clamp(30px, 3vw, 24px)" }}>
-                            <span className="font-mono text-[0.46rem] tracking-[0.2em] uppercase text-fg-m opacity-30 mb-0.5">
-                                Scroll
-                            </span>
-
-                            {[0, 0.18, 0.36].map((d, i) => (
-                                <div
-                                    key={i}
-                                    className="w-[8px] h-[8px] border-r border-b border-fg-m"
-                                    style={{
-                                        transform: "rotate(45deg)",
-                                        opacity: 0,
-                                        animation: `_mChev 1.8s ${d}s infinite`,
-                                        marginTop: i > 0 ? "-4px" : 0,
-                                    }}
-                                />
-                            ))}
-                        </div>
-                    )}
-
-
-
-                    {/* Bottom rule */}
+                    {/* Bottom green rule */}
                     <div
-                        className="absolute bottom-0 left-0 right-0 h-[1px]"
-                        style={{ background: "linear-gradient(to right, transparent, rgba(106,178,32,0.35), transparent)" }}
+                        className="absolute bottom-0 left-0 right-0 h-[1px] z-20"
+                        style={{ background: "linear-gradient(to right, transparent, rgba(106,178,32,0.4), transparent)" }}
                     />
-
-                    <style>{`
-            @keyframes mPulse {
-              0%,100% { opacity:1; transform:scale(1); }
-              50%      { opacity:.4; transform:scale(0.85); }
-            }
-          `}</style>
                 </section>
 
                 {/* ── DESKTOP HERO (≥ lg) — original, unchanged ── */}
@@ -421,10 +469,10 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                         <div
                             className="flex flex-row gap-2 mt-6"
                             style={{
-                                marginTop: "clamp(16px, 6vh, 48px)", // 🔥 adaptive spacing
+                                marginTop: "clamp(16px, 6vh, 48px)",
                             }}
                         >
-                            <button
+                            <CtaButton
                                 onClick={() => {
                                     const NAV_HEIGHT = 80;
                                     const ourRangeEl = document.getElementById("our-range");
@@ -438,18 +486,13 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                                         window.scrollTo({ top: y, behavior: "smooth" });
                                     }
                                 }}
-                                className="flex items-center justify-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase px-5 py-3 rounded-[12px] text-white bg-green border border-green transition-all active:scale-[0.98]"
-                                style={{ boxShadow: "0 4px 18px rgba(106,178,32,0.28)" }}
                             >
                                 View Products ↓
-                            </button>
+                            </CtaButton>
 
-                            <Link
-                                href="/contact"
-                                className="flex items-center justify-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase px-5 py-3 rounded-[12px] text-fg-m border border-border-m transition-all active:scale-[0.98]"
-                            >
+                            <CtaButton href="/contact" variant="secondary">
                                 Get Quote →
-                            </Link>
+                            </CtaButton>
                         </div>
                     </div>
 
@@ -472,9 +515,11 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                     <div className="max-w-[1160px] mx-auto w-full px-5 lg:px-8 py-16 lg:py-24">
                         <div className="_rev mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
                             <div>
-                                <p id="our-range" className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">Our Range</p>
+                                <p id="our-range" className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">
+                                    {c.productsEyebrow ?? "Our Range"}
+                                </p>
                                 <h2 className="font-serif font-bold text-fg-b leading-[1]" style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}>
-                                    SELZYME Products
+                                    {c.productsTitle ?? "SELZYME Products"}
                                 </h2>
                             </div>
                             <p className="font-sans font-light text-fg-m text-[0.84rem] max-w-[240px] leading-[1.6] opacity-70">
@@ -510,19 +555,31 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                     />
                     <div className="relative z-10 flex-1 flex flex-col justify-center max-w-[1160px] mx-auto w-full px-5 lg:px-8 py-16 lg:py-24 gap-14">
                         <div className="_rev">
-                            <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">How It Works</p>
+                            <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">
+                                {c.processEyebrow ?? "How It Works"}
+                            </p>
                             <h2 className="font-serif font-bold text-fg-b leading-[1]" style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}>
-                                The Enzymatic Process
+                                {c.processTitle ?? "The Enzymatic Process"}
                             </h2>
                         </div>
                         <div className="relative">
                             <div
-                                className="hidden lg:block absolute top-[44px] left-0 right-0 h-[1px]"
+                                className={`hidden absolute top-[44px] left-0 right-0 h-[1px] ${
+                                    c.processSteps.length >= 5 ? "xl:block" : "lg:block"
+                                }`}
                                 style={{ background: "linear-gradient(to right, transparent 2%, rgba(106,178,32,0.2) 10%, rgba(106,178,32,0.2) 90%, transparent 98%)" }}
                             />
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            <div
+                                className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${
+                                    c.processSteps.length >= 5
+                                        ? "xl:grid-cols-5 lg:grid-cols-3"
+                                        : c.processSteps.length === 3
+                                          ? "lg:grid-cols-3"
+                                          : "lg:grid-cols-4"
+                                }`}
+                            >
                                 {c.processSteps.map((s, i) => {
-                                    const defaultIcons = ["🌡️", "💧", "⚗️", "✨"];
+                                    const defaultIcons = ["🧵", "💧", "⚗️", "✨", "🧴"];
                                     const icon = s.icon ?? defaultIcons[i % defaultIcons.length];
                                     return (
                                         <div
@@ -540,7 +597,9 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                                                 <p className="font-sans font-light text-fg-m text-[0.84rem] leading-[1.7]">{s.desc}</p>
                                             </div>
                                             {i < c.processSteps.length - 1 && (
-                                                <div className="hidden lg:flex absolute -right-[13px] top-[40px] z-20 items-center justify-center w-6 h-6 rounded-full bg-bg border border-border text-fg-m text-[0.7rem] opacity-35">›</div>
+                                                <div className={`hidden absolute -right-[13px] top-[40px] z-20 items-center justify-center w-6 h-6 rounded-full bg-bg border border-border text-fg-m text-[0.7rem] opacity-35 ${
+                                                    c.processSteps.length >= 5 ? "xl:flex" : "lg:flex"
+                                                }`}>›</div>
                                             )}
                                         </div>
                                     );
@@ -552,9 +611,9 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                             <blockquote className="relative pl-5 border-l-2 border-green max-w-[520px]">
                                 <p className="font-serif font-light text-fg text-[1.02rem] leading-[1.8] italic">"{c.aboutSub}"</p>
                             </blockquote>
-                            <Link href="/contact" className="inline-flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.12em] uppercase text-green border-b border-[rgba(106,178,32,0.3)] pb-0.5 transition-colors hover:border-green w-fit">
+                            <CtaButton href="/contact" variant="text" className="w-fit text-[0.62rem] tracking-[0.12em]">
                                 Speak to our team →
-                            </Link>
+                            </CtaButton>
                         </div>
                     </div>
                 </section>
@@ -578,34 +637,42 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                                 <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">Background</p>
                                 <h2 className="font-serif font-bold text-fg-b leading-[1.02]" style={{ fontSize: "clamp(1.9rem, 3.5vw, 3.2rem)" }}>{c.aboutTitle}</h2>
                             </div>
-                            <Link href="/contact" className="hidden lg:inline-flex items-center gap-1.5 font-mono text-[0.62rem] tracking-[0.12em] uppercase text-green border-b border-[rgba(106,178,32,0.3)] pb-0.5 transition-colors hover:border-green flex-shrink-0">
+                            <CtaButton href="/contact" variant="text" className="hidden lg:inline-flex flex-shrink-0 text-[0.62rem] tracking-[0.12em]">
                                 Request our enzyme guide →
-                            </Link>
+                            </CtaButton>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            {c.aboutBody.map((para, i) => {
-                                const icons = ["🔬", "⚗️", "🌿", "🏭", "📊", "🧬"];
-                                const labels = ["Overview", "Process", "Application", "Benefit", "Impact", "Science"];
+                        <div className={`grid grid-cols-1 gap-4 ${
+                            (c.aboutItems?.length ?? c.aboutBody.length) === 1
+                                ? "max-w-[560px]"
+                                : "lg:grid-cols-2"
+                        }`}>
+                            {(c.aboutItems ??
+                                c.aboutBody.map((para, i) => ({
+                                    icon: ["🔬", "⚗️", "🌿", "🏭", "📊", "🧬"][i % 6],
+                                    label: ["Overview", "Process", "Application", "Benefit", "Impact", "Science"][i % 6],
+                                    text: para,
+                                }))
+                            ).map((item, i) => {
                                 const isIndigo = i % 4 === 1 || i % 4 === 2;
                                 return (
                                     <div
-                                        key={i}
-                                        className={`_rev _d${Math.min(i + 1, 4)} group flex flex-col gap-4 p-6 lg:p-8 rounded-[16px] border bg-card transition-all duration-250 hover:bg-bg2 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] cursor-default border-border-m`}
+                                        key={`${item.label}-${i}`}
+                                        className={`_rev _d${Math.min(i + 1, 4)} group flex flex-col gap-4 p-6 lg:p-8 rounded-[14px] border bg-card transition-all duration-250 hover:bg-bg2 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] cursor-default border-border-m`}
                                         onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = isIndigo ? "rgba(114,114,216,0.35)" : "rgba(106,178,32,0.35)"; }}
                                         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = ""; }}
                                     >
                                         <div className="flex items-center gap-3">
                                             <div
-                                                className="w-10 h-10 rounded-[10px] border flex items-center justify-center text-lg leading-none flex-shrink-0"
+                                                className="w-11 h-11 rounded-[10px] border flex items-center justify-center text-[1.25rem] leading-none flex-shrink-0"
                                                 style={{ borderColor: isIndigo ? "rgba(114,114,216,0.25)" : "rgba(106,178,32,0.25)", background: isIndigo ? "rgba(58,58,184,0.06)" : "rgba(106,178,32,0.06)" }}
                                             >
-                                                <span style={{ filter: "saturate(0.85)" }}>{icons[i % icons.length]}</span>
+                                                <span style={{ filter: "saturate(0.85)" }}>{item.icon}</span>
                                             </div>
-                                            <span className="font-mono text-[0.58rem] tracking-[0.18em] uppercase font-medium" style={{ color: isIndigo ? "var(--indigo-l)" : "var(--green)" }}>
-                                                {labels[i % labels.length]}
+                                            <span className="font-sans text-[0.58rem] tracking-[0.18em] uppercase font-medium" style={{ color: isIndigo ? "var(--indigo-l)" : "var(--green)" }}>
+                                                {item.label}
                                             </span>
                                         </div>
-                                        <p className="font-sans font-light text-fg-m leading-[1.85]" style={{ fontSize: "clamp(0.88rem, 1vw, 0.97rem)" }}>{para}</p>
+                                        <p className="font-sans font-light text-fg-m leading-[1.85]" style={{ fontSize: "clamp(0.88rem, 1vw, 0.97rem)" }}>{item.text}</p>
                                         <div
                                             className="h-[1.5px] rounded-full mt-auto opacity-0 group-hover:opacity-100 transition-all duration-300"
                                             style={{ background: isIndigo ? "linear-gradient(to right, rgba(114,114,216,0.4), transparent)" : "linear-gradient(to right, rgba(106,178,32,0.4), transparent)" }}
@@ -615,31 +682,31 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                             })}
                         </div>
                         <div className="mt-10 lg:hidden">
-                            <Link href="/contact" className="inline-flex items-center gap-1.5 font-mono text-[0.62rem] tracking-[0.12em] uppercase text-green border-b border-[rgba(106,178,32,0.3)] pb-0.5 transition-colors hover:border-green">
+                            <CtaButton href="/contact" variant="text" className="text-[0.62rem] tracking-[0.12em]">
                                 Request our enzyme guide →
-                            </Link>
+                            </CtaButton>
                         </div>
                     </div>
                 </section>
 
                 {/* ══════════════════════════════════════════════════
-            §5 CTA BAND — unchanged
+            §5 CTA BAND — short ending (Textile format)
         ══════════════════════════════════════════════════ */}
                 <section
-                    className="relative py-20 lg:py-28 border-t border-border overflow-hidden"
+                    className="relative py-12 md:py-16 border-t border-border overflow-hidden"
                     style={{ background: "radial-gradient(ellipse at 50% 110%, rgba(106,178,32,0.09), transparent 55%)" }}
                 >
                     <div className="relative z-10 max-w-[700px] mx-auto px-5 lg:px-8 text-center">
-                        <p className="_rev font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-4">Ready to Optimise?</p>
-                        <h2 className="_rev _d1 font-serif font-bold text-fg-b leading-[1.02] mb-5" style={{ fontSize: "clamp(1.8rem, 3.5vw, 3rem)" }}>{c.ctaTitle}</h2>
-                        <p className="_rev _d2 font-sans font-light text-fg-m text-[1rem] leading-[1.75] mb-8 max-w-[460px] mx-auto">{c.ctaBody}</p>
+                        <p className="_rev font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">Ready to Optimise?</p>
+                        <h2 className="_rev _d1 font-serif font-bold text-fg-b leading-[1.05] mb-3 whitespace-pre-line" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}>{c.ctaTitle}</h2>
+                        <p className="_rev _d2 font-sans font-light text-fg-m text-[0.95rem] leading-[1.75] mb-6 max-w-[460px] mx-auto">{c.ctaBody}</p>
                         <div className="_rev _d3 flex flex-wrap gap-3 justify-center">
-                            <Link href="/contact" className="inline-flex items-center gap-2 font-mono text-[0.66rem] tracking-[0.14em] uppercase px-6 py-3 rounded-[10px] bg-green text-white border border-green transition-all hover:bg-green-l hover:-translate-y-px hover:shadow-[0_6px_24px_rgba(106,178,32,0.3)]">
+                            <CtaButton href="/contact">
                                 Contact Our Team →
-                            </Link>
-                            <Link href="/products" className="inline-flex items-center gap-2 font-mono text-[0.66rem] tracking-[0.14em] uppercase px-6 py-3 rounded-[10px] bg-transparent text-fg-m border border-border-m transition-all hover:border-[rgba(106,178,32,0.35)] hover:text-green hover:-translate-y-px">
+                            </CtaButton>
+                            <CtaButton href="/products" variant="secondary">
                                 ← All Products
-                            </Link>
+                            </CtaButton>
                         </div>
                     </div>
                 </section>
@@ -668,7 +735,7 @@ function ProductCard({
     return (
         <button
             onClick={onRequestQuote}
-            className="group relative flex flex-col gap-4 p-5 sm:p-6 rounded-[16px] border border-border bg-card text-left w-full cursor-pointer transition-all duration-200 hover:border-[rgba(106,178,32,0.4)] hover:bg-bg2 hover:-translate-y-[2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)]"
+            className="group relative flex flex-col gap-4 p-5 sm:p-6 rounded-[14px] border border-border bg-card text-left w-full cursor-pointer transition-all duration-200 hover:border-[rgba(106,178,32,0.4)] hover:bg-bg2 hover:-translate-y-[2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)]"
             style={{ animationDelay: `${index * 40}ms` }}
         >
             <div className="absolute top-4 right-4 hidden sm:flex items-center gap-1.5">
@@ -696,10 +763,11 @@ function ProductCard({
                 ))}
             </div>
             <div className="sm:hidden pt-2">
-                <div className="w-full text-center font-mono text-[0.6rem] tracking-[0.12em] uppercase px-4 py-2 rounded-[8px] bg-[rgba(106,178,32,0.08)] text-green border border-[rgba(106,178,32,0.25)]">
+                <div className="w-full text-center font-mono text-[0.6rem] tracking-[0.12em] uppercase px-4 py-2 rounded-[3px] bg-[rgba(106,178,32,0.08)] text-green border border-[rgba(106,178,32,0.25)]">
                     Tap to Request Quote →
                 </div>
             </div>
         </button>
     );
 }
+

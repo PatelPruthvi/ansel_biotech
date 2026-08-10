@@ -12,6 +12,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Products from "@/pages/Products";
+import Industries from "@/pages/Industries";
 import SugarProducts from "@/pages/products/SugarProducts";
 import TextileProducts from "@/pages/products/TextileProducts";
 import FoodProducts from "@/pages/products/FoodProducts";
@@ -24,6 +25,11 @@ import DetergentProducts from "./pages/products/DetergentProducts";
 import WasteWaterProducts from "./pages/products/WasteWaterProducts";
 import PaperPulpProducts from "./pages/products/PaperProducts";
 import AnimalFeedProducts from "./pages/products/AnimalProducts";
+import AnimalHealthcareProducts from "./pages/products/AnimalHealthcareProducts";
+import AquaProducts from "./pages/products/AquaProducts";
+import LeatherProducts from "./pages/products/LeatherProducts";
+import ProbioticsProducts from "./pages/products/ProbioticsProducts";
+import EnzymesProducts from "./pages/products/EnzymesProducts";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -38,17 +44,31 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route path="/products" component={Products} />
-          <Route path="/products/sugar" component={SugarProducts} />
+          <Route path="/industries" component={Industries} />
+
+          {/* Product categories */}
+          <Route path="/products/probiotics" component={ProbioticsProducts} />
+          <Route path="/products/enzymes" component={EnzymesProducts} />
+
+          {/* Industries We Serve */}
+          <Route path="/products/animal-healthcare" component={AnimalHealthcareProducts} />
+          <Route path="/products/aqua" component={AquaProducts} />
           <Route path="/products/textile" component={TextileProducts} />
+          <Route path="/products/detergent" component={DetergentProducts} />
+          <Route path="/products/leather" component={LeatherProducts} />
           <Route path="/products/food" component={FoodProducts} />
+
+          {/* Legacy Animal Feed path — kept temporarily for backwards compatibility */}
+          <Route path="/products/feed" component={AnimalFeedProducts} />
+
+          {/* Legacy industry routes — kept temporarily; removed from discovery UI */}
+          <Route path="/products/sugar" component={SugarProducts} />
           <Route path="/products/distillery" component={DistilleryProducts} />
           <Route path="/products/starch" component={StarchProducts} />
           <Route path="/products/brewery" component={BreweryProducts} />
           <Route path="/products/pharma" component={PharmaProducts} />
-          <Route path="/products/detergent" component={DetergentProducts} />
           <Route path="/products/wastewater" component={WasteWaterProducts} />
           <Route path="/products/paper" component={PaperPulpProducts} />
-          <Route path="/products/feed" component={AnimalFeedProducts} />
 
           <Route path="/contact" component={Contact} />
           <Route path="/contacts" component={Contact} />
