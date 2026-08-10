@@ -1,11 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Link } from "wouter";
-import { DnaCanvas } from "@/components/DnaCanvas";
 import { CtaButton } from "@/components/CtaButton";
 import { industriesWeServe } from "@/data/siteStructure";
 
+const DnaCanvas = lazy(() =>
+  import("@/components/DnaCanvas").then((m) => ({ default: m.DnaCanvas }))
+);
+
 const ANSEL = "ANSEL".split("");
 const BIOTECH = "BIOTECH".split("");
+
+const WHAT_WE_DO_CARDS = [
+  {
+    i: "🧬",
+    t: "Develop & Supply",
+    d: "Ansel Biotech develops and supplies probiotics, enzymes and application-specific biotechnology solutions for animal healthcare, food processing and industrial applications.",
+  },
+  {
+    i: "📈",
+    t: "Built to Improve",
+    d: "Gut health & digestion · Feed utilization · Water & soil quality · Textile processing · Detergent performance · Leather processing · Food processing efficiency.",
+  },
+  {
+    i: "🏭",
+    t: "Application Focused",
+    d: "Practical, consistent solutions for commercial use across Animal Healthcare, Textile, Detergent, Leather and Food.",
+  },
+];
 
 export default function Home() {
   useEffect(() => {
@@ -26,14 +47,12 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  // Duplicate enough times so one marquee half stays wider than the viewport
-  // (short industry lists otherwise leave empty space while scrolling).
   const marqueeHalf = Array.from({ length: 4 }, () => industriesWeServe).flat();
   const marqueeItems = [...marqueeHalf, ...marqueeHalf];
 
   return (
     <div className="w-full">
-      {/* HERO — exactly 100vh, contains everything */}
+      {/* HERO */}
       <section
         className="hero relative w-full h-[100svh] min-h-[640px] flex flex-col overflow-hidden"
         style={{
@@ -41,12 +60,10 @@ export default function Home() {
             "radial-gradient(circle at 68% 46%, rgba(106,178,32,0.09), transparent 58%), radial-gradient(circle at 28% 22%, rgba(58,58,184,0.07), transparent 55%)",
         }}
       >
-        {/* DNA layer — clicks anywhere on hero trigger burst */}
-        <DnaCanvas />
-        {/* <Dna3D /> */}
+        <Suspense fallback={null}>
+          <DnaCanvas />
+        </Suspense>
 
-
-        {/* Hero body */}
         <div className="relative z-10 flex-1 flex items-center px-[6vw] md:px-[9vw] pt-[88px] md:pt-0">
           <div className="flex flex-col gap-5 md:gap-7 max-w-full md:max-w-[560px] w-full">
             <p className="font-mono text-[0.62rem] md:text-[0.72rem] tracking-[0.22em] uppercase text-fg-m animate-[fadeUp_0.8s_ease-out_both]">
@@ -100,27 +117,25 @@ export default function Home() {
                 Explore Products <span>→</span>
               </CtaButton>
               <CtaButton href="/contact" variant="secondary">
-                Get In Touch
+                Talk to Our Team
               </CtaButton>
             </div>
           </div>
         </div>
 
-        {/* Scroll indicator — centered, just above stats with padding */}
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 bottom-[112px] flex-col items-center gap-1 z-20 pointer-events-none animate-[fadeIn_1.2s_1.4s_ease-out_both]">
           <span className="font-mono text-[0.55rem] tracking-[0.22em] uppercase text-fg-m mb-1.5 opacity-70">
             Scroll
           </span>
-          <div className="w-[11px] h-[11px] border-r-[1.5px] border-b-[1.5px] border-fg-m animate-[chev_1.8s_0s_infinite]" />
-          <div className="w-[11px] h-[11px] border-r-[1.5px] border-b-[1.5px] border-fg-m -mt-[7px] animate-[chev_1.8s_0.18s_infinite]" />
-          <div className="w-[11px] h-[11px] border-r-[1.5px] border-b-[1.5px] border-fg-m -mt-[7px] animate-[chev_1.8s_0.36s_infinite]" />
+          <div className="w-[11px] h-[11px] border-r-[1.5px] border-b-[1.5px] border-fg-m animate-[chev_1.8s_0s_infinite]" style={{ transform: "rotate(45deg)" }} />
+          <div className="w-[11px] h-[11px] border-r-[1.5px] border-b-[1.5px] border-fg-m -mt-[7px] animate-[chev_1.8s_0.18s_infinite]" style={{ transform: "rotate(45deg)" }} />
+          <div className="w-[11px] h-[11px] border-r-[1.5px] border-b-[1.5px] border-fg-m -mt-[7px] animate-[chev_1.8s_0.36s_infinite]" style={{ transform: "rotate(45deg)" }} />
         </div>
 
-        {/* Stats bar — bottom of hero, included in 100vh */}
         <div className="relative z-10 flex flex-wrap border-t border-border bg-glass backdrop-blur-xl animate-[fadeUp_0.9s_0.5s_ease-out_both]">
           {[
             { v: "12+", l: "Years Active" },
-            { v: "12+", l: "Industries Served" },
+            { v: "5", l: "Key Industries" },
             { v: "ISO", l: "Certified Quality" },
             { v: "GIDC", l: "Vadodara Facility" },
           ].map((stat, i) => (
@@ -142,47 +157,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 2 — Why Enzymes (full 100vh) */}
+      {/* What We Do — full viewport, original kit + marquee */}
       <section
-        className="relative w-full flex items-center bg-background py-16 md:py-[90px]"
-        style={{ minHeight: "100svh" }}
+        className="relative w-full flex items-center bg-background py-16 md:py-[90px] min-h-[100svh] lg:h-[100svh]"
       >
         <div className="w-full max-w-[1160px] mx-auto px-5 md:px-10">
           <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
-            Why Ansel Biotech
+            What We Do
           </p>
           <h2
-            className="font-serif font-semibold text-fg-b leading-[1.02] mb-10 md:mb-12 reveal"
+            className="font-sans font-semibold text-fg-b leading-[1.02] mb-10 md:mb-12 reveal"
             style={{
               fontSize: "clamp(1.9rem, 3.2vw, 3rem)",
               transitionDelay: "80ms",
             }}
           >
-            Biocatalysts Built
+            Biotechnology Built
             <br />
             for Industry
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[2px] border border-border rounded-[12px] overflow-hidden bg-border">
-            {[
-              {
-                i: "🌿",
-                t: "Eco-Friendly by Design",
-                d: "Our enzyme formulations replace harsh chemicals across industrial processes — reducing energy consumption, water usage, and environmental load without compromising output.",
-              },
-              {
-                i: "⚗️",
-                t: "Custom Blends at Scale",
-                d: "Off-the-shelf or fully tailored. We engineer enzyme blends to your substrate, temperature profile, and process parameters — manufactured at commercial scale from our Vadodara facility.",
-              },
-              {
-                i: "🏭",
-                t: "Trusted Across Industries",
-                d: "Serving Animal Healthcare, Textile, Detergent, Leather, and Food. ISO-certified, GIDC-based, and trusted by manufacturers across India and worldwide.",
-              },
-            ].map((card, i) => (
+            {WHAT_WE_DO_CARDS.map((card, i) => (
               <div
-                key={i}
+                key={card.t}
                 className="why-card group bg-background p-8 md:p-10 flex flex-col gap-4 transition-colors duration-300 hover:bg-bg2 cursor-default reveal"
                 style={{ transitionDelay: `${i * 90}ms` }}
               >
@@ -198,7 +196,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Industries We Serve marquee — full bleed */}
+          {/* Industries marquee */}
           <div className="mt-12 md:mt-[46px] -mx-[6vw] md:mx-[calc(50%-50vw)] overflow-hidden border-t border-b border-border bg-transparent">
             <p className="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-fg-m opacity-60 text-center py-3.5 border-b border-border m-0">
               Industries We Serve
@@ -223,5 +221,3 @@ export default function Home() {
     </div>
   );
 }
-
-

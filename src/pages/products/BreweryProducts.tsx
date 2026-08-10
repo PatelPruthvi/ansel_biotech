@@ -6,7 +6,7 @@ const content: IndustryPageContent = {
     accentLine: 1,
     subtitle:
         "Advanced enzymatic solutions to optimize mashing, improve filtration, and ensure flavor stability while reducing overall production expenses and increasing raw material utilization.",
-    imageUrl: "../assets/products/BrewEnzyme.png",
+    imageUrl: "/assets/products/BrewEnzyme.png",
     imageAlt: "Brewery fermentation and mashing equipment",
     slug: "brewery",
 

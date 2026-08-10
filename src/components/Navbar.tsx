@@ -110,7 +110,7 @@ export function Navbar() {
         scrolled ? "py-2.5 bg-glass backdrop-blur-xl border-b border-border" : "py-[18px]"
       }`}
     >
-      <div className="max-w-[1160px] mx-auto px-5 lg:px-8 flex items-center justify-between gap-4">
+      <div className="max-w-[1160px] mx-auto px-3 sm:px-4 lg:px-5 flex items-center justify-between gap-4">
         <Link
           href="/"
           className="flex items-center shrink-0 px-3.5 py-1.5 rounded-xl bg-glass border border-glass-b backdrop-blur-md transition-colors hover:border-border-m"
@@ -175,7 +175,7 @@ export function Navbar() {
 
       {mobileMenuOpen && (
         <div
-          className="lg:hidden flex flex-col bg-glass backdrop-blur-xl border-t border-border px-5 py-3.5 pb-[18px] gap-1 absolute w-full top-full"
+          className="lg:hidden flex flex-col bg-glass backdrop-blur-xl border-t border-border px-3 sm:px-4 py-3.5 pb-[18px] gap-1 absolute w-full top-full"
           style={{ background: theme === "dark" ? "#0a0c12" : "#ffffff" }}
         >
           {navLinks.map((link) => {

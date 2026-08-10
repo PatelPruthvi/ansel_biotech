@@ -19,16 +19,7 @@ export default function Products() {
           </h1>
         }
         subtitle="Two product lines: probiotic strains and enzymes, built for animal healthcare, food and industrial processing."
-        below={
-          <div className="flex flex-wrap gap-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-border bg-card backdrop-blur-sm">
-              <span className="font-sans text-[0.9rem] text-green font-medium leading-none">2</span>
-              <span className="font-sans text-[0.52rem] tracking-[0.12em] uppercase text-fg-m">
-                Categories
-              </span>
-            </div>
-          </div>
-        }
+        stats={[{ value: "2", label: "Categories" }]}
         actions={
           <>
             <HeroScrollCta targetId="product-categories">Explore Categories ↓</HeroScrollCta>
@@ -49,7 +40,7 @@ export default function Products() {
           Our Products
         </p>
         <h2
-          className="font-serif font-semibold text-fg-b leading-[1.05] mb-3"
+          className="font-sans font-semibold text-fg-b leading-[1.05] mb-3"
           style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)" }}
         >
           Choose a category
@@ -87,7 +78,7 @@ export default function Products() {
                 <span className="font-sans text-[0.52rem] tracking-[0.14em] uppercase text-fg-m mb-2">
                   {p.tag}
                 </span>
-                <h3 className="font-serif text-[1.4rem] font-semibold text-fg-b mb-2 group-hover:text-green transition-colors">
+                <h3 className="font-sans text-[1.4rem] font-semibold text-fg-b mb-2 group-hover:text-green transition-colors">
                   {p.name}
                 </h3>
                 <p className="font-sans text-[0.9rem] font-light leading-[1.7] text-fg-m m-0 mb-5 flex-grow">
@@ -108,7 +99,7 @@ export default function Products() {
             <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">
               Also explore
             </p>
-            <h2 className="font-serif text-[1.35rem] font-semibold text-fg-b">
+            <h2 className="font-sans text-[1.35rem] font-semibold text-fg-b">
               Industries We Serve
             </h2>
           </div>

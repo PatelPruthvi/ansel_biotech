@@ -4,10 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -20,6 +17,9 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
+    // Keep React in one graph — aggressive manualChunks broke React 19 at runtime.
+    // Route/DnaCanvas lazy imports already split pages + three.js safely.
+    chunkSizeWarningLimit: 700,
   },
   server: {
     port: 5173,

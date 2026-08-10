@@ -7,7 +7,7 @@ const content: IndustryPageContent = {
   subtitle:
     "Cost-effective enzyme solutions for liquefaction, saccharification and refining — improve yield, clarity and process efficiency across your entire sugar production line.",
   imageUrl:
-    "../assets/products/sugar_1.png",
+    "/assets/products/sugar_1.png",
 
   imageAlt: "Sugar cane field",
   slug: "sugar",

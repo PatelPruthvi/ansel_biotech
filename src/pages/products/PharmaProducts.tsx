@@ -6,7 +6,7 @@ const content: IndustryPageContent = {
     accentLine: 1,
     subtitle:
         "High-purity enzymatic solutions for therapeutic drug formulation, cardiovascular health, and advanced digestive support systems.",
-    imageUrl: "../assets/products/PharmaEnzyme.png",
+    imageUrl: "/assets/products/PharmaEnzyme.png",
     imageAlt: "Pharmaceutical laboratory research and enzyme development",
     slug: "pharma",
 

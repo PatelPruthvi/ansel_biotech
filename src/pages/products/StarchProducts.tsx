@@ -6,7 +6,7 @@ const content: IndustryPageContent = {
     accentLine: 1,
     subtitle:
         "High-performance enzymatic solutions to break down complex starch polymers into glucose and maltose syrups, improving yield and accelerating production cycles.",
-    imageUrl: "../assets/products/starch_1.png",
+    imageUrl: "/assets/products/starch_1.png",
     imageAlt: "Industrial starch processing facility",
     slug: "starch",
 

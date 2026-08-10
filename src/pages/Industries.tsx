@@ -20,16 +20,7 @@ export default function Industries() {
           </h1>
         }
         subtitle="Five industries. Application-ready enzyme and probiotic solutions for each."
-        below={
-          <div className="flex flex-wrap gap-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-border bg-card backdrop-blur-sm">
-              <span className="font-sans text-[0.9rem] text-green font-medium leading-none">5</span>
-              <span className="font-sans text-[0.52rem] tracking-[0.12em] uppercase text-fg-m">
-                Industries
-              </span>
-            </div>
-          </div>
-        }
+        stats={[{ value: "5", label: "Industries" }]}
         actions={
           <>
             <HeroScrollCta targetId="industry-grid">Browse Industries ↓</HeroScrollCta>
@@ -50,7 +41,7 @@ export default function Industries() {
           Industries
         </p>
         <h2
-          className="font-serif font-semibold text-fg-b leading-[1.05] mb-3"
+          className="font-sans font-semibold text-fg-b leading-[1.05] mb-3"
           style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)" }}
         >
           Where we apply
@@ -85,7 +76,7 @@ export default function Industries() {
                 </div>
               </div>
               <div className="relative z-10 p-5 pt-1 flex flex-col flex-1">
-                <h3 className="font-serif text-[1.2rem] font-semibold text-fg-b mb-1.5 group-hover:text-green transition-colors">
+                <h3 className="font-sans text-[1.2rem] font-semibold text-fg-b mb-1.5 group-hover:text-green transition-colors">
                   {ind.name}
                 </h3>
                 <p className="font-sans text-[0.88rem] font-light leading-[1.65] text-fg-m m-0 mb-4 flex-grow">

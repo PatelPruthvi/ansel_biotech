@@ -128,7 +128,7 @@ export default function Contact() {
               💬
             </div>
             <div>
-              <div className="font-serif text-[1.5rem] font-semibold text-fg-b leading-tight">
+              <div className="font-sans text-[1.5rem] font-semibold text-fg-b leading-tight">
                 Send a Message
               </div>
               <div className="font-mono text-[0.6rem] text-fg-m tracking-[0.06em] mt-1">

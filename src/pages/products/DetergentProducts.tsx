@@ -10,7 +10,7 @@ const content: IndustryPageContent = {
   accentLine: 1,
   subtitle:
     "Enzymes for detergent manufacturing — different stains require different enzymes.",
-  imageUrl: "../assets/products/Detergent.png",
+  imageUrl: "/assets/products/Detergent.png",
   imageAlt: "Detergent enzyme applications",
   slug: "detergent",
 
@@ -126,7 +126,7 @@ const content: IndustryPageContent = {
 
   aboutTitle: "One Formula Doesn't Fit Every Detergent",
   aboutSub:
-    "ANSEL BIOTECH develops customized enzyme blends according to detergent formulation, target stains, washing temperature, pH, application and desired cleaning performance.",
+    "Ansel Biotech develops customized enzyme blends according to detergent formulation, target stains, washing temperature, pH, application and desired cleaning performance.",
   aboutBody: [
     "Possible blends include a 4-Enzyme Blend (Protease + Amylase + Lipase + Cellulase), a 5-Enzyme Blend (Protease + Amylase + Lipase + Cellulase + Mannanase), and a 6-Enzyme Blend (Protease + Amylase + Lipase + Cellulase + Mannanase + Pectinase).",
     "Need a different combination? We can develop an application-specific enzyme blend based on your formulation requirements.",

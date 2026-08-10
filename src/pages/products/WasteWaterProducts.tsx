@@ -6,7 +6,7 @@ const content: IndustryPageContent = {
     accentLine: 1,
     subtitle:
         "Advanced biological catalysts and microbial blends designed to oxidize impurities, reduce sludge, and eliminate odors efficiently.",
-    imageUrl: "../assets/products/water_1.png",
+    imageUrl: "/assets/products/water_1.png",
     imageAlt: "Sustainable water treatment facility",
     slug: "wastewater",
 

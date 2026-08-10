@@ -38,18 +38,7 @@ export default function EnzymesProducts() {
           </h1>
         }
         subtitle="Individual enzymes across the portfolio, with custom formulation support when you need a tailored blend."
-        below={
-          <div className="flex flex-wrap gap-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-border bg-card">
-              <span className="font-sans text-[0.9rem] text-green font-medium leading-none">
-                {enzymePortfolio.length}
-              </span>
-              <span className="font-sans text-[0.52rem] tracking-[0.12em] uppercase text-fg-m">
-                Enzymes
-              </span>
-            </div>
-          </div>
-        }
+        stats={[{ value: String(enzymePortfolio.length), label: "Enzymes" }]}
         actions={
           <>
             <HeroScrollCta targetId="enzyme-portfolio">View Portfolio ↓</HeroScrollCta>
@@ -70,7 +59,7 @@ export default function EnzymesProducts() {
           Our Enzyme Portfolio
         </p>
         <h2
-          className="font-serif font-bold text-fg-b leading-[1.02] mb-8 md:mb-10"
+          className="font-sans font-bold text-fg-b leading-[1.02] mb-8 md:mb-10"
           style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}
         >
           Individual enzymes
@@ -91,7 +80,7 @@ export default function EnzymesProducts() {
               className="group text-left flex flex-col gap-3 p-5 sm:p-6 rounded-[14px] border border-border bg-card transition-all duration-200 hover:border-[rgba(106,178,32,0.4)] hover:bg-bg2 hover:-translate-y-[2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.1)]"
             >
               <div className="flex items-start justify-between gap-3">
-                <h3 className="font-serif text-[1.15rem] font-semibold text-fg-b group-hover:text-green transition-colors">
+                <h3 className="font-sans text-[1.15rem] font-semibold text-fg-b group-hover:text-green transition-colors">
                   {enzyme.name}
                 </h3>
                 <span className="font-sans text-[0.52rem] tracking-[0.1em] uppercase text-fg-m opacity-40 group-hover:opacity-80 transition-opacity shrink-0">

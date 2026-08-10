@@ -32,26 +32,10 @@ export default function ProbioticsProducts() {
           </h1>
         }
         subtitle="Actual organisms organised by genus group, ready for animal healthcare and related applications."
-        below={
-          <div className="flex flex-wrap gap-2">
-            {[
-              { v: String(probioticGroups.length), l: "Groups" },
-              { v: String(totalStrains), l: "Strains" },
-            ].map((s) => (
-              <div
-                key={s.l}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-border bg-card"
-              >
-                <span className="font-sans text-[0.9rem] text-green font-medium leading-none">
-                  {s.v}
-                </span>
-                <span className="font-sans text-[0.52rem] tracking-[0.12em] uppercase text-fg-m">
-                  {s.l}
-                </span>
-              </div>
-            ))}
-          </div>
-        }
+        stats={[
+          { value: String(probioticGroups.length), label: "Groups" },
+          { value: String(totalStrains), label: "Strains" },
+        ]}
         actions={
           <>
             <HeroScrollCta targetId="probiotic-portfolio">View Portfolio ↓</HeroScrollCta>
@@ -72,7 +56,7 @@ export default function ProbioticsProducts() {
           Probiotic Portfolio
         </p>
         <h2
-          className="font-serif font-bold text-fg-b leading-[1.02] mb-3"
+          className="font-sans font-bold text-fg-b leading-[1.02] mb-3"
           style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}
         >
           Strains by organism group
@@ -104,7 +88,7 @@ export default function ProbioticsProducts() {
                       <p className="font-sans text-[0.52rem] tracking-[0.16em] uppercase text-fg-m mb-0.5">
                         Group {String(gi + 1).padStart(2, "0")}
                       </p>
-                      <h3 className="font-serif text-[1.25rem] md:text-[1.4rem] font-semibold text-fg-b leading-tight">
+                      <h3 className="font-sans text-[1.25rem] md:text-[1.4rem] font-semibold text-fg-b leading-tight">
                         {group.name}
                       </h3>
                     </div>

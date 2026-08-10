@@ -19,7 +19,7 @@ const content: IndustryPageContent = {
   accentLine: 1,
   subtitle:
     "Enzymes are naturally occurring biological catalysts that help food manufacturers improve processing efficiency, texture, stability, yield and product quality.",
-  imageUrl: "../assets/products/FoodEnzyme.png",
+  imageUrl: "/assets/products/FoodEnzyme.png",
   imageAlt: "Food processing enzymes",
   slug: "food",
 

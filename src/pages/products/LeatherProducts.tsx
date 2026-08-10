@@ -11,7 +11,7 @@ const content: IndustryPageContent = {
   accentLine: 1,
   subtitle:
     "Our leather processing enzymes replace harsh chemicals in traditional tanning processes, improving leather quality while reducing environmental impact.",
-  imageUrl: "../assets/products/Detergent.png",
+  imageUrl: "/assets/products/Detergent.png",
   imageAlt: "Leather processing",
   slug: "leather",
 

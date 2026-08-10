@@ -6,7 +6,7 @@ const content: IndustryPageContent = {
     accentLine: 1,
     subtitle:
         "Bio-solutions for bleaching, deinking, and fiber refining — reducing chemical dependency and energy consumption in biomass processing.",
-    imageUrl: "../assets/products/Paper.png",
+    imageUrl: "/assets/products/Paper.png",
     imageAlt: "Industrial paper manufacturing process",
     slug: "paper-pulp",
 

@@ -6,7 +6,7 @@ const content: IndustryPageContent = {
     accentLine: 1,
     subtitle:
         "Cost-effective enzyme solutions designed to improve fermentation efficiency, maximize ethanol yield, and reduce processing costs across starch and sugar-based feedstocks.",
-    imageUrl: "../assets/products/DistilleryEnzyme.png",
+    imageUrl: "/assets/products/DistilleryEnzyme.png",
     imageAlt: "Distillery fermentation tanks",
     slug: "distillery",
 

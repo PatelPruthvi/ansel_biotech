@@ -60,7 +60,7 @@ export default function NotFound() {
           {/* 404 number */}
           <div className="_f0">
             <span
-              className="_glitch font-serif font-bold text-green select-none block"
+              className="_glitch font-sans font-bold text-green select-none block"
               style={{
                 fontSize: "clamp(6rem, 20vw, 11rem)",
                 lineHeight: 1,
@@ -84,7 +84,7 @@ export default function NotFound() {
               Page Not Found
             </p>
             <h1
-              className="font-serif font-bold text-fg-b leading-[1.05]"
+              className="font-sans font-bold text-fg-b leading-[1.05]"
               style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "var(--fg-b, #edf4e5)" }}
             >
               This strand doesn't exist

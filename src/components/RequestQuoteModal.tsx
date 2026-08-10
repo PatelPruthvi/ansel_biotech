@@ -187,7 +187,7 @@ export function RequestQuoteModal({ product, onClose }: Props) {
                                 <div className="font-mono text-[0.54rem] tracking-[0.14em] uppercase text-green opacity-80 mb-0.5 truncate">
                                     {product.code}
                                 </div>
-                                <h2 className="font-serif font-bold text-fg-b leading-[1.1] truncate" style={{ fontSize: "1.15rem" }}>
+                                <h2 className="font-sans font-bold text-fg-b leading-[1.1] truncate" style={{ fontSize: "1.15rem" }}>
                                     {product.enzyme}
                                 </h2>
                                 <div className="font-mono text-[0.52rem] tracking-[0.1em] uppercase text-fg-m opacity-50 mt-0.5 truncate">
@@ -229,7 +229,7 @@ export function RequestQuoteModal({ product, onClose }: Props) {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="font-serif font-bold text-fg-b text-[1.25rem] mb-2">
+                                    <h3 className="font-sans font-bold text-fg-b text-[1.25rem] mb-2">
                                         Request Received!
                                     </h3>
                                     <p className="font-sans font-light text-fg-m text-[0.92rem] leading-[1.75] max-w-[340px]">

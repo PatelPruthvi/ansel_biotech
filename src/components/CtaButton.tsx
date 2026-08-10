@@ -24,9 +24,9 @@ export const ctaButtonVariants = cva(
           "btn-p relative overflow-hidden text-white border-green bg-green hover:shadow-[0_4px_18px_rgba(106,178,32,0.28)]",
         secondary:
           "bg-transparent text-fg-m border-border-m hover:border-indigo-l hover:text-indigo-l",
-        /** Outline CTA on dark / image heroes */
+        /** Outline CTA on dark / image heroes — border matches label color */
         secondaryDark:
-          "bg-[rgba(255,255,255,0.04)] text-[rgba(255,255,255,0.75)] border-[rgba(255,255,255,0.14)] backdrop-blur-[8px] hover:border-[rgba(255,255,255,0.3)] hover:text-white",
+          "bg-transparent text-[#f0f0ee] border-[1.5px] border-solid border-[#f0f0ee] hover:bg-[rgba(240,240,238,0.12)] hover:text-white hover:border-white",
         /** Compact text CTA — not an underline novelty link */
         text: "border-transparent bg-transparent text-green px-0 py-1 rounded-none hover:text-green-l hover:shadow-none active:scale-100",
       },

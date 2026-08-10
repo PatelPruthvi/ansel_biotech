@@ -32,16 +32,7 @@ export default function AquaProducts() {
           </h1>
         }
         subtitle="Aquaculture solutions under Animal Healthcare for gut, water, soil and pond conditions."
-        below={
-          <div className="flex flex-wrap gap-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-border bg-card">
-              <span className="font-sans text-[0.9rem] text-green font-medium leading-none">6</span>
-              <span className="font-sans text-[0.52rem] tracking-[0.12em] uppercase text-fg-m">
-                Solution Areas
-              </span>
-            </div>
-          </div>
-        }
+        stats={[{ value: "6", label: "Solution Areas" }]}
         actions={
           <>
             <HeroScrollCta targetId="aqua-solutions">View Solutions ↓</HeroScrollCta>
@@ -62,7 +53,7 @@ export default function AquaProducts() {
           Aquaculture Solutions
         </p>
         <h2
-          className="font-serif font-bold text-fg-b leading-[1.02] mb-8 md:mb-10"
+          className="font-sans font-bold text-fg-b leading-[1.02] mb-8 md:mb-10"
           style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}
         >
           Solution areas
@@ -77,7 +68,7 @@ export default function AquaProducts() {
               <div className="w-11 h-11 rounded-[10px] border border-[rgba(58,58,184,0.2)] bg-[rgba(58,58,184,0.06)] flex items-center justify-center text-[1.2rem]">
                 {AQUA_EMOJI[sol.id] ?? "🦐"}
               </div>
-              <h3 className="font-serif text-[1.1rem] font-semibold text-fg-b leading-[1.25]">
+              <h3 className="font-sans text-[1.1rem] font-semibold text-fg-b leading-[1.25]">
                 {sol.name}
               </h3>
               <p className="font-sans font-light text-fg-m text-[0.88rem] leading-[1.7] m-0">

@@ -41,7 +41,7 @@ export function PageCtaBand({
           {eyebrow}
         </p>
         <h2
-          className="font-serif font-bold text-fg-b leading-[1.05] mb-3 whitespace-pre-line"
+          className="font-sans font-bold text-fg-b leading-[1.05] mb-3 whitespace-pre-line"
           style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
         >
           {title}
