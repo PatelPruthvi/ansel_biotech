@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { type QuoteProduct } from "@/components/RequestQuoteModal";
 import { lazy, Suspense } from "react";
 import { CtaButton } from "@/components/CtaButton";
+import { MoleculeCanvas } from "@/components/MoleculeCanvas";
 
 const RequestQuoteModal = lazy(() =>
     import("@/components/RequestQuoteModal").then((mod) => ({
@@ -444,6 +445,11 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                                 Get Quote →
                             </CtaButton>
                         </div>
+                    </div>
+
+                    {/* Molecule overlay — right side */}
+                    <div className="absolute top-0 right-0 w-[42%] h-full pointer-events-none hidden lg:block opacity-35">
+                      <MoleculeCanvas />
                     </div>
 
                     <div className="_fu4 absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-0.5 pointer-events-none">

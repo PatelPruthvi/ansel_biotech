@@ -174,12 +174,81 @@ export function DnaCanvas({ className = "" }: { className?: string }) {
 
     window.addEventListener("resize", onResize);
 
+    // Particles that spawn on the DNA surface and get flung outward by rotation
+    const particles: { mesh: THREE.Mesh; vel: THREE.Vector3; life: number; maxLife: number }[] = [];
+    const pGeoSmall = new THREE.SphereGeometry(0.1, 6, 6);
+    const pGeoMed = new THREE.SphereGeometry(0.18, 8, 8);
+    const pMatGreen = new THREE.MeshStandardMaterial({ color: 0x6ab220, emissive: 0x6ab220, emissiveIntensity: 1.0, transparent: true, depthWrite: false });
+    const pMatBlue = new THREE.MeshStandardMaterial({ color: 0x3a3ab8, emissive: 0x6666dd, emissiveIntensity: 1.0, transparent: true, depthWrite: false });
+
+    let spawnTimer = 0;
+    const spawnInterval = 0.06;
+
     const clock = new THREE.Clock();
 
     const animate = () => {
+      const dt = clock.getDelta();
       const t = clock.getElapsedTime();
+      const rotSpeed = 0.25;
 
-      dna.rotation.y = t * 0.25;
+      dna.rotation.y = t * rotSpeed;
+
+      // Spawn particles from the DNA helix surface, transformed by tiltGroup
+      spawnTimer += dt;
+      if (spawnTimer > spawnInterval && particles.length < 160) {
+        spawnTimer = 0;
+        const spawnT = Math.random();
+        const spawnAngle = spawnT * Math.PI * 2 * turns + dna.rotation.y;
+        const isStrandA = Math.random() > 0.5;
+        const offset = isStrandA ? 0 : Math.PI;
+        const finalAngle = spawnAngle + offset;
+
+        // Local position on the helix
+        const localPos = new THREE.Vector3(
+          Math.cos(finalAngle) * radius,
+          (spawnT - 0.5) * height * 0.5,
+          Math.sin(finalAngle) * radius
+        );
+
+        // Apply tiltGroup's rotation to get world position
+        localPos.applyEuler(tiltGroup.rotation);
+        localPos.add(tiltGroup.position);
+
+        const geo = Math.random() > 0.5 ? pGeoMed : pGeoSmall;
+        const mat = (isStrandA ? pMatGreen : pMatBlue).clone();
+        const p = new THREE.Mesh(geo, mat);
+        p.position.copy(localPos);
+
+        // Velocity: outward from DNA center (in world space after rotation)
+        const outDir = new THREE.Vector3(
+          Math.cos(finalAngle) * (2 + Math.random() * 2.5),
+          (Math.random() - 0.4) * 1.2,
+          Math.sin(finalAngle) * (2 + Math.random() * 2.5)
+        );
+        outDir.applyEuler(tiltGroup.rotation);
+
+        scene.add(p);
+        particles.push({ mesh: p, vel: outDir, life: 0, maxLife: 2 + Math.random() * 1.5 });
+      }
+
+      // Update particles — fade + slow down
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const pp = particles[i];
+        pp.life += dt;
+        const progress = pp.life / pp.maxLife;
+        // Decelerate over time
+        const damping = 1 - progress * 0.6;
+        pp.mesh.position.add(pp.vel.clone().multiplyScalar(dt * damping));
+        // Scale down as it fades
+        const scale = 1 - progress * 0.5;
+        pp.mesh.scale.setScalar(scale);
+        (pp.mesh.material as THREE.MeshStandardMaterial).opacity = (1 - progress) * 0.7;
+        if (pp.life >= pp.maxLife) {
+          scene.remove(pp.mesh);
+          (pp.mesh.material as THREE.MeshStandardMaterial).dispose();
+          particles.splice(i, 1);
+        }
+      }
 
       renderer.render(scene, camera);
       requestAnimationFrame(animate);

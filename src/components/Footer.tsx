@@ -65,7 +65,7 @@ export function Footer() {
               />
             </div>
             <p className="text-fg-m font-sans text-[0.9rem] leading-[1.7] max-w-[280px]">
-              ANSEL BIOTECH Excellence and Efficiency — Enzymes, probiotics and biotechnology solutions engineered for performance, efficiency and sustainable processing.
+              Advanced enzymes and probiotic solutions engineered for industrial precision, health and sustainability.
             </p>
           </div>
 
@@ -139,6 +139,9 @@ export function Footer() {
             </a>
             <a href="tel:+919327028058" className="footer-link">
               +91 93270 28058
+            </a>
+            <a href="tel:+9102653556167" className="footer-link">
+              +91 0265 3556167
             </a>
           </div>
         </div>

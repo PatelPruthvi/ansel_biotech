@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { MoleculeCanvas } from "@/components/MoleculeCanvas";
+import { AboutHeroVisual } from "@/components/AboutHeroVisual";
+import { ProcessFlow } from "@/components/ProcessFlow";
 import { CtaButton } from "@/components/CtaButton";
 
 export default function About() {
@@ -23,33 +24,31 @@ export default function About() {
     <div className="w-full">
       {/* Hero — original layout */}
       <section
-        className="relative w-full grid grid-cols-1 lg:grid-cols-[55fr_45fr] min-h-[100svh] lg:h-[100svh] overflow-hidden bg-background"
+        className="relative w-full grid grid-cols-1 lg:grid-cols-[55fr_45fr] min-h-[100svh] overflow-x-hidden bg-background"
         style={{
           background:
             "radial-gradient(ellipse at 80% 50%, rgba(106,178,32,0.07), transparent 60%), radial-gradient(ellipse at 15% 30%, rgba(58,58,184,0.05), transparent 55%)",
         }}
       >
-        <div className="relative z-10 flex flex-col justify-center pt-[120px] pb-12 px-[6vw] lg:pt-0 lg:pb-0 lg:pl-[9vw] lg:pr-[5vw]">
+        <div className="relative z-10 min-w-0 overflow-visible flex flex-col justify-center pt-[120px] pb-10 px-[6vw] lg:pt-[108px] lg:pb-16 lg:pl-[9vw] lg:pr-[5vw]">
           <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3.5 animate-[fadeUp_0.8s_ease-out_both]">
             Who We Are
           </p>
           <h1
-            className="font-serif font-bold leading-[0.93] tracking-[-0.015em] text-fg-b mb-5 animate-[fadeUp_0.8s_0.1s_ease-out_both]"
+            className="font-serif font-bold leading-[1.04] tracking-[-0.015em] text-fg-b mb-5 overflow-visible animate-[fadeUp_0.8s_0.1s_ease-out_both]"
             style={{ fontSize: "clamp(2.6rem, 4.6vw, 4.6rem)" }}
           >
-            Enzyme Science
+            <span className="text-green">Manufacture</span> &amp;
             <br />
-            at <span className="italic text-indigo-l pr-1">Commercial</span>
+            Supply <span className="text-indigo-l">Biotech</span>
             <br />
-            Scale
+            Solutions
           </h1>
           <p
             className="font-sans font-light text-fg-m leading-[1.85] mb-8 max-w-[440px] animate-[fadeUp_0.8s_0.2s_ease-out_both]"
             style={{ fontSize: "clamp(0.95rem, 1.15vw, 1.05rem)" }}
           >
-            Ansel Biotech is a biotechnology company specializing in probiotics
-            and enzymes for animal healthcare, food processing and industrial
-            applications.
+            Ansel Biotech develops and supplies high-performance enzymes, probiotics and application-specific biotechnology solutions for Animal Health, Aquaculture, Food Processing and Industrial Applications.
           </p>
 
           <p className="font-mono text-[0.58rem] tracking-[0.18em] uppercase text-fg-m opacity-60 mb-3 animate-[fadeUp_0.8s_0.3s_ease-out_both]">
@@ -72,16 +71,19 @@ export default function About() {
           </div>
         </div>
 
-        <div className="relative w-full hidden lg:flex h-full items-center justify-center px-5 pb-8 lg:pl-8 lg:pr-[5vw] lg:pb-0">
+        <div className="relative w-full min-w-0 flex items-center justify-center px-[6vw] pb-12 lg:h-auto lg:px-5 lg:pl-8 lg:pr-[5vw] lg:pb-16 lg:pt-[108px]">
           <div
-            className="relative w-full max-w-[600px] h-full max-h-[540px] min-h-[260px] rounded-[18px] border border-border overflow-hidden"
+            className="relative w-full max-w-[560px] h-[220px] sm:h-[280px] lg:h-[min(500px,calc(100svh-200px))] min-h-[200px] rounded-[28px] overflow-hidden border border-white/50 dark:border-white/15"
             style={{
               background:
-                "radial-gradient(ellipse at 55% 45%, rgba(106,178,32,0.06), transparent 65%)",
-              boxShadow: "0 10px 60px rgba(0,0,0,0.18)",
+                "linear-gradient(165deg, color-mix(in srgb, var(--card) 78%, transparent) 0%, rgba(127,162,57,0.10) 48%, rgba(92,86,176,0.07) 100%)",
+              backdropFilter: "blur(18px) saturate(1.15)",
+              WebkitBackdropFilter: "blur(18px) saturate(1.15)",
+              boxShadow:
+                "0 22px 56px rgba(20,24,18,0.10), inset 0 1px 0 rgba(255,255,255,0.62)",
             }}
           >
-            <MoleculeCanvas />
+            <AboutHeroVisual />
           </div>
         </div>
 
@@ -119,18 +121,18 @@ export default function About() {
             {[
               {
                 n: "01 · Specialize",
-                t: "Probiotics & Enzymes<br/>for <span class='text-green'>Industry</span>",
-                d: "Ansel Biotech is a biotechnology company specializing in probiotics and enzymes for animal healthcare, food processing and industrial applications.",
+                t: "Probiotics & Enzymes<br/>for <span class='text-green'>Diverse Applications</span>",
+                d: "Ansel Biotech is a biotechnology company specializing in probiotics and enzymes for animal healthcare, aquaculture, food processing and industrial applications.",
               },
               {
                 n: "02 · Develop",
-                t: "Application-Focused<br/><span class='text-green'>Product</span> Development",
-                d: "We combine biotechnology with application-focused product development to provide solutions that are practical, consistent and suitable for commercial use.",
+                t: "Application-Driven<br/><span class='text-green'>Product</span> Development",
+                d: "We combine biotechnology expertise with application-focused development to deliver practical, consistent solutions tailored to specific process requirements.",
               },
               {
                 n: "03 · Portfolio",
                 t: "Strains, Enzymes &<br/><span class='text-green'>Custom</span> Formulations",
-                d: "Our portfolio includes probiotic strains, feed enzymes, industrial enzymes and customized enzyme formulations.",
+                d: "Our portfolio includes probiotic solutions, feed enzymes, industrial enzymes and customized formulations for specific applications.",
               },
             ].map((pillar, i) => (
               <div
@@ -154,6 +156,9 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* Our Process — self-playing flow animation */}
+      <ProcessFlow />
 
       <div className="max-w-[1160px] mx-auto px-5 md:px-10">
         <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-border-m to-transparent" />

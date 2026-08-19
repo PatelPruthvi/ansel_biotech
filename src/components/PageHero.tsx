@@ -2,6 +2,7 @@ import * as React from "react";
 import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { CtaButton } from "@/components/CtaButton";
+import { MoleculeCanvas } from "@/components/MoleculeCanvas";
 import { cn } from "@/lib/utils";
 
 export type HeroCrumb = { label: string; href?: string };
@@ -420,6 +421,11 @@ export function PageHero({
             />
           </div>
         )}
+
+        {/* Molecule overlay — right side, desktop only */}
+        <div className="absolute top-0 right-0 w-[42%] h-full pointer-events-none hidden lg:block opacity-35 z-[5]">
+          <MoleculeCanvas />
+        </div>
 
         <div
           className="absolute bottom-0 left-0 right-0 h-[1px]"

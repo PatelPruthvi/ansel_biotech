@@ -50,7 +50,7 @@ export default function Contact() {
       </div>
 
       {/* BODY: 2-col, left = ic-grid + map, right = form card */}
-      <div className="max-w-[1160px] mx-auto mt-14 mb-20 px-5 md:px-[22px] grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 animate-[fadeIn_0.9s_0.28s_ease-out_both]">
+      <div className="max-w-[1160px] mx-auto mt-14 mb-20 px-5 md:px-[22px] grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 md:items-center animate-[fadeIn_0.9s_0.28s_ease-out_both]">
         {/* LEFT */}
         <div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3.5">
@@ -60,6 +60,12 @@ export default function Contact() {
                 lbl: "Call / WhatsApp",
                 val: "+91 93270 28058",
                 href: "tel:+919327028058",
+              },
+              {
+                ico: "☎️",
+                lbl: "Landline",
+                val: "+91 0265 3556167",
+                href: "tel:+9102653556167",
               },
               {
                 ico: "✉️",
@@ -122,7 +128,7 @@ export default function Contact() {
         </div>
 
         {/* RIGHT — Form card */}
-        <div className="fc bg-card border border-border border-t-[3px] border-t-green rounded-[14px] p-7 md:p-9 opacity-0 animate-[fadeUp_0.85s_0.42s_ease-out_both]">
+        <div className="fc bg-card border border-border border-t-[3px] border-t-green rounded-[14px] p-7 md:p-9 h-fit opacity-0 animate-[fadeUp_0.85s_0.42s_ease-out_both]">
           <div className="flex items-start gap-3.5 mb-6">
             <div className="w-10 h-10 rounded-[10px] bg-[rgba(106,178,32,0.1)] border border-[rgba(106,178,32,0.2)] flex items-center justify-center text-base shrink-0">
               💬

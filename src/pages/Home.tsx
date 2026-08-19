@@ -77,22 +77,22 @@ export default function Home() {
                 fontSize: "clamp(2.6rem, 7vw, 5.6rem)",
               }}
             >
-              <span className="block overflow-visible wa-word text-green">
+              <span className="block overflow-visible wa-word" style={{ color: "#7FA239" }}>
                 {ANSEL.map((ch, i) => (
                   <span
                     key={`a-${i}`}
-                    className="ltr-a inline-block transition-[color,transform] duration-300 will-change-transform"
+                    className="ltr-a inline-block transition-transform duration-300 will-change-transform hover:scale-110"
                     style={{ transformOrigin: "50% 85%" }}
                   >
                     {ch}
                   </span>
                 ))}
               </span>
-              <span className="block overflow-visible wb-word text-indigo-l">
+              <span className="block overflow-visible wb-word" style={{ color: "#382995" }}>
                 {BIOTECH.map((ch, i) => (
                   <span
                     key={`b-${i}`}
-                    className="ltr-b inline-block transition-[color,transform] duration-300 will-change-transform"
+                    className="ltr-b inline-block transition-transform duration-300 will-change-transform hover:scale-110"
                     style={{ transformOrigin: "50% 85%" }}
                   >
                     {ch}
@@ -108,7 +108,8 @@ export default function Home() {
                 lineHeight: 1.85,
               }}
             >
-              Enzymes, Probiotics &amp; Biotech Solutions
+              Science-driven solutions for Animal Health, Food &amp; Industrial
+              Processing.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mt-1 animate-[fadeUp_0.8s_0.3s_ease-out_both]">
@@ -141,15 +142,15 @@ export default function Home() {
               key={i}
               className="stat-cell flex-1 basis-1/2 sm:basis-auto px-4 py-3 md:px-7 md:py-4 border-r border-border last:border-r-0 max-sm:[&:nth-child(2n)]:border-r-0 max-sm:[&:nth-child(-n+2)]:border-b max-sm:[&:nth-child(-n+2)]:border-border transition-colors hover:bg-[rgba(106,178,32,0.05)] cursor-default"
             >
-            <div
-              className="sv font-sans text-stat tracking-[0.02em] transition-colors font-semibold"
-              style={{ fontSize: "clamp(1.15rem, 1.65vw, 1.65rem)" }}
-            >
-              {stat.v}
-            </div>
-            <div className="font-sans text-[0.54rem] md:text-[0.6rem] tracking-[0.12em] uppercase text-fg-m opacity-60 mt-1">
-              {stat.l}
-            </div>
+              <div
+                className="sv font-sans text-stat tracking-[0.02em] transition-colors font-semibold"
+                style={{ fontSize: "clamp(1.15rem, 1.65vw, 1.65rem)" }}
+              >
+                {stat.v}
+              </div>
+              <div className="font-sans text-[0.54rem] md:text-[0.6rem] tracking-[0.12em] uppercase text-fg-m opacity-60 mt-1">
+                {stat.l}
+              </div>
             </div>
           ))}
         </div>

@@ -117,7 +117,7 @@ export function Navbar() {
           <img
             src={anselLogoTrans}
             alt="Ansel Biotech"
-            className="h-10 md:h-12 w-auto block"
+            className="h-10 md:h-[52px] lg:h-[58px] w-auto block"
           />
         </Link>
 
