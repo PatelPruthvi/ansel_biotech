@@ -77,7 +77,7 @@ export const animalHealthcareSolutions: AnimalSolution[] = [
   },
 ];
 
-/** Confirmed Animal Healthcare areas (PDF tabs + client hierarchy). Aqua links out. */
+/** Confirmed Animal Healthcare areas (PDF tabs + client hierarchy). */
 export const animalHealthcareAreas = [
   {
     id: "poultry" as const,
@@ -88,7 +88,6 @@ export const animalHealthcareAreas = [
     id: "aqua" as const,
     label: "Aqua",
     application: "Aquafeed improvement",
-    href: "/products/aqua",
   },
   {
     id: "ruminant" as const,

@@ -1,11 +1,10 @@
 import { useCallback, useRef, useState, type MouseEvent } from "react";
 import { Link } from "wouter";
 import anselLogoTrans from "@assets/ansel_logo_transparent.png";
-import { industriesWeServe, productCategories } from "@/data/siteStructure";
 
 /** Wider than content column — can bleed past side padding */
 /** Desktop / tablet spotlight size; mobile uses smaller CSS override */
-const WORDMARK_SIZE_DESKTOP = "clamp(4rem, 22vw, 12.5rem)";
+const WORDMARK_SIZE_DESKTOP = "clamp(3.5rem, 19.5vw, 11rem)";
 
 export function Footer() {
   const spotlightRef = useRef<HTMLDivElement | null>(null);
@@ -29,7 +28,7 @@ export function Footer() {
   const mask = `radial-gradient(circle 150px at ${spot.x}px ${spot.y}px, #000 0%, #000 26%, transparent 72%)`;
 
   const wordmarkClass =
-    "footer-wordmark font-serif font-bold leading-none tracking-[-0.02em] text-center m-0 whitespace-nowrap";
+    "footer-wordmark font-sans font-bold leading-none tracking-[-0.03em] text-center m-0 whitespace-nowrap";
 
   return (
     <footer className="relative border-t border-border mt-0 overflow-hidden bg-background">
@@ -65,9 +64,8 @@ export function Footer() {
                 className="h-10 w-auto object-contain"
               />
             </div>
-            <p className="text-fg-m font-sans text-[0.9rem] leading-[1.7] max-w-[260px]">
-              Advanced enzyme solutions engineered for industrial precision,
-              efficiency, and sustainable processing.
+            <p className="text-fg-m font-sans text-[0.9rem] leading-[1.7] max-w-[280px]">
+              ANSEL BIOTECH Excellence and Efficiency — Enzymes, probiotics and biotechnology solutions engineered for performance, efficiency and sustainable processing.
             </p>
           </div>
 
@@ -96,22 +94,39 @@ export function Footer() {
             <span className="font-sans text-[0.65rem] tracking-[0.18em] uppercase text-green">
               Products
             </span>
-            {productCategories.map((p) => (
-              <Link key={p.id} href={p.href} className="footer-link">
-                {p.name}
-              </Link>
-            ))}
+            <Link href="/products/probiotics" className="footer-link">
+              Probiotics
+            </Link>
+            <Link href="/products/enzymes" className="footer-link">
+              Enzymes
+            </Link>
+            <Link href="/industries" className="footer-link">
+              Industrial Solutions
+            </Link>
           </div>
 
           <div className="flex flex-col gap-3">
             <span className="font-sans text-[0.65rem] tracking-[0.18em] uppercase text-green">
-              Industries We Serve
+              Industries
             </span>
-            {industriesWeServe.map((ind) => (
-              <Link key={ind.id} href={ind.href} className="footer-link">
-                {ind.name}
-              </Link>
-            ))}
+            <Link href="/products/animal-healthcare" className="footer-link">
+              Animal Health
+            </Link>
+            <Link href="/products/animal-healthcare" className="footer-link">
+              Aquaculture
+            </Link>
+            <Link href="/products/textile" className="footer-link">
+              Textile
+            </Link>
+            <Link href="/products/detergent" className="footer-link">
+              Detergent
+            </Link>
+            <Link href="/products/leather" className="footer-link">
+              Leather
+            </Link>
+            <Link href="/products/food" className="footer-link">
+              Food
+            </Link>
           </div>
 
           <div className="flex flex-col gap-3 min-w-0">
@@ -149,7 +164,7 @@ export function Footer() {
               style={{ gap: "0.28em" }}
             >
               <span>Ansel</span>
-              <span>BioTech</span>
+              <span>Biotech</span>
             </p>
 
             <p
@@ -165,7 +180,7 @@ export function Footer() {
               }}
             >
               <span style={{ color: "var(--green)" }}>Ansel</span>
-              <span style={{ color: "transparent" }}>BioTech</span>
+              <span style={{ color: "transparent" }}>Biotech</span>
             </p>
 
             <p
@@ -181,10 +196,10 @@ export function Footer() {
               }}
             >
               <span style={{ color: "transparent" }}>Ansel</span>
-              <span style={{ color: "var(--indigo-l)" }}>BioTech</span>
+              <span style={{ color: "var(--indigo-l)" }}>Biotech</span>
             </p>
           </div>
-          <span className="sr-only">Ansel BioTech</span>
+          <span className="sr-only">Ansel Biotech</span>
         </div>
       </div>
 
@@ -226,7 +241,7 @@ export function Footer() {
         }
 
         .footer-wordmark {
-          font-size: clamp(2.05rem, 11.5vw, 2.75rem);
+          font-size: clamp(2rem, 10.5vw, 2.6rem);
         }
         @media (min-width: 768px) {
           .footer-wordmark {
@@ -236,11 +251,27 @@ export function Footer() {
 
         .footer-wordmark-base {
           color: var(--fg-b);
-          opacity: 0.035;
+          opacity: 0.1;
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            #000 0%,
+            rgba(0, 0, 0, 0.7) 28%,
+            rgba(0, 0, 0, 0.28) 58%,
+            rgba(0, 0, 0, 0.06) 82%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(
+            to bottom,
+            #000 0%,
+            rgba(0, 0, 0, 0.7) 28%,
+            rgba(0, 0, 0, 0.28) 58%,
+            rgba(0, 0, 0, 0.06) 82%,
+            transparent 100%
+          );
         }
         .dark .footer-wordmark-base {
-          color: var(--fg-d);
-          opacity: 0.28;
+          color: var(--fg-m);
+          opacity: 0.72;
         }
       `}</style>
     </footer>

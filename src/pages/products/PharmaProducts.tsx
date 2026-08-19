@@ -1,8 +1,8 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 const content: IndustryPageContent = {
-    industry: "Pharmaceutical Industry",
-    headline: ["Pharmaceutical", "Enzymes"],
+    industry: "Pharmaceutical",
+    headline: ["Pharmaceutical", "Industry"],
     accentLine: 1,
     subtitle:
         "High-purity enzymatic solutions for therapeutic drug formulation, cardiovascular health, and advanced digestive support systems.",

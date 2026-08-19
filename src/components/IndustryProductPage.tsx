@@ -381,8 +381,8 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                     </div>
 
                     <div className="relative z-10 flex-1 flex flex-col justify-center max-w-[1160px] mx-auto w-full px-5 lg:px-8 gap-6 pb-24">
-                        <nav className="_fu0 flex items-center gap-1.5 font-mono text-[0.58rem] tracking-[0.15em] uppercase text-fg-m">
-                            <Link href="/products" className="hover:text-green transition-colors">Products</Link>
+                        <nav className="_fu0 flex items-center gap-1.5 font-sans text-[0.58rem] tracking-[0.15em] uppercase text-fg-m">
+                            <Link href="/industries" className="hover:text-green transition-colors">Industries</Link>
                             <span className="opacity-30">/</span>
                             <span className="text-green">{c.industry}</span>
                         </nav>

@@ -108,9 +108,9 @@ export default function AnimalHealthcareProducts() {
             className="font-serif font-bold leading-[0.93] tracking-[-0.015em] text-fg-b"
             style={{ fontSize: "clamp(2.6rem, 4.6vw, 4.6rem)" }}
           >
-            Animal
+            Animal Healthcare
             <br />
-            <span className="text-green">Healthcare</span>
+            <span className="text-green">Industry</span>
           </h1>
         }
         subtitle="Poultry, Aqua and Ruminant applications under one industry, with enzymes and probiotic solutions matched to each focus area."
@@ -247,21 +247,16 @@ export default function AnimalHealthcareProducts() {
 
           {area === "aqua" ? (
             <div>
-              <div className="flex flex-row items-end justify-between gap-4 mb-8">
-                <div>
-                  <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
-                    Aquaculture Solutions
-                  </p>
-                  <h2
-                    className="font-sans font-semibold text-fg-b leading-[1.05]"
-                    style={{ fontSize: "clamp(1.5rem, 2.6vw, 2rem)" }}
-                  >
-                    Solutions for ponds and feed
-                  </h2>
-                </div>
-                <CtaButton href="/products/aqua" variant="secondary" size="sm">
-                  Open Aqua page →
-                </CtaButton>
+              <div className="mb-8">
+                <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
+                  Aquaculture Solutions
+                </p>
+                <h2
+                  className="font-sans font-semibold text-fg-b leading-[1.05]"
+                  style={{ fontSize: "clamp(1.5rem, 2.6vw, 2rem)" }}
+                >
+                  Solutions for ponds and feed
+                </h2>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
@@ -432,14 +427,6 @@ function MobileAquaList({
           </h3>
         </div>
       </div>
-      <CtaButton
-        href="/products/aqua"
-        variant="secondary"
-        size="sm"
-        className="w-full justify-center mb-4"
-      >
-        Open full Aqua page →
-      </CtaButton>
       <p className="font-sans text-[0.78rem] text-fg-m mb-4">
         Tap a solution to expand details.
       </p>

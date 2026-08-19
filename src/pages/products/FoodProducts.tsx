@@ -15,10 +15,10 @@ const DAIRY_APPLICATIONS =
 
 const content: IndustryPageContent = {
   industry: "Food",
-  headline: ["Food", "Enzymes"],
+  headline: ["Food", "Industry"],
   accentLine: 1,
   subtitle:
-    "Enzymes are naturally occurring biological catalysts that help food manufacturers improve processing efficiency, texture, stability, yield and product quality.",
+    "Enzyme solutions for food manufacturers — improve processing efficiency, texture, stability, yield and product quality.",
   imageUrl: "/assets/products/FoodEnzyme.png",
   imageAlt: "Food processing enzymes",
   slug: "food",

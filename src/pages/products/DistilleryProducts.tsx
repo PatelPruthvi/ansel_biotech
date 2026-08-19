@@ -1,8 +1,8 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 const content: IndustryPageContent = {
-    industry: "Distillery Industry",
-    headline: ["Enzymes for", "Distillery"],
+    industry: "Distillery",
+    headline: ["Distillery", "Industry"],
     accentLine: 1,
     subtitle:
         "Cost-effective enzyme solutions designed to improve fermentation efficiency, maximize ethanol yield, and reduce processing costs across starch and sugar-based feedstocks.",

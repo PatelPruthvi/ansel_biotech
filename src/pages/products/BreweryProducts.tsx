@@ -1,8 +1,8 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 const content: IndustryPageContent = {
-    industry: "Brewery Industry",
-    headline: ["Enzymes for", "Brewery"],
+    industry: "Brewery",
+    headline: ["Brewery", "Industry"],
     accentLine: 1,
     subtitle:
         "Advanced enzymatic solutions to optimize mashing, improve filtration, and ensure flavor stability while reducing overall production expenses and increasing raw material utilization.",

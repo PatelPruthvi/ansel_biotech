@@ -1,8 +1,8 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 const content: IndustryPageContent = {
-    industry: "Waste Water Treatment",
-    headline: ["Waste Water", "Treatment"],
+    industry: "Waste Water",
+    headline: ["Waste Water", "Industry"],
     accentLine: 1,
     subtitle:
         "Advanced biological catalysts and microbial blends designed to oxidize impurities, reduce sludge, and eliminate odors efficiently.",

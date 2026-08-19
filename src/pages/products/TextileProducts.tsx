@@ -2,8 +2,8 @@ import { IndustryProductPage, type IndustryPageContent } from "@/components/Indu
 
 /** Textile content from client PDF §9 — process flow + enzymes only. */
 const content: IndustryPageContent = {
-  industry: "Textile Processing",
-  headline: ["Textile", "Processing"],
+  industry: "Textile",
+  headline: ["Textile", "Industry"],
   accentLine: 1,
   subtitle:
     "Enzyme support across the textile line: desizing, bioscouring, peroxide removal after bleaching, biopolishing and biowashing.",

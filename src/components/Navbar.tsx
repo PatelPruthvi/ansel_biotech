@@ -7,7 +7,6 @@ import { industriesWeServe, productCategories } from "@/data/siteStructure";
 const industryHrefs = new Set([
   "/industries",
   ...industriesWeServe.map((i) => i.href),
-  "/products/aqua",
 ]);
 
 const productHrefs = new Set([
@@ -113,13 +112,12 @@ export function Navbar() {
       <div className="max-w-[1160px] mx-auto px-3 sm:px-4 lg:px-5 flex items-center justify-between gap-4">
         <Link
           href="/"
-          className="flex items-center shrink-0 px-3.5 py-1.5 rounded-xl bg-glass border border-glass-b backdrop-blur-md transition-colors hover:border-border-m"
+          className="flex items-center shrink-0"
         >
           <img
             src={anselLogoTrans}
             alt="Ansel Biotech"
-            className="h-10 w-auto block"
-            style={{ height: 40 }}
+            className="h-10 md:h-12 w-auto block"
           />
         </Link>
 

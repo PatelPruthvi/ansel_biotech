@@ -21,7 +21,6 @@ const EnzymesProducts = lazy(() => import("@/pages/products/EnzymesProducts"));
 const AnimalHealthcareProducts = lazy(
   () => import("@/pages/products/AnimalHealthcareProducts")
 );
-const AquaProducts = lazy(() => import("@/pages/products/AquaProducts"));
 const TextileProducts = lazy(() => import("@/pages/products/TextileProducts"));
 const DetergentProducts = lazy(() => import("@/pages/products/DetergentProducts"));
 const LeatherProducts = lazy(() => import("@/pages/products/LeatherProducts"));
@@ -72,7 +71,6 @@ function Router() {
               path="/products/animal-healthcare"
               component={AnimalHealthcareProducts}
             />
-            <Route path="/products/aqua" component={AquaProducts} />
             <Route path="/products/textile" component={TextileProducts} />
             <Route path="/products/detergent" component={DetergentProducts} />
             <Route path="/products/leather" component={LeatherProducts} />

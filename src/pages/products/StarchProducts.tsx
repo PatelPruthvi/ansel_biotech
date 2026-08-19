@@ -1,8 +1,8 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 const content: IndustryPageContent = {
-    industry: "Starch Industry",
-    headline: ["Starch Processing", "Enzymes"],
+    industry: "Starch",
+    headline: ["Starch", "Industry"],
     accentLine: 1,
     subtitle:
         "High-performance enzymatic solutions to break down complex starch polymers into glucose and maltose syrups, improving yield and accelerating production cycles.",

@@ -1,8 +1,8 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 const content: IndustryPageContent = {
-    industry: "Paper & Pulp Industry",
-    headline: ["Paper & Pulp", "Enzymes"],
+    industry: "Paper & Pulp",
+    headline: ["Paper & Pulp", "Industry"],
     accentLine: 1,
     subtitle:
         "Bio-solutions for bleaching, deinking, and fiber refining — reducing chemical dependency and energy consumption in biomass processing.",

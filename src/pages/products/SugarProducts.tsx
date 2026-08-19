@@ -1,8 +1,8 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 const content: IndustryPageContent = {
-  industry: "Sugar Industry",
-  headline: ["Sugar Industry", "Enzymes"],
+  industry: "Sugar",
+  headline: ["Sugar", "Industry"],
   accentLine: 1,
   subtitle:
     "Cost-effective enzyme solutions for liquefaction, saccharification and refining — improve yield, clarity and process efficiency across your entire sugar production line.",

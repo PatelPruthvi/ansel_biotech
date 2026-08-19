@@ -13,18 +13,18 @@ const BIOTECH = "BIOTECH".split("");
 const WHAT_WE_DO_CARDS = [
   {
     i: "🧬",
-    t: "Develop & Supply",
-    d: "Ansel Biotech develops and supplies probiotics, enzymes and application-specific biotechnology solutions for animal healthcare, food processing and industrial applications.",
+    t: "Manufacture & Supply",
+    d: "ANSEL Biotech manufactures and supplies enzymes, probiotics and biotech solutions for animal health, aquaculture, food processing and industrial applications.",
   },
   {
     i: "📈",
-    t: "Built to Improve",
-    d: "Gut health & digestion · Feed utilization · Water & soil quality · Textile processing · Detergent performance · Leather processing · Food processing efficiency.",
+    t: "Engineered for Performance",
+    d: "Solutions designed to improve gut health, feed utilization, water & soil quality, textile processing, detergent performance, leather processing and food processing efficiency.",
   },
   {
     i: "🏭",
-    t: "Application Focused",
-    d: "Practical, consistent solutions for commercial use across Animal Healthcare, Textile, Detergent, Leather and Food.",
+    t: "Application-Driven Solutions",
+    d: "Practical, consistent and cost-effective biotechnology solutions developed for commercial applications across Animal Health, Aquaculture, Textile, Detergent, Leather and Food Processing.",
   },
 ];
 
@@ -66,8 +66,8 @@ export default function Home() {
 
         <div className="relative z-10 flex-1 flex items-center px-[6vw] md:px-[9vw] pt-[88px] md:pt-0">
           <div className="flex flex-col gap-5 md:gap-7 max-w-full md:max-w-[560px] w-full">
-            <p className="font-mono text-[0.62rem] md:text-[0.72rem] tracking-[0.22em] uppercase text-fg-m animate-[fadeUp_0.8s_ease-out_both]">
-              Enzymes • Probiotics • Biotechnology Solutions
+            <p className="font-sans text-[0.62rem] md:text-[0.72rem] tracking-[0.22em] uppercase text-fg-m animate-[fadeUp_0.8s_ease-out_both]">
+              Enzyme Technology • Probiotics • Bioprocess Solutions
             </p>
 
             <h1
@@ -77,7 +77,7 @@ export default function Home() {
                 fontSize: "clamp(2.6rem, 7vw, 5.6rem)",
               }}
             >
-              <span className="block overflow-visible wa-word">
+              <span className="block overflow-visible wa-word text-green">
                 {ANSEL.map((ch, i) => (
                   <span
                     key={`a-${i}`}
@@ -88,7 +88,7 @@ export default function Home() {
                   </span>
                 ))}
               </span>
-              <span className="block overflow-visible wb-word">
+              <span className="block overflow-visible wb-word text-indigo-l">
                 {BIOTECH.map((ch, i) => (
                   <span
                     key={`b-${i}`}
@@ -108,8 +108,7 @@ export default function Home() {
                 lineHeight: 1.85,
               }}
             >
-              Science-driven solutions for Animal Health, Food & Industrial
-              Processing.
+              Enzymes, Probiotics &amp; Biotech Solutions
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mt-1 animate-[fadeUp_0.8s_0.3s_ease-out_both]">
@@ -124,7 +123,7 @@ export default function Home() {
         </div>
 
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 bottom-[112px] flex-col items-center gap-1 z-20 pointer-events-none animate-[fadeIn_1.2s_1.4s_ease-out_both]">
-          <span className="font-mono text-[0.55rem] tracking-[0.22em] uppercase text-fg-m mb-1.5 opacity-70">
+          <span className="font-sans text-[0.55rem] tracking-[0.22em] uppercase text-fg-m mb-1.5 opacity-70">
             Scroll
           </span>
           <div className="w-[11px] h-[11px] border-r-[1.5px] border-b-[1.5px] border-fg-m animate-[chev_1.8s_0s_infinite]" style={{ transform: "rotate(45deg)" }} />
@@ -134,24 +133,23 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-wrap border-t border-border bg-glass backdrop-blur-xl animate-[fadeUp_0.9s_0.5s_ease-out_both]">
           {[
-            { v: "12+", l: "Years Active" },
-            { v: "5", l: "Key Industries" },
-            { v: "ISO", l: "Certified Quality" },
-            { v: "GIDC", l: "Vadodara Facility" },
+            { v: "12+", l: "Years of Biotechnology Experience" },
+            { v: "5+", l: "Industries Serving Diverse Applications" },
+            { v: "Vadodara", l: "India · Manufacturing Facility" },
           ].map((stat, i) => (
             <div
               key={i}
               className="stat-cell flex-1 basis-1/2 sm:basis-auto px-4 py-3 md:px-7 md:py-4 border-r border-border last:border-r-0 max-sm:[&:nth-child(2n)]:border-r-0 max-sm:[&:nth-child(-n+2)]:border-b max-sm:[&:nth-child(-n+2)]:border-border transition-colors hover:bg-[rgba(106,178,32,0.05)] cursor-default"
             >
-              <div
-                className="sv font-mono text-stat tracking-[0.02em] transition-colors"
-                style={{ fontSize: "clamp(1.15rem, 1.65vw, 1.65rem)" }}
-              >
-                {stat.v}
-              </div>
-              <div className="font-mono text-[0.58rem] md:text-[0.64rem] tracking-[0.15em] uppercase text-fg-m opacity-60 mt-1">
-                {stat.l}
-              </div>
+            <div
+              className="sv font-sans text-stat tracking-[0.02em] transition-colors font-semibold"
+              style={{ fontSize: "clamp(1.15rem, 1.65vw, 1.65rem)" }}
+            >
+              {stat.v}
+            </div>
+            <div className="font-sans text-[0.54rem] md:text-[0.6rem] tracking-[0.12em] uppercase text-fg-m opacity-60 mt-1">
+              {stat.l}
+            </div>
             </div>
           ))}
         </div>
@@ -162,11 +160,11 @@ export default function Home() {
         className="relative w-full flex items-center bg-background py-16 md:py-[90px] min-h-[100svh] lg:h-[100svh]"
       >
         <div className="w-full max-w-[1160px] mx-auto px-5 md:px-10">
-          <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
+          <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
             What We Do
           </p>
           <h2
-            className="font-sans font-semibold text-fg-b leading-[1.02] mb-10 md:mb-12 reveal"
+            className="font-serif font-semibold text-fg-b leading-[1.02] mb-10 md:mb-12 reveal"
             style={{
               fontSize: "clamp(1.9rem, 3.2vw, 3rem)",
               transitionDelay: "80ms",
@@ -174,7 +172,7 @@ export default function Home() {
           >
             Biotechnology Built
             <br />
-            for Industry
+            for Performance
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[2px] border border-border rounded-[12px] overflow-hidden bg-border">
@@ -198,7 +196,7 @@ export default function Home() {
 
           {/* Industries marquee */}
           <div className="mt-12 md:mt-[46px] -mx-[6vw] md:mx-[calc(50%-50vw)] overflow-hidden border-t border-b border-border bg-transparent">
-            <p className="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-fg-m opacity-60 text-center py-3.5 border-b border-border m-0">
+            <p className="font-sans text-[0.6rem] tracking-[0.22em] uppercase text-fg-m opacity-60 text-center py-3.5 border-b border-border m-0">
               Industries We Serve
             </p>
             <div className="flex w-max animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">

@@ -6,10 +6,10 @@ import { IndustryProductPage, type IndustryPageContent } from "@/components/Indu
  */
 const content: IndustryPageContent = {
   industry: "Detergent",
-  headline: ["Detergent", "Enzymes"],
+  headline: ["Detergent", "Industry"],
   accentLine: 1,
   subtitle:
-    "Enzymes for detergent manufacturing — different stains require different enzymes.",
+    "Enzyme solutions for detergent manufacturing — different stains need different enzymes.",
   imageUrl: "/assets/products/Detergent.png",
   imageAlt: "Detergent enzyme applications",
   slug: "detergent",

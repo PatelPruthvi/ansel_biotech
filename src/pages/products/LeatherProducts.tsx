@@ -6,8 +6,8 @@ import { IndustryProductPage, type IndustryPageContent } from "@/components/Indu
  * Product names/benefits preserved from PDF (Unhairing = Dehairing stage).
  */
 const content: IndustryPageContent = {
-  industry: "Leather Processing",
-  headline: ["Leather", "Processing"],
+  industry: "Leather",
+  headline: ["Leather", "Industry"],
   accentLine: 1,
   subtitle:
     "Our leather processing enzymes replace harsh chemicals in traditional tanning processes, improving leather quality while reducing environmental impact.",
