@@ -1,6 +1,8 @@
 import { useEffect, lazy, Suspense } from "react";
 import { Link } from "wouter";
 import { CtaButton } from "@/components/CtaButton";
+import { PageCtaBand } from "@/components/PageCtaBand";
+import { ProcessFlow } from "@/components/ProcessFlow";
 import { industriesWeServe } from "@/data/siteStructure";
 
 const DnaCanvas = lazy(() =>
@@ -14,7 +16,7 @@ const WHAT_WE_DO_CARDS = [
   {
     i: "🧬",
     t: "Manufacture & Supply",
-    d: "ANSEL Biotech manufactures and supplies enzymes, probiotics and biotech solutions for animal health, aquaculture, food processing and industrial applications.",
+    d: "Enzymes, probiotics and biotechnology solutions for animal health, aquaculture, food processing and industrial applications.",
   },
   {
     i: "📈",
@@ -77,7 +79,7 @@ export default function Home() {
                 fontSize: "clamp(2.6rem, 7vw, 5.6rem)",
               }}
             >
-              <span className="block overflow-visible wa-word" style={{ color: "#7FA239" }}>
+              <span className="block overflow-visible wa-word text-green">
                 {ANSEL.map((ch, i) => (
                   <span
                     key={`a-${i}`}
@@ -88,7 +90,7 @@ export default function Home() {
                   </span>
                 ))}
               </span>
-              <span className="block overflow-visible wb-word" style={{ color: "#382995" }}>
+              <span className="block overflow-visible wb-word text-indigo-l">
                 {BIOTECH.map((ch, i) => (
                   <span
                     key={`b-${i}`}
@@ -157,9 +159,7 @@ export default function Home() {
       </section>
 
       {/* What We Do — full viewport, original kit + marquee */}
-      <section
-        className="relative w-full flex items-center bg-background py-16 md:py-[90px] min-h-[100svh] lg:h-[100svh]"
-      >
+      <section className="relative w-full flex items-center bg-background py-16 md:py-[90px]">
         <div className="w-full max-w-[1160px] mx-auto px-5 md:px-10">
           <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
             What We Do
@@ -217,6 +217,17 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ProcessFlow />
+
+      <PageCtaBand
+        title={"See the portfolio"}
+        body="Probiotic strains and enzymes organised by application — from animal health to industrial processing."
+        primaryLabel="Explore Products →"
+        primaryHref="/products"
+        secondaryLabel="About Us"
+        secondaryHref="/about"
+      />
     </div>
   );
 }

@@ -1,242 +1,343 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "wouter";
+import anselLogoTrans from "@assets/ansel_logo_transparent.png";
 
-type Tone = "green" | "sage" | "violet" | "mist";
-type Region = "probiotics" | "enzymes" | "blends";
+const VB = { w: 900, h: 560 };
+/** Centered plate — paths originate from its left and right edges */
+const BOX = { x: 340, y: 236, w: 220, h: 88 };
 
-const DROPS: {
-  id: Region | null;
-  w: string;
-  x: string;
-  y: string;
-  depth: number;
-  tone: Tone;
-  delay: string;
-  hideOnCompact?: boolean;
-}[] = [
-  { id: "enzymes", w: "46%", x: "46%", y: "50%", depth: 1, tone: "green", delay: "0s" },
-  { id: "probiotics", w: "22%", x: "70%", y: "27%", depth: 1.7, tone: "sage", delay: "0.12s" },
-  { id: "blends", w: "18%", x: "26%", y: "72%", depth: 1.8, tone: "violet", delay: "0.22s" },
-  { id: null, w: "9%", x: "76%", y: "68%", depth: 2.2, tone: "mist", delay: "0.34s", hideOnCompact: true },
-];
+const Y1 = BOX.y + 26;
+const Y2 = BOX.y + BOX.h - 26;
+const LEFT = BOX.x;
+const RIGHT = BOX.x + BOX.w;
+const STRAIGHT = 108;
 
-const SPECKS = [
-  { x: "38%", y: "42%" },
-  { x: "52%", y: "46%" },
-  { x: "44%", y: "56%" },
-  { x: "50%", y: "38%" },
-  { x: "41%", y: "50%" },
-  { x: "55%", y: "54%" },
-];
+const PATHS = [
+  {
+    id: "enzymes",
+    label: ["Enzymes"],
+    href: "/products/enzymes",
+    d: `M ${LEFT} ${Y1} H ${LEFT - STRAIGHT} C ${LEFT - STRAIGHT - 78} ${Y1}, ${118} 128, 92 78`,
+    end: { x: 92, y: 78 },
+    v: "top" as const,
+  },
+  {
+    id: "probiotics",
+    label: ["Probiotics"],
+    href: "/products/probiotics",
+    d: `M ${LEFT} ${Y2} H ${LEFT - STRAIGHT} C ${LEFT - STRAIGHT - 78} ${Y2}, ${118} 432, 92 482`,
+    end: { x: 92, y: 482 },
+    v: "bottom" as const,
+  },
+  {
+    id: "blends",
+    label: ["Custom Blends"],
+    href: "/products",
+    d: `M ${RIGHT} ${Y1} H ${RIGHT + STRAIGHT} C ${RIGHT + STRAIGHT + 78} ${Y1}, ${782} 128, 808 78`,
+    end: { x: 808, y: 78 },
+    v: "top" as const,
+  },
+  {
+    id: "industrial",
+    label: ["Industrial", "Applications"],
+    href: "/industries",
+    d: `M ${RIGHT} ${Y2} H ${RIGHT + STRAIGHT} C ${RIGHT + STRAIGHT + 78} ${Y2}, ${782} 432, 808 482`,
+    end: { x: 808, y: 482 },
+    v: "bottom" as const,
+  },
+] as const;
 
-const LABELS: { id: Region; label: string; x: string; y: string }[] = [
-  { id: "probiotics", label: "PROBIOTICS", x: "70%", y: "12%" },
-  { id: "enzymes", label: "ENZYMES", x: "8%", y: "48%" },
-  { id: "blends", label: "BLENDS", x: "26%", y: "86%" },
-];
+type DestId = (typeof PATHS)[number]["id"];
 
-function fill(tone: Tone) {
-  switch (tone) {
-    case "green":
-      return "radial-gradient(circle at 34% 30%, rgba(255,255,255,0.72) 0%, rgba(196,214,150,0.55) 28%, rgba(127,162,57,0.42) 62%, rgba(90,120,40,0.28) 100%)";
-    case "sage":
-      return "radial-gradient(circle at 34% 30%, rgba(255,255,255,0.7) 0%, rgba(210,222,186,0.5) 34%, rgba(150,168,110,0.38) 100%)";
-    case "violet":
-      return "radial-gradient(circle at 34% 30%, rgba(255,255,255,0.7) 0%, rgba(214,210,232,0.5) 36%, rgba(124,118,176,0.32) 100%)";
-    default:
-      return "radial-gradient(circle at 34% 30%, rgba(255,255,255,0.75) 0%, rgba(232,234,224,0.45) 100%)";
-  }
+const HEAD = 0.16;
+const GAP = 0.3;
+const PERIOD = HEAD + GAP;
+const TRAVEL = 1450;
+
+function mod(n: number, m: number) {
+  return ((n % m) + m) % m;
 }
 
 export function AboutHeroVisual() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef<HTMLDivElement>(null);
-  const mouse = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
-  const dropRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const specksRef = useRef<HTMLDivElement | null>(null);
-  const [hover, setHover] = useState<Region | null>(null);
-  const [entered, setEntered] = useState(false);
-  const [compact, setCompact] = useState(false);
+  const [, navigate] = useLocation();
+  const [hover, setHover] = useState<DestId | null>(null);
+  const hoverRef = useRef<DestId | null>(null);
+  hoverRef.current = hover;
+
+  const reducedRef = useRef(false);
+  const maskRefs = useRef<Record<string, SVGPathElement | null>>({});
+  const glowRefs = useRef<Record<string, SVGGElement | null>>({});
+  const fullRefs = useRef<Record<string, SVGGElement | null>>({});
+  const dotRefs = useRef<Record<string, SVGCircleElement | null>>({});
+  const pulseRefs = useRef<Record<string, SVGCircleElement | null>>({});
+  const groupRefs = useRef<Record<string, SVGGElement | null>>({});
+  const labelRefs = useRef<Record<string, SVGTextElement | null>>({});
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const measure = () => {
-      const next = wrap.clientWidth < 420 || wrap.clientHeight < 240;
-      setCompact((p) => (p === next ? p : next));
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const applyMq = () => {
+      reducedRef.current = mq.matches;
     };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(wrap);
+    applyMq();
+    mq.addEventListener("change", applyMq);
+    return () => mq.removeEventListener("change", applyMq);
+  }, []);
 
-    const onMove = (e: MouseEvent) => {
-      const r = wrap.getBoundingClientRect();
-      mouse.current.tx = (e.clientX - r.left) / r.width - 0.5;
-      mouse.current.ty = (e.clientY - r.top) / r.height - 0.5;
-    };
-    const onLeave = () => {
-      mouse.current.tx = 0;
-      mouse.current.ty = 0;
-    };
-    wrap.addEventListener("mousemove", onMove);
-    wrap.addEventListener("mouseleave", onLeave);
-
+  useEffect(() => {
     let raf = 0;
-    let running = true;
-    const intro = window.setTimeout(() => setEntered(true), 40);
+    const start = performance.now();
 
-    const tick = () => {
-      if (!running) return;
-      const m = mouse.current;
-      m.x += (m.tx - m.x) * 0.06;
-      m.y += (m.ty - m.y) * 0.06;
-      // 3D tilt following cursor
-      if (sceneRef.current && !reduced) {
-        sceneRef.current.style.transform = `perspective(800px) rotateY(${m.x * 14}deg) rotateX(${-m.y * 10}deg)`;
+    const paint = (now: number, hovered: DestId | null) => {
+      const offset = HEAD - (now - start) / TRAVEL;
+      const packetAtEnd = mod(1 + offset, PERIOD) <= HEAD + 0.02;
+      const breath = 0.5 + 0.5 * Math.sin(now / 130);
+
+      for (const p of PATHS) {
+        const isHover = hovered === p.id;
+        const dim = hovered !== null && !isHover;
+        const mask = maskRefs.current[p.id];
+        const glow = glowRefs.current[p.id];
+        const full = fullRefs.current[p.id];
+        const dot = dotRefs.current[p.id];
+        const pulse = pulseRefs.current[p.id];
+        const group = groupRefs.current[p.id];
+        const label = labelRefs.current[p.id];
+
+        if (group) group.style.opacity = dim ? "0.38" : "1";
+        if (label) label.setAttribute("fill", isHover ? "var(--green)" : "var(--fg-b)");
+
+        const setDot = (lit: boolean, breathe: boolean) => {
+          if (dot) dot.setAttribute("fill", lit ? "var(--green)" : "var(--bdr-m)");
+          if (pulse) {
+            if (lit && breathe) {
+              pulse.style.opacity = String(0.22 + 0.38 * breath);
+              pulse.setAttribute("r", String(5.5 + 4.2 * breath));
+            } else {
+              pulse.style.opacity = "0";
+            }
+          }
+        };
+
+        if (isHover) {
+          if (glow) glow.style.opacity = "0";
+          if (full) full.style.opacity = "1";
+          setDot(true, false);
+          continue;
+        }
+
+        if (full) full.style.opacity = "0";
+
+        if (reducedRef.current) {
+          if (glow) glow.style.opacity = "0";
+          setDot(false, false);
+          continue;
+        }
+
+        if (mask) mask.setAttribute("stroke-dashoffset", String(offset));
+        if (glow) glow.style.opacity = "1";
+        setDot(packetAtEnd, true);
       }
-      DROPS.forEach((d, i) => {
-        const el = dropRefs.current[i];
-        if (!el) return;
-        const px = reduced ? 0 : m.x * d.depth * 12;
-        const py = reduced ? 0 : m.y * d.depth * 9;
-        el.style.translate = `calc(-50% + ${px}px) calc(-50% + ${py}px)`;
-      });
-      if (specksRef.current && !reduced) {
-        specksRef.current.style.translate = `${m.x * 16}px ${m.y * 12}px`;
-      }
+    };
+
+    const tick = (now: number) => {
+      paint(now, hoverRef.current);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-
-    return () => {
-      running = false;
-      window.clearTimeout(intro);
-      ro.disconnect();
-      wrap.removeEventListener("mousemove", onMove);
-      wrap.removeEventListener("mouseleave", onLeave);
-      cancelAnimationFrame(raf);
-    };
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   return (
-    <div ref={wrapRef} className="relative w-full h-full min-h-[200px] overflow-hidden" style={{ perspective: 800 }}>
-      <div ref={sceneRef} className="absolute inset-0" style={{ transition: "transform 0.08s linear", transformStyle: "preserve-3d" }}>
-      {DROPS.map((d, i) => {
-        if (compact && d.hideOnCompact) return null;
-        const on = d.id !== null && hover === d.id;
-        const dim = hover !== null && d.id !== null && hover !== d.id;
-        return (
-          <div
-            key={i}
-            ref={(el) => {
-              dropRefs.current[i] = el;
-            }}
-            className="absolute rounded-full pointer-events-none ahv-drop"
-            style={{
-              width: d.w,
-              aspectRatio: "1",
-              left: d.x,
-              top: d.y,
-              translate: "-50% -50%",
-              background: fill(d.tone),
-              boxShadow: on
-                ? "0 18px 40px rgba(70,90,40,0.18), inset 0 1px 0 rgba(255,255,255,0.7)"
-                : "0 14px 32px rgba(40,50,30,0.12), inset 0 1px 0 rgba(255,255,255,0.55)",
-              opacity: entered ? (dim ? 0.45 : 1) : 0,
-              filter: on ? "saturate(1.12)" : "none",
-              transition: "opacity .7s ease, filter .4s ease, box-shadow .4s ease",
-              transitionDelay: entered ? d.delay : "0s",
-              animation: compact ? undefined : `ahvFloat ${9 + i * 1.4}s ease-in-out ${i * 0.6}s infinite`,
-            }}
-          >
-            <span
-              className="absolute left-[18%] top-[14%] w-[42%] h-[22%] rounded-full pointer-events-none"
-              style={{
-                background: "linear-gradient(180deg, rgba(255,255,255,0.65), transparent)",
-              }}
-            />
-          </div>
-        );
-      })}
-
-      {!compact && (
-        <div ref={specksRef} className="absolute inset-0 pointer-events-none">
-          {SPECKS.map((s, i) => (
-            <span
-              key={i}
-              className="absolute w-1 h-1 rounded-full"
-              style={{
-                left: s.x,
-                top: s.y,
-                background: i % 2 ? "rgba(92,86,176,0.35)" : "rgba(127,162,57,0.4)",
-                opacity: entered ? 0.7 : 0,
-                transition: "opacity .8s ease",
-                transitionDelay: `${0.5 + i * 0.06}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      </div>{/* end sceneRef */}
-
-      {!compact &&
-        LABELS.map((l, i) => {
-          const dim = hover !== null && hover !== l.id;
-          return (
-            <button
-              key={l.id}
-              type="button"
-              onMouseEnter={() => setHover(l.id)}
-              onMouseLeave={() => setHover(null)}
-              className="absolute z-10 flex items-center gap-1.5 bg-transparent border-0 p-0 cursor-default outline-none"
-              style={{
-                left: l.x,
-                top: l.y,
-                fontFamily: "inherit",
-                opacity: entered ? (dim ? 0.3 : 0.8) : 0,
-                transition: "opacity .4s ease",
-                transitionDelay: entered && !hover ? `${0.45 + i * 0.1}s` : "0s",
-              }}
-            >
-              <span
-                className="block w-1.5 h-1.5 rounded-full shrink-0"
-                style={{ background: l.id === "blends" ? "#7a74b8" : "#7FA239" }}
+    <div
+      className="relative w-full h-full min-h-[300px] rounded-[28px] overflow-hidden border border-white/50 dark:border-white/12"
+      style={{
+        background: "color-mix(in srgb, var(--card) 78%, transparent)",
+        backdropFilter: "blur(18px) saturate(1.12)",
+        WebkitBackdropFilter: "blur(18px) saturate(1.12)",
+        boxShadow: "0 22px 56px rgba(20,24,18,0.08), inset 0 1px 0 rgba(255,255,255,0.55)",
+      }}
+    >
+      <svg
+        viewBox={`0 0 ${VB.w} ${VB.h}`}
+        className="absolute inset-0 h-full w-full"
+        fill="none"
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        aria-label="Ansel Biotech connected to enzymes, probiotics, custom blends, and industrial applications"
+      >
+        <defs>
+          <filter id="ahv-dash-glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="2.1" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          {PATHS.map((p) => (
+            <mask id={`ahv-win-${p.id}`} key={p.id} maskUnits="userSpaceOnUse">
+              <path
+                ref={(el) => {
+                  maskRefs.current[p.id] = el;
+                }}
+                d={p.d}
+                stroke="white"
+                strokeWidth="8"
+                strokeLinecap="butt"
+                fill="none"
+                pathLength={1}
+                strokeDasharray={`${HEAD} ${GAP}`}
+                strokeDashoffset={HEAD}
               />
-              <span className="uppercase tracking-[0.18em] text-[0.55rem] font-semibold text-fg-b whitespace-nowrap">
-                {l.label}
-              </span>
-            </button>
-          );
-        })}
-
-      {compact && (
-        <div
-          className="absolute bottom-3 inset-x-4 flex justify-between gap-2"
-          style={{ opacity: entered ? 1 : 0, transition: "opacity .6s ease .3s" }}
-        >
-          {LABELS.map((c) => (
-            <span
-              key={c.id}
-              className="uppercase tracking-[0.16em] text-[0.5rem] font-semibold text-fg-b"
-              style={{ fontFamily: "inherit" }}
-            >
-              {c.label}
-            </span>
+            </mask>
           ))}
-        </div>
-      )}
+        </defs>
 
-      <style>{`
-        @keyframes ahvFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .ahv-drop { animation: none !important; }
-        }
-      `}</style>
+        {PATHS.map((p) => (
+          <g
+            key={p.id}
+            ref={(el) => {
+              groupRefs.current[p.id] = el;
+            }}
+            style={{ transition: "opacity 0.28s ease" }}
+          >
+            <path
+              d={p.d}
+              stroke="transparent"
+              strokeWidth="28"
+              strokeLinecap="round"
+              className="cursor-pointer"
+              onMouseEnter={() => setHover(p.id)}
+              onMouseLeave={() => setHover(null)}
+              onClick={() => navigate(p.href)}
+            />
+            <path
+              d={p.d}
+              stroke="var(--bdr-m)"
+              strokeWidth="1.75"
+              strokeLinecap="butt"
+              strokeDasharray="11 13"
+              pointerEvents="none"
+            />
+            <g
+              ref={(el) => {
+                glowRefs.current[p.id] = el;
+              }}
+              mask={`url(#ahv-win-${p.id})`}
+              opacity={0}
+              pointerEvents="none"
+            >
+              <path
+                d={p.d}
+                stroke="var(--green)"
+                strokeWidth="4.2"
+                strokeLinecap="butt"
+                strokeDasharray="11 13"
+                opacity="0.55"
+                filter="url(#ahv-dash-glow)"
+              />
+              <path
+                d={p.d}
+                stroke="var(--green)"
+                strokeWidth="1.75"
+                strokeLinecap="butt"
+                strokeDasharray="11 13"
+              />
+            </g>
+            <g
+              ref={(el) => {
+                fullRefs.current[p.id] = el;
+              }}
+              opacity={0}
+              pointerEvents="none"
+            >
+              <path
+                d={p.d}
+                stroke="var(--green)"
+                strokeWidth="4.2"
+                strokeLinecap="butt"
+                strokeDasharray="11 13"
+                opacity="0.55"
+                filter="url(#ahv-dash-glow)"
+              />
+              <path
+                d={p.d}
+                stroke="var(--green)"
+                strokeWidth="1.75"
+                strokeLinecap="butt"
+                strokeDasharray="11 13"
+              />
+            </g>
+            <circle
+              ref={(el) => {
+                pulseRefs.current[p.id] = el;
+              }}
+              cx={p.end.x}
+              cy={p.end.y}
+              r="5.5"
+              fill="var(--green)"
+              opacity={0}
+              pointerEvents="none"
+            />
+            <circle
+              ref={(el) => {
+                dotRefs.current[p.id] = el;
+              }}
+              cx={p.end.x}
+              cy={p.end.y}
+              r="3.2"
+              fill="var(--bdr-m)"
+              pointerEvents="none"
+            />
+            <text
+              ref={(el) => {
+                labelRefs.current[p.id] = el;
+              }}
+              x={p.end.x}
+              y={p.v === "bottom" ? p.end.y + 16 : p.end.y - 16}
+              textAnchor="middle"
+              dominantBaseline={p.v === "bottom" ? "hanging" : "auto"}
+              fill="var(--fg-b)"
+              className="cursor-pointer"
+              style={{
+                fontFamily: "Open Sans, ui-sans-serif, system-ui, sans-serif",
+                fontSize: p.label.length > 1 ? 13 : 15,
+                fontWeight: 600,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+              }}
+              onMouseEnter={() => setHover(p.id)}
+              onMouseLeave={() => setHover(null)}
+              onClick={() => navigate(p.href)}
+            >
+              {p.label.map((line, i) => (
+                <tspan key={line} x={p.end.x} dy={i === 0 ? 0 : "1.2em"}>
+                  {line}
+                </tspan>
+              ))}
+            </text>
+          </g>
+        ))}
+
+        <rect
+          x={BOX.x}
+          y={BOX.y}
+          width={BOX.w}
+          height={BOX.h}
+          rx="16"
+          fill="color-mix(in srgb, var(--card) 88%, transparent)"
+          stroke="rgba(255,255,255,0.55)"
+          strokeWidth="1"
+        />
+        <image
+          href={anselLogoTrans}
+          x={BOX.x + 8}
+          y={BOX.y + 2}
+          width={BOX.w - 16}
+          height={BOX.h - 4}
+          preserveAspectRatio="xMidYMid meet"
+        />
+      </svg>
     </div>
   );
 }

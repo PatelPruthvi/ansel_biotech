@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { AboutHeroVisual } from "@/components/AboutHeroVisual";
-import { ProcessFlow } from "@/components/ProcessFlow";
+import { CoreValues } from "@/components/CoreValues";
 import { CtaButton } from "@/components/CtaButton";
+import { PageCtaBand } from "@/components/PageCtaBand";
 
 export default function About() {
   useEffect(() => {
@@ -22,98 +23,77 @@ export default function About() {
 
   return (
     <div className="w-full">
-      {/* Hero — original layout */}
       <section
-        className="relative w-full grid grid-cols-1 lg:grid-cols-[55fr_45fr] min-h-[100svh] overflow-x-hidden bg-background"
+        className="relative w-full grid grid-cols-1 lg:grid-cols-[42fr_58fr] lg:min-h-[100svh] overflow-x-hidden bg-background"
         style={{
           background:
             "radial-gradient(ellipse at 80% 50%, rgba(106,178,32,0.07), transparent 60%), radial-gradient(ellipse at 15% 30%, rgba(58,58,184,0.05), transparent 55%)",
         }}
       >
-        <div className="relative z-10 min-w-0 overflow-visible flex flex-col justify-center pt-[120px] pb-10 px-[6vw] lg:pt-[108px] lg:pb-16 lg:pl-[9vw] lg:pr-[5vw]">
-          <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3.5 animate-[fadeUp_0.8s_ease-out_both]">
+        <div className="relative z-10 min-w-0 overflow-visible flex flex-col justify-center pt-[120px] pb-8 px-[6vw] lg:pt-[108px] lg:pb-16 lg:pl-[9vw] lg:pr-[4vw]">
+          <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3.5 animate-[fadeUp_0.8s_ease-out_both]">
             Who We Are
           </p>
           <h1
             className="font-serif font-bold leading-[1.04] tracking-[-0.015em] text-fg-b mb-5 overflow-visible animate-[fadeUp_0.8s_0.1s_ease-out_both]"
-            style={{ fontSize: "clamp(2.6rem, 4.6vw, 4.6rem)" }}
+            style={{ fontSize: "clamp(2.4rem, 4.4vw, 4.4rem)" }}
           >
-            <span className="text-green">Manufacture</span> &amp;
+            <span className="text-green">Biotech Solutions</span>
             <br />
-            Supply <span className="text-indigo-l">Biotech</span>
-            <br />
-            Solutions
+            <span className="text-indigo-l">Provider</span>
           </h1>
           <p
-            className="font-sans font-light text-fg-m leading-[1.85] mb-8 max-w-[440px] animate-[fadeUp_0.8s_0.2s_ease-out_both]"
+            className="font-sans font-light text-fg-m leading-[1.85] mb-8 max-w-[460px] animate-[fadeUp_0.8s_0.2s_ease-out_both]"
             style={{ fontSize: "clamp(0.95rem, 1.15vw, 1.05rem)" }}
           >
             Ansel Biotech develops and supplies high-performance enzymes, probiotics and application-specific biotechnology solutions for Animal Health, Aquaculture, Food Processing and Industrial Applications.
           </p>
 
-          <p className="font-mono text-[0.58rem] tracking-[0.18em] uppercase text-fg-m opacity-60 mb-3 animate-[fadeUp_0.8s_0.3s_ease-out_both]">
+          <p className="font-sans text-[0.58rem] tracking-[0.18em] uppercase text-fg-m opacity-60 mb-3 animate-[fadeUp_0.8s_0.3s_ease-out_both]">
             Our Portfolio
           </p>
           <div className="flex flex-wrap gap-[7px] mb-2.5 animate-[fadeUp_0.8s_0.35s_ease-out_both]">
             {[
-              { l: "🦠 Probiotic Strains", ind: false },
-              { l: "🌾 Feed Enzymes", ind: true },
-              { l: "⚗️ Industrial Enzymes", ind: false },
-              { l: "🧪 Custom Formulations", ind: true },
+              { e: "🦠", l: "Probiotic Strains", ind: false },
+              { e: "🌾", l: "Feed Enzymes", ind: true },
+              { e: "⚗️", l: "Industrial Enzymes", ind: false },
+              { e: "🧪", l: "Custom Formulations", ind: true },
             ].map((c, i) => (
               <span
                 key={i}
-                className={`chip ${c.ind ? "chip-ind" : ""} font-mono text-[0.58rem] tracking-[0.09em] uppercase px-3 py-[5px] border border-border-m rounded-full text-fg-m cursor-default whitespace-nowrap transition-[background,border-color,color,transform]`}
+                className={`chip ${c.ind ? "chip-ind" : ""} inline-flex items-center gap-1.5 font-sans text-[0.58rem] tracking-[0.09em] uppercase px-3 py-[5px] border border-border-m rounded-full text-fg-m cursor-default whitespace-nowrap`}
               >
+                <span className="text-[0.85rem] tracking-normal normal-case leading-none" aria-hidden>
+                  {c.e}
+                </span>
                 {c.l}
               </span>
             ))}
           </div>
         </div>
 
-        <div className="relative w-full min-w-0 flex items-center justify-center px-[6vw] pb-12 lg:h-auto lg:px-5 lg:pl-8 lg:pr-[5vw] lg:pb-16 lg:pt-[108px]">
-          <div
-            className="relative w-full max-w-[560px] h-[220px] sm:h-[280px] lg:h-[min(500px,calc(100svh-200px))] min-h-[200px] rounded-[28px] overflow-hidden border border-white/50 dark:border-white/15"
-            style={{
-              background:
-                "linear-gradient(165deg, color-mix(in srgb, var(--card) 78%, transparent) 0%, rgba(127,162,57,0.10) 48%, rgba(92,86,176,0.07) 100%)",
-              backdropFilter: "blur(18px) saturate(1.15)",
-              WebkitBackdropFilter: "blur(18px) saturate(1.15)",
-              boxShadow:
-                "0 22px 56px rgba(20,24,18,0.10), inset 0 1px 0 rgba(255,255,255,0.62)",
-            }}
-          >
+        <div className="relative w-full min-w-0 flex items-center justify-center px-[4vw] pb-10 lg:px-4 lg:pl-4 lg:pr-[4vw] lg:pb-16 lg:pt-[108px]">
+          <div className="relative w-full max-w-[720px] h-[340px] sm:h-[400px] lg:h-[min(540px,calc(100svh-170px))] min-h-[300px]">
             <AboutHeroVisual />
           </div>
         </div>
-
-        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 bottom-10 flex-col items-center gap-1 z-20 pointer-events-none animate-[fadeIn_1.2s_1.2s_ease-out_both]">
-          <span className="font-mono text-[0.55rem] tracking-[0.22em] uppercase text-fg-m opacity-50 mb-1">
-            Scroll
-          </span>
-          <div className="w-[10px] h-[10px] border-r-[1.5px] border-b-[1.5px] border-fg-m opacity-0 animate-[chev_1.8s_0s_infinite]" style={{ transform: "rotate(45deg)" }} />
-          <div className="w-[10px] h-[10px] border-r-[1.5px] border-b-[1.5px] border-fg-m opacity-0 -mt-[6px] animate-[chev_1.8s_0.18s_infinite]" style={{ transform: "rotate(45deg)" }} />
-          <div className="w-[10px] h-[10px] border-r-[1.5px] border-b-[1.5px] border-fg-m opacity-0 -mt-[6px] animate-[chev_1.8s_0.36s_infinite]" style={{ transform: "rotate(45deg)" }} />
-        </div>
       </section>
 
-      {/* Who We Are — original pillars kit */}
+      {/* Who We Are */}
       <section className="py-16 md:py-[100px] bg-bg2">
         <div className="max-w-[1160px] mx-auto px-5 md:px-10">
           <div className="mb-10 md:mb-[52px]">
-            <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
+            <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
               Who We Are
             </p>
             <h2
-              className="font-sans font-semibold text-fg-b leading-[1.02] reveal"
+              className="font-sans font-semibold text-fg-b leading-[1.15] reveal"
               style={{
                 fontSize: "clamp(1.9rem, 3.2vw, 3rem)",
                 transitionDelay: "80ms",
               }}
             >
-              Built on Biotechnology,
-              <br />
-              Driven by Application
+              Built on biotechnology, driven by application
             </h2>
           </div>
 
@@ -122,17 +102,17 @@ export default function About() {
               {
                 n: "01 · Specialize",
                 t: "Probiotics & Enzymes<br/>for <span class='text-green'>Diverse Applications</span>",
-                d: "Ansel Biotech is a biotechnology company specializing in probiotics and enzymes for animal healthcare, aquaculture, food processing and industrial applications.",
+                d: "A biotechnology company focused on probiotics and enzymes for animal healthcare, aquaculture, food processing and industrial applications.",
               },
               {
                 n: "02 · Develop",
                 t: "Application-Driven<br/><span class='text-green'>Product</span> Development",
-                d: "We combine biotechnology expertise with application-focused development to deliver practical, consistent solutions tailored to specific process requirements.",
+                d: "Biotechnology expertise applied to the process in front of us — practical, consistent solutions for specific requirements.",
               },
               {
                 n: "03 · Portfolio",
                 t: "Strains, Enzymes &<br/><span class='text-green'>Custom</span> Formulations",
-                d: "Our portfolio includes probiotic solutions, feed enzymes, industrial enzymes and customized formulations for specific applications.",
+                d: "The portfolio covers probiotic solutions, feed enzymes, industrial enzymes and customized formulations.",
               },
             ].map((pillar, i) => (
               <div
@@ -140,7 +120,7 @@ export default function About() {
                 className="relative bg-background p-8 md:p-10 flex flex-col gap-5 transition-colors duration-300 hover:bg-bg3 cursor-default group reveal"
                 style={{ transitionDelay: `${i * 90}ms` }}
               >
-                <div className="font-mono text-[0.58rem] tracking-[0.2em] uppercase text-fg-d">
+                <div className="font-sans text-[0.58rem] tracking-[0.2em] uppercase text-fg-d">
                   {pillar.n}
                 </div>
                 <div
@@ -157,17 +137,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* Our Process — self-playing flow animation */}
-      <ProcessFlow />
+      <CoreValues />
 
-      <div className="max-w-[1160px] mx-auto px-5 md:px-10">
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-border-m to-transparent" />
-      </div>
-
-      {/* Our Approach — original mission + values kit */}
+      {/* Our Approach */}
       <section className="py-16 md:py-[100px]">
         <div className="max-w-[1160px] mx-auto px-5 md:px-10">
-          <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
+          <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
             Our Approach
           </p>
           <h2
@@ -192,9 +167,8 @@ export default function About() {
                 Optimize the formulation → Deliver consistent performance.
               </p>
               <p className="mb-8">
-                We combine biotechnology with application-focused product
-                development to provide solutions that are practical, consistent
-                and suitable for commercial use.
+                Biotechnology expertise applied to commercial use — practical,
+                consistent and suitable for scale.
               </p>
               <div className="flex flex-wrap gap-3">
                 <CtaButton href="/products">Explore Products →</CtaButton>
@@ -230,7 +204,7 @@ export default function About() {
                   key={i}
                   className="val py-7 px-7 md:px-8 border-l-2 border-border-m transition-all duration-200 hover:border-green hover:bg-[rgba(106,178,32,0.04)] hover:pl-[38px] cursor-default"
                 >
-                  <div className="font-mono text-[0.68rem] tracking-[0.18em] uppercase text-green mb-2">
+                  <div className="font-sans text-[0.68rem] tracking-[0.18em] uppercase text-green mb-2">
                     {v.n}
                   </div>
                   <div className="font-sans text-[0.97rem] font-light text-fg-m leading-[1.8]">
@@ -242,6 +216,13 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      <PageCtaBand
+        title={"Talk to the team"}
+        body="Share your application and we will match the right strain, enzyme or formulation."
+        secondaryLabel="Explore Products"
+        secondaryHref="/products"
+      />
     </div>
   );
 }

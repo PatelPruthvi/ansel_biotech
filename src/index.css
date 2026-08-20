@@ -237,7 +237,7 @@ body::after {
 }
 
 .wa-word .ltr-a:hover {
-  color: var(--green);
+  color: var(--green-l);
   transform: scale(1.14) rotateY(15deg);
 }
 
@@ -321,4 +321,24 @@ body::after {
 /* MOLECULE bg in light mode (subtle) */
 .mol-wrap {
   background: radial-gradient(ellipse at 55% 45%, rgba(106, 178, 32, .06), transparent 65%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,4 +1,3 @@
-import { lazy, Suspense } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -8,48 +7,32 @@ import { Footer } from "@/components/Footer";
 import { Cursor } from "@/components/Cursor";
 import { WhatsAppFAB } from "@/components/WhatsAppFAB";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { PageTransition } from "@/components/PageTransition";
 
-const Home = lazy(() => import("@/pages/Home"));
-const About = lazy(() => import("@/pages/About"));
-const Products = lazy(() => import("@/pages/Products"));
-const Industries = lazy(() => import("@/pages/Industries"));
-const Contact = lazy(() => import("@/pages/Contact"));
-const NotFound = lazy(() => import("@/pages/not-found"));
+import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Products from "@/pages/Products";
+import Industries from "@/pages/Industries";
+import Contact from "@/pages/Contact";
+import NotFound from "@/pages/not-found";
 
-const ProbioticsProducts = lazy(() => import("@/pages/products/ProbioticsProducts"));
-const EnzymesProducts = lazy(() => import("@/pages/products/EnzymesProducts"));
-const AnimalHealthcareProducts = lazy(
-  () => import("@/pages/products/AnimalHealthcareProducts")
-);
-const TextileProducts = lazy(() => import("@/pages/products/TextileProducts"));
-const DetergentProducts = lazy(() => import("@/pages/products/DetergentProducts"));
-const LeatherProducts = lazy(() => import("@/pages/products/LeatherProducts"));
-const FoodProducts = lazy(() => import("@/pages/products/FoodProducts"));
-const AnimalFeedProducts = lazy(() => import("@/pages/products/AnimalProducts"));
-const SugarProducts = lazy(() => import("@/pages/products/SugarProducts"));
-const DistilleryProducts = lazy(() => import("@/pages/products/DistilleryProducts"));
-const StarchProducts = lazy(() => import("@/pages/products/StarchProducts"));
-const BreweryProducts = lazy(() => import("@/pages/products/BreweryProducts"));
-const PharmaProducts = lazy(() => import("@/pages/products/PharmaProducts"));
-const WasteWaterProducts = lazy(() => import("@/pages/products/WasteWaterProducts"));
-const PaperPulpProducts = lazy(() => import("@/pages/products/PaperProducts"));
+import ProbioticsProducts from "@/pages/products/ProbioticsProducts";
+import EnzymesProducts from "@/pages/products/EnzymesProducts";
+import AnimalHealthcareProducts from "@/pages/products/AnimalHealthcareProducts";
+import TextileProducts from "@/pages/products/TextileProducts";
+import DetergentProducts from "@/pages/products/DetergentProducts";
+import LeatherProducts from "@/pages/products/LeatherProducts";
+import FoodProducts from "@/pages/products/FoodProducts";
+import AnimalFeedProducts from "@/pages/products/AnimalProducts";
+import SugarProducts from "@/pages/products/SugarProducts";
+import DistilleryProducts from "@/pages/products/DistilleryProducts";
+import StarchProducts from "@/pages/products/StarchProducts";
+import BreweryProducts from "@/pages/products/BreweryProducts";
+import PharmaProducts from "@/pages/products/PharmaProducts";
+import WasteWaterProducts from "@/pages/products/WasteWaterProducts";
+import PaperPulpProducts from "@/pages/products/PaperProducts";
 
 const queryClient = new QueryClient();
-
-function PageFallback() {
-  return (
-    <div
-      className="w-full min-h-[50vh] flex items-center justify-center"
-      aria-busy="true"
-      aria-label="Loading page"
-    >
-      <div
-        className="w-8 h-8 rounded-full border-2 border-border border-t-green animate-spin"
-        aria-hidden
-      />
-    </div>
-  );
-}
 
 function Router() {
   return (
@@ -57,8 +40,9 @@ function Router() {
       <ScrollToTop />
       <Navbar />
       <main className="flex-grow">
-        <Suspense fallback={<PageFallback />}>
-          <Switch>
+        <PageTransition>
+          {(location) => (
+          <Switch location={location}>
             <Route path="/" component={Home} />
             <Route path="/about" component={About} />
             <Route path="/products" component={Products} />
@@ -90,7 +74,8 @@ function Router() {
             <Route path="/contacts" component={Contact} />
             <Route component={NotFound} />
           </Switch>
-        </Suspense>
+          )}
+        </PageTransition>
       </main>
       <Footer />
       <WhatsAppFAB />
