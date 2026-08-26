@@ -2,7 +2,7 @@ import { useCallback, useRef, useState, type MouseEvent } from "react";
 import { Link } from "wouter";
 import anselLogoTrans from "@assets/ansel_logo_transparent.png";
 
-/** Wider than content column — can bleed past side padding */
+/** Wider than content column can bleed past side padding */
 /** Desktop / tablet spotlight size; mobile uses smaller CSS override */
 const WORDMARK_SIZE_DESKTOP = "clamp(3.5rem, 19.5vw, 11rem)";
 
@@ -32,7 +32,7 @@ export function Footer() {
 
   return (
     <footer className="relative border-t border-border mt-0 overflow-hidden bg-background">
-      {/* Top accent — contained so glow does not spill onto content */}
+      {/* Top accent contained so glow does not spill onto content */}
       <div className="relative w-full h-[10px] overflow-hidden">
         <div
           className="absolute left-0 right-0 top-0 h-[1.5px]"
@@ -109,22 +109,22 @@ export function Footer() {
             <span className="font-sans text-[0.65rem] tracking-[0.18em] uppercase text-green">
               Industries
             </span>
-            <Link href="/products/animal-healthcare" className="footer-link">
+            <Link href="/industries/animal-healthcare" className="footer-link">
               Animal Health
             </Link>
-            <Link href="/products/animal-healthcare" className="footer-link">
+            <Link href="/industries/animal-healthcare" className="footer-link">
               Aquaculture
             </Link>
-            <Link href="/products/textile" className="footer-link">
+            <Link href="/industries/textile" className="footer-link">
               Textile
             </Link>
-            <Link href="/products/detergent" className="footer-link">
+            <Link href="/industries/detergent" className="footer-link">
               Detergent
             </Link>
-            <Link href="/products/leather" className="footer-link">
+            <Link href="/industries/leather" className="footer-link">
               Leather
             </Link>
-            <Link href="/products/food" className="footer-link">
+            <Link href="/industries/food" className="footer-link">
               Food
             </Link>
           </div>
@@ -152,7 +152,7 @@ export function Footer() {
         <div className="h-px w-full bg-border" />
       </div>
 
-      {/* Wordmark — smaller on mobile so it fits */}
+      {/* Wordmark smaller on mobile so it fits */}
       <div className="bg-background w-full overflow-hidden">
         <div className="w-full px-2 sm:px-2 py-6 md:py-10">
           <div

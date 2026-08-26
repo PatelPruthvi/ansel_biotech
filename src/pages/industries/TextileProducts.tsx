@@ -1,6 +1,6 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
-/** Textile content from client PDF §9 — process flow + enzymes only. */
+/** Textile content from client PDF §9 process flow + enzymes only. */
 const content: IndustryPageContent = {
   industry: "Textile",
   headline: ["Textile", "Industry"],
@@ -68,31 +68,31 @@ const content: IndustryPageContent = {
     {
       step: "01",
       title: "Desizing",
-      desc: "Alpha-Amylase — Enzymatic removal of starch-based sizing materials from cotton and other suitable fabrics.",
+      desc: "Alpha-Amylase Enzymatic removal of starch-based sizing materials from cotton and other suitable fabrics.",
       icon: "🧵",
     },
     {
       step: "02",
       title: "Bioscouring",
-      desc: "Pectinase — Enzymatic removal/modification of pectic substances to improve fabric wettability and prepare cotton for subsequent processing.",
+      desc: "Pectinase Enzymatic removal/modification of pectic substances to improve fabric wettability and prepare cotton for subsequent processing.",
       icon: "💧",
     },
     {
       step: "03",
       title: "H₂O₂ Removal",
-      desc: "Catalase — Rapid breakdown of residual hydrogen peroxide after bleaching. Result: H₂O₂ → Water + Oxygen.",
+      desc: "Catalase Rapid breakdown of residual hydrogen peroxide after bleaching. Result: H₂O₂ → Water + Oxygen.",
       icon: "⚗️",
     },
     {
       step: "04",
       title: "Biopolishing",
-      desc: "Cellulase — Removes protruding cellulose fibres from the fabric surface to improve smoothness and appearance.",
+      desc: "Cellulase Removes protruding cellulose fibres from the fabric surface to improve smoothness and appearance.",
       icon: "✨",
     },
     {
       step: "05",
       title: "Biowashing",
-      desc: "Cellulase — Enzymatic treatment used to create a softer hand feel and controlled surface effects in suitable textile applications.",
+      desc: "Cellulase Enzymatic treatment used to create a softer hand feel and controlled surface effects in suitable textile applications.",
       icon: "🧴",
     },
   ],
@@ -108,7 +108,7 @@ const content: IndustryPageContent = {
 
   ctaTitle: "Get in touch about\ntextile processing",
   ctaBody:
-    "Contact our team about textile process enzymes — desizing, bioscouring, peroxide removal, biopolishing and biowashing.",
+    "Contact our team about textile process enzymes desizing, bioscouring, peroxide removal, biopolishing and biowashing.",
 };
 
 export default function TextileProducts() {

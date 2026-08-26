@@ -154,7 +154,7 @@ export function ProbioticPortfolio() {
                       <span
                         className={`flex items-center justify-center rounded-full border font-mono text-[0.52rem] tracking-[0.04em] transition-all duration-300 ${
                           on
-                            ? "w-8 h-8 bg-white text-fg-b border-white"
+                            ? "w-8 h-8 bg-white text-[#0c0f0a] border-white"
                             : "w-7 h-7 bg-black/35 text-white border-white/55 hover:border-white hover:bg-black/50"
                         }`}
                       >
@@ -192,7 +192,7 @@ export function ProbioticPortfolio() {
                 {group.strains.length} strains in this group
               </p>
               <p className="font-sans text-[0.88rem] font-light text-fg-m leading-relaxed m-0 max-w-[36ch]">
-                Tap a marker on the specimen — a line identifies the strain.
+                Tap a marker on the specimen. A line identifies the strain.
               </p>
             </div>
 

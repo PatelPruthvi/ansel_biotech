@@ -16,7 +16,7 @@ type PageHeroProps = {
   actions?: ReactNode;
   /** Desktop chips / custom; prefer `stats` for mobile-friendly numbers */
   below?: ReactNode;
-  /** Structured stats — mobile strip + desktop chips */
+  /** Structured stats mobile strip + desktop chips */
   stats?: HeroStatItem[];
   imageUrl: string;
   imageAlt: string;
@@ -200,7 +200,7 @@ function MobileTabletHero({
         ) : null}
 
         <div style={{ animation: "_mCardUp .55s .08s cubic-bezier(.4,0,.2,1) both" }}>
-          <div className="text-[#f0f0ee] [&_.text-green]:text-[#8fd43a] [&_.text-fg-b]:text-[#f0f0ee] [&_h1]:font-serif [&_h1]:font-bold [&_h1]:leading-[0.9] [&_h1]:tracking-[-0.02em] [&_h1]:text-[clamp(2.2rem,9.5vw,3.1rem)]">
+          <div className="text-[#f0f0ee] [&_.text-green]:text-[#8fd43a] [&_.text-fg-b]:text-[#f0f0ee] [&_h1]:font-section [&_h1]:font-bold [&_h1]:leading-[0.9] [&_h1]:tracking-[-0.02em] [&_h1]:text-[clamp(1.85rem,8vw,2.55rem)]">
             {title}
           </div>
           <div
@@ -341,7 +341,7 @@ export function PageHero({
         className={className}
       />
 
-      {/* Desktop — keep as-is */}
+      {/* Desktop keep as-is */}
       <section
         className={cn("hidden lg:flex relative flex-col overflow-hidden", className)}
         style={{ height: "100svh", minHeight: 560 }}
@@ -422,7 +422,7 @@ export function PageHero({
           </div>
         )}
 
-        {/* Molecule overlay — right side, desktop only */}
+        {/* Molecule overlay right side, desktop only */}
         <div className="absolute top-0 right-0 w-[42%] h-full pointer-events-none hidden lg:block opacity-35 z-[5]">
           <MoleculeCanvas />
         </div>

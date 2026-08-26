@@ -3,6 +3,7 @@ import { CtaButton } from "@/components/CtaButton";
 import { HeroScrollCta, PageHero } from "@/components/PageHero";
 import { PageCtaBand } from "@/components/PageCtaBand";
 import { industriesWeServe } from "@/data/siteStructure";
+import { sectionTitleClass, sectionTitleSizeHub, heroTitleClass, heroTitleSizeLg } from "@/lib/typography";
 
 export default function Industries() {
   return (
@@ -10,11 +11,8 @@ export default function Industries() {
       <PageHero
         eyebrow="Industries We Serve"
         title={
-          <h1
-            className="font-serif font-bold leading-[0.9] tracking-[-0.02em] text-fg-b"
-            style={{ fontSize: "clamp(2.8rem, 6vw, 5.2rem)" }}
-          >
-            Built for
+          <h1 className={`${heroTitleClass} text-fg-b`} style={heroTitleSizeLg}>
+            <span className="text-fg-b">Built for</span>
             <br />
             <span className="text-green">Industry</span>
           </h1>
@@ -40,11 +38,8 @@ export default function Industries() {
         <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
           Industries
         </p>
-        <h2
-          className="font-sans font-semibold text-fg-b leading-[1.05] mb-3"
-          style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)" }}
-        >
-          Where we apply
+        <h2 className={`${sectionTitleClass} mb-3`} style={sectionTitleSizeHub}>
+          Industries we serve
         </h2>
         <p className="font-sans font-light text-fg-m text-[0.95rem] leading-[1.75] max-w-[480px] mb-10">
           Pick an industry to see process steps, enzymes and applications.

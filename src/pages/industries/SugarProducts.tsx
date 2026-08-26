@@ -5,7 +5,7 @@ const content: IndustryPageContent = {
   headline: ["Sugar", "Industry"],
   accentLine: 1,
   subtitle:
-    "Cost-effective enzyme solutions for liquefaction, saccharification and refining — improve yield, clarity and process efficiency across your entire sugar production line.",
+    "Cost-effective enzyme solutions for liquefaction, saccharification and refining, improve yield, clarity and process efficiency across your entire sugar production line.",
   imageUrl:
     "/assets/products/sugar_1.png",
 
@@ -20,7 +20,7 @@ const content: IndustryPageContent = {
 
   products: [
     {
-      code: "SELZYME – HTA",
+      code: "SELZYME HTA",
       enzyme: "Alpha Amylase",
       application: "Sugar Industries",
       purpose:
@@ -28,15 +28,15 @@ const content: IndustryPageContent = {
       tags: ["Liquefaction", "Starch Hydrolysis"],
     },
     {
-      code: "SELZYME – DEX",
+      code: "SELZYME DEX",
       enzyme: "Dextranase",
       application: "Sugar Industries",
       purpose:
-        "Reduces crystal elongation and significantly improves clarity and filterability of syrup — preventing viscosity-related yield losses during cane juice processing.",
+        "Reduces crystal elongation and significantly improves clarity and filterability of syrup preventing viscosity-related yield losses during cane juice processing.",
       tags: ["Dextran Removal", "Clarity"],
     },
     {
-      code: "SELZYME – SUCRASE",
+      code: "SELZYME SUCRASE",
       enzyme: "Invertase",
       application: "Invert Sugar Production",
       purpose:
@@ -44,11 +44,11 @@ const content: IndustryPageContent = {
       tags: ["Invert Sugar", "HFCS"],
     },
     {
-      code: "SELZYME – GISO",
+      code: "SELZYME GISO",
       enzyme: "Glucose Isomerase",
       application: "Fructose Syrup Preparation",
       purpose:
-        "Isomerization of glucose to fructose — enabling production of high-fructose syrups with superior sweetness profiles for food and beverage applications.",
+        "Isomerization of glucose to fructose enabling production of high-fructose syrups with superior sweetness profiles for food and beverage applications.",
       tags: ["Isomerization", "Fructose Syrup"],
     },
   ],
@@ -57,12 +57,12 @@ const content: IndustryPageContent = {
     {
       step: "01",
       title: "Gelatinisation",
-      desc: "Starch suspension (40–45% dry matter) is raised to steam temperature, breaking down granule structure for enzyme access.",
+      desc: "Starch suspension (40 45% dry matter) is raised to steam temperature, breaking down granule structure for enzyme access.",
     },
     {
       step: "02",
       title: "Liquefaction",
-      desc: "Alpha amylase hydrolyses gelatinised starch into maltodextrins — soluble oligosaccharides and dextrins ready for the next stage.",
+      desc: "Alpha amylase hydrolyses gelatinised starch into maltodextrins soluble oligosaccharides and dextrins ready for the next stage.",
     },
     {
       step: "03",
@@ -72,7 +72,7 @@ const content: IndustryPageContent = {
     {
       step: "04",
       title: "Refining",
-      desc: "Dextranase and invertase clean up residual dextrans and convert sucrose — improving product clarity and final yield.",
+      desc: "Dextranase and invertase clean up residual dextrans and convert sucrose improving product clarity and final yield.",
     },
   ],
 
@@ -81,9 +81,9 @@ const content: IndustryPageContent = {
     "Traditional acid-based starch conversion is hazardous and inefficient. Enzymatic routes deliver safer, cleaner, higher-yield results.",
   aboutBody: [
     "Since many years, starch has been converted into glucose using acid and chemicals. With the arrival of enzyme technology, industries have taken the solace of enzymes for this biochemical reaction. Enzymatic conversion of starch depends on both the enzymes used and the physical properties of the starch substrate.",
-    "Sugar enzymes accelerate the conversion through two key processes: liquefaction and saccharification. In liquefaction, a starch suspension (40–45% dry matter) is gelatinised at steam temperature and liquefied by alpha amylase — hydrolyzing starch to maltodextrins containing mainly oligosaccharides and dextrins.",
-    "Dextrans present many problems in cane processing and juice extraction — causing viscosity issues and crystal elongation that reduce yield and product quality. Dextranase effectively eliminates these, improving filtration rate and syrup clarity.",
-    "Sugar enzymes manufactured by Ansel Biotech inhibit viscosity during the biochemical reaction and enhance quality by eliminating hazardous chemicals — making the entire process safer, greener and more economical.",
+    "Sugar enzymes accelerate the conversion through two key processes: liquefaction and saccharification. In liquefaction, a starch suspension (40 45% dry matter) is gelatinised at steam temperature and liquefied by alpha amylase hydrolyzing starch to maltodextrins containing mainly oligosaccharides and dextrins.",
+    "Dextrans present many problems in cane processing and juice extraction causing viscosity issues and crystal elongation that reduce yield and product quality. Dextranase effectively eliminates these, improving filtration rate and syrup clarity.",
+    "Sugar enzymes manufactured by Ansel Biotech inhibit viscosity during the biochemical reaction and enhance quality by eliminating hazardous chemicals making the entire process safer, greener and more economical.",
   ],
 
   ctaTitle: "Get the right enzyme\nfor your sugar process",

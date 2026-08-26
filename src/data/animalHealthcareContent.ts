@@ -1,6 +1,6 @@
 /**
  * Animal Healthcare + Aquaculture content from client PDF (content.pdf).
- * Swine is mentioned in the PDF but is NOT a confirmed top-level tab — omitted from UI.
+ * Swine is mentioned in the PDF but is NOT a confirmed top-level tab omitted from UI.
  */
 
 export type AnimalSolution = {
@@ -97,7 +97,7 @@ export const animalHealthcareAreas = [
 ];
 
 /**
- * Aquaculture Solutions — PDF §7.
+ * Aquaculture Solutions PDF §7.
  * Descriptions use PDF claim-safe framing (support / manage), not cure/kill language.
  */
 export const aquaSolutions: AquaSolution[] = [

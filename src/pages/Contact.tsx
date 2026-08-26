@@ -1,6 +1,7 @@
 import { useContact } from "@/components/hooks/use-contact";
 import { useRef } from "react";
 import { CtaButton } from "@/components/CtaButton";
+import { heroTitleClass, heroTitleSizeContact } from "@/lib/typography";
 
 export default function Contact() {
   const mutation = useContact();
@@ -10,7 +11,7 @@ export default function Contact() {
     e.preventDefault();
     const form = e.currentTarget;
 
-    // Use native checkValidity — browser shows tooltip bubbles automatically
+    // Use native checkValidity browser shows tooltip bubbles automatically
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
@@ -38,10 +39,11 @@ export default function Contact() {
           Reach Out
         </p>
         <h1
-          className="font-serif font-bold leading-[0.93] text-fg-b mb-2.5 animate-[fadeUp_0.85s_0.08s_ease-out_both]"
-          style={{ fontSize: "clamp(2.6rem, 4.5vw, 5rem)" }}
+          className={`${heroTitleClass} mb-2.5 animate-[fadeUp_0.85s_0.08s_ease-out_both]`}
+          style={heroTitleSizeContact}
         >
-          Get In Touch
+          <span className="block text-fg-b">Get In</span>
+          <span className="block text-green">Touch</span>
         </h1>
         <p className="font-sans font-light text-fg-m leading-[1.8] text-base animate-[fadeUp_0.85s_0.14s_ease-out_both]">
           Questions about enzymes, bulk orders, or custom formulations? We're here.
@@ -82,8 +84,8 @@ export default function Contact() {
               {
                 ico: "🕐",
                 lbl: "Working Hours",
-                val: "Mon – Sat",
-                sub: "10:00 AM – 6:00 PM",
+                val: "Mon to Sat",
+                sub: "10:00 AM to 6:00 PM",
               },
             ].map((c, i) => (
               <div
@@ -127,7 +129,7 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* RIGHT — Form card */}
+        {/* RIGHT Form card */}
         <div className="fc bg-card border border-border border-t-[3px] border-t-green rounded-[14px] p-7 md:p-9 h-fit opacity-0 animate-[fadeUp_0.85s_0.42s_ease-out_both]">
           <div className="flex items-start gap-3.5 mb-6">
             <div className="w-10 h-10 rounded-[10px] bg-[rgba(106,178,32,0.1)] border border-[rgba(106,178,32,0.2)] flex items-center justify-center text-base shrink-0">

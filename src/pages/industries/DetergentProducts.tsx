@@ -1,7 +1,7 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 /**
- * Detergent content from client PDF §10–11.
+ * Detergent content from client PDF §10 11.
  * Individual enzymes for stain types + custom blend options (not a product category).
  */
 const content: IndustryPageContent = {
@@ -9,7 +9,7 @@ const content: IndustryPageContent = {
   headline: ["Detergent", "Industry"],
   accentLine: 1,
   subtitle:
-    "Enzyme solutions for detergent manufacturing — different stains need different enzymes.",
+    "Enzyme solutions for detergent manufacturing different stains need different enzymes.",
   imageUrl: "/assets/products/Detergent.png",
   imageAlt: "Detergent enzyme applications",
   slug: "detergent",

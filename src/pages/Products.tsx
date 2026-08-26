@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { CtaButton } from "@/components/CtaButton";
 import { HeroScrollCta, PageHero } from "@/components/PageHero";
 import { productCategories } from "@/data/siteStructure";
+import { sectionTitleClass, sectionTitleSizeHub, heroTitleClass, heroTitleSizeLg } from "@/lib/typography";
 
 export default function Products() {
   return (
@@ -9,11 +10,8 @@ export default function Products() {
       <PageHero
         eyebrow="Products"
         title={
-          <h1
-            className="font-serif font-bold leading-[0.9] tracking-[-0.02em] text-fg-b"
-            style={{ fontSize: "clamp(2.8rem, 6vw, 5.2rem)" }}
-          >
-            Products &amp;
+          <h1 className={`${heroTitleClass} text-fg-b`} style={heroTitleSizeLg}>
+            <span className="text-fg-b">Products &amp;</span>
             <br />
             <span className="text-green">Solutions</span>
           </h1>
@@ -39,10 +37,7 @@ export default function Products() {
         <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
           Our Products
         </p>
-        <h2
-          className="font-sans font-semibold text-fg-b leading-[1.05] mb-3"
-          style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)" }}
-        >
+        <h2 className={`${sectionTitleClass} mb-3`} style={sectionTitleSizeHub}>
           Choose a category
         </h2>
         <p className="font-sans font-light text-fg-m text-[0.95rem] leading-[1.75] max-w-[480px] mb-10">
@@ -99,7 +94,7 @@ export default function Products() {
             <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">
               Also explore
             </p>
-            <h2 className="font-sans text-[1.35rem] font-semibold text-fg-b">
+            <h2 className={`${sectionTitleClass} text-[1.2rem] tracking-[0.06em]`}>
               Industries We Serve
             </h2>
           </div>

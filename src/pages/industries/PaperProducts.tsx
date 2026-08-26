@@ -5,7 +5,7 @@ const content: IndustryPageContent = {
     headline: ["Paper & Pulp", "Industry"],
     accentLine: 1,
     subtitle:
-        "Bio-solutions for bleaching, deinking, and fiber refining — reducing chemical dependency and energy consumption in biomass processing.",
+        "Bio-solutions for bleaching, deinking, and fiber refining reducing chemical dependency and energy consumption in biomass processing.",
     imageUrl: "/assets/products/Paper.png",
     imageAlt: "Industrial paper manufacturing process",
     slug: "paper-pulp",
@@ -41,7 +41,7 @@ const content: IndustryPageContent = {
 
     products: [
         {
-            code: "SELZYME – X PP",
+            code: "SELZYME X PP",
             enzyme: "Xylanase",
             application: "Bleaching",
             purpose:
@@ -49,7 +49,7 @@ const content: IndustryPageContent = {
             tags: ["Bio-bleaching", "Brightness", "Kraft Pulp"],
         },
         {
-            code: "SELZYME – CL PP",
+            code: "SELZYME CL PP",
             enzyme: "Cellulase",
             application: "Fiber Refining",
             purpose:
@@ -57,7 +57,7 @@ const content: IndustryPageContent = {
             tags: ["Fibrillation", "Refining", "Fiber Strength"],
         },
         {
-            code: "SELZYME – HEMICELL PP",
+            code: "SELZYME HEMICELL PP",
             enzyme: "Hemicellulase",
             application: "Deinking",
             purpose:
@@ -65,7 +65,7 @@ const content: IndustryPageContent = {
             tags: ["Deinking", "Recycling", "Ink Removal"],
         },
         {
-            code: "SELZYME – AMY PP",
+            code: "SELZYME AMY PP",
             enzyme: "Alpha Amylase",
             application: "Liquefaction",
             purpose:
@@ -80,7 +80,7 @@ const content: IndustryPageContent = {
         "The paper and pulp industry processes massive volumes of lignocellulosic biomass annually. As technology evolves, enzymatic applications have become vital for achieving high-performance results while minimizing environmental impact.",
         "One of the most critical breakthroughs is in the pre-bleaching of kraft pulp. By using Xylanase enzymes, mills can achieve superior brightness with a significantly lower chemical footprint, making the bleaching process much greener.",
         "For virgin pulps, our enzymes increase pulp fibrillation and water retention, which directly translates to reduced beating times and energy savings. In the world of recycled fibers, these solutions are indispensable for deinking and restoring fiber bonding.",
-        "Ansel Biotech provides specialized enzymes that address specific challenges—from removing bark and pitch to preventing slime buildup. These biological tools allow for a cleaner, more efficient production cycle from raw pulp to the finished paper product.",
+        "Ansel Biotech provides specialized enzymes that address specific challenges, from removing bark and pitch to preventing slime buildup. These biological tools allow for a cleaner, more efficient production cycle from raw pulp to the finished paper product.",
     ],
 
     ctaTitle: "Enhance your\npulp quality",

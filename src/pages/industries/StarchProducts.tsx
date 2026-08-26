@@ -41,21 +41,21 @@ const content: IndustryPageContent = {
 
     products: [
         {
-            code: "SELZYME – HTA – ST",
+            code: "SELZYME HTA ST",
             enzyme: "High Temperature Alpha Amylase",
             application: "Liquefaction Process",
             purpose: "Increases wort yield and grain adjunct cooking capacity by rapidly breaking down starch into dextrins under high-heat conditions.",
             tags: ["Liquefaction", "Viscosity Reduction"],
         },
         {
-            code: "SELZYME – AMG – ST",
+            code: "SELZYME AMG ST",
             enzyme: "Glucoamylase and Pullulanase",
             application: "Saccharification Process",
             purpose: "Produces a high dextrose equivalent (DE) at the end of the saccharification process by efficiently converting dextrins into glucose.",
             tags: ["Saccharification", "High DE"],
         },
         {
-            code: "SELZYME – BETA AMY",
+            code: "SELZYME BETA AMY",
             enzyme: "Beta Amylase",
             application: "Maltose Preparation",
             purpose: "Specifically used for the production of high-maltose syrups, targeting the second linkage in starch chains.",
@@ -74,7 +74,7 @@ const content: IndustryPageContent = {
 
     ctaTitle: "Maximize your starch\nconversion yield",
     ctaBody:
-        "Our technical experts can assist you in optimizing your liquefaction and saccharification parameters using the SELZYME – ST range.",
+        "Our technical experts can assist you in optimizing your liquefaction and saccharification parameters using the SELZYME ST range.",
 };
 
 export default function StarchProducts() {

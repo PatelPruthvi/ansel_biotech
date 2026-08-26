@@ -41,42 +41,42 @@ const content: IndustryPageContent = {
 
     products: [
         {
-            code: "SELZYME – BREW IMPROV",
+            code: "SELZYME BREW IMPROV",
             enzyme: "Amylase, β-Glucanase and Xylanase",
             application: "Mashing Process",
             purpose: "Reduces viscosity of the mash and significantly improves the filtration rate of the wort.",
             tags: ["Mashing", "Viscosity Control"],
         },
         {
-            code: "SELZYME – BETA G",
+            code: "SELZYME BETA G",
             enzyme: "Beta-glucanase",
             application: "Mashing Process",
             purpose: "Specifically targets beta-glucans to improve filtration rates and prevent 'haze' in the final brewery product.",
             tags: ["Filtration", "Clarity"],
         },
         {
-            code: "SELZYME – PAPAYA",
+            code: "SELZYME PAPAYA",
             enzyme: "Papain",
             application: "Wort Cooling & Fermentation",
             purpose: "Hydrolyzes proteins and peptides to improve yeast growth and prevent protein-related chill haze.",
             tags: ["Protein Management", "Yeast Health"],
         },
         {
-            code: "SELZYME – HTA",
+            code: "SELZYME HTA",
             enzyme: "High Temperature α-Amylase",
             application: "Mashing Process",
             purpose: "Rapidly hydrolyzes starch molecules at high temperatures to reduce viscosity and prepare the mash for saccharification.",
             tags: ["Starch Liquefaction", "High Temp"],
         },
         {
-            code: "SELZYME – ALDC",
+            code: "SELZYME ALDC",
             enzyme: "α-acetolactate decarboxylase",
             application: "Fermentation & Maturation",
             purpose: "Prevents the formation of diacetyl from α-acetolactate, reducing maturation time and ensuring flavor consistency.",
             tags: ["Flavor Stability", "Diacetyl Control"],
         },
         {
-            code: "SELZYME – AMG",
+            code: "SELZYME AMG",
             enzyme: "Glucoamylase & Pullulanase",
             application: "Fermentation Process",
             purpose: "Hydrolyzes dextrins and maltose into simpler glucose for healthy yeast growth and high attenuation.",

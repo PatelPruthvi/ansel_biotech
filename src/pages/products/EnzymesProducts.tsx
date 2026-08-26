@@ -3,6 +3,12 @@ import { CtaButton } from "@/components/CtaButton";
 import { HeroScrollCta, PageHero } from "@/components/PageHero";
 import { PageCtaBand } from "@/components/PageCtaBand";
 import { customEnzymeCta, enzymePortfolio } from "@/data/productContent";
+import {
+  sectionTitleClass,
+  sectionTitleSizeProduct,
+  heroTitleClass,
+  heroTitleSizeLg,
+} from "@/lib/typography";
 import type { QuoteProduct } from "@/components/RequestQuoteModal";
 
 const RequestQuoteModal = lazy(() =>
@@ -28,11 +34,8 @@ export default function EnzymesProducts() {
           { label: "Enzymes" },
         ]}
         title={
-          <h1
-            className="font-serif font-bold leading-[0.93] tracking-[-0.015em] text-fg-b"
-            style={{ fontSize: "clamp(2.6rem, 4.6vw, 4.6rem)" }}
-          >
-            Our Enzyme
+          <h1 className={`${heroTitleClass} text-fg-b`} style={heroTitleSizeLg}>
+            <span className="text-fg-b">Our Enzyme</span>
             <br />
             <span className="text-green">Portfolio</span>
           </h1>
@@ -58,10 +61,7 @@ export default function EnzymesProducts() {
         <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
           Our Enzyme Portfolio
         </p>
-        <h2
-          className="font-sans font-bold text-fg-b leading-[1.02] mb-8 md:mb-10"
-          style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}
-        >
+        <h2 className={`${sectionTitleClass} mb-8 md:mb-10`} style={sectionTitleSizeProduct}>
           Individual enzymes
         </h2>
 

@@ -4,6 +4,14 @@ import { Link } from "wouter";
 import { type QuoteProduct } from "@/components/RequestQuoteModal";
 import { lazy, Suspense } from "react";
 import { CtaButton } from "@/components/CtaButton";
+import { ctaBandEyebrowClass, ctaBandTitleClass } from "@/components/PageCtaBand";
+import {
+    sectionTitleClass,
+    sectionTitleSize,
+    sectionTitleSizeProduct,
+    heroTitleClass,
+    heroTitleSizeLg,
+} from "@/lib/typography";
 import { MoleculeCanvas } from "@/components/MoleculeCanvas";
 
 const RequestQuoteModal = lazy(() =>
@@ -49,7 +57,7 @@ export interface IndustryPageContent {
     ctaTitle: string;
     ctaBody: string;
     slug: string;
-    /** Optional section labels — defaults preserve existing industry-page copy */
+    /** Optional section labels defaults preserve existing industry-page copy */
     productsEyebrow?: string;
     productsTitle?: string;
     processEyebrow?: string;
@@ -179,7 +187,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
             §1 HERO
         ══════════════════════════════════════════════════ */}
 
-                {/* ── MOBILE HERO (< lg) — full-bleed ≤100svh, soft bottom fade ── */}
+                {/* ── MOBILE HERO (< lg) full-bleed ≤100svh, soft bottom fade ── */}
                 <section
                     className="lg:hidden relative overflow-hidden"
                     style={{
@@ -238,9 +246,9 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                     >
                         <div style={{ animation: "_mCardUp .55s .08s cubic-bezier(.4,0,.2,1) both" }}>
                             <h1
-                                className="font-serif font-bold leading-[0.9] tracking-[-0.02em]"
+                                className={heroTitleClass}
                                 style={{
-                                    fontSize: "clamp(2.2rem, 9.5vw, 3.1rem)",
+                                    ...heroTitleSizeLg,
                                     color: "#f0f0ee",
                                 }}
                             >
@@ -350,7 +358,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                     </div>
                 </section>
 
-                {/* ── DESKTOP HERO (≥ lg) — original, unchanged ── */}
+                {/* ── DESKTOP HERO (≥ lg) original, unchanged ── */}
                 <section
                     className="hidden lg:flex snap-start relative flex-col overflow-hidden"
                     style={{ height: "100svh", minHeight: 560 }}
@@ -389,8 +397,8 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                         </nav>
 
                         <h1
-                            className="_fu1 font-serif font-bold leading-[0.9] tracking-[-0.02em] text-fg-b"
-                            style={{ fontSize: "clamp(3rem, 7vw, 6.4rem)" }}
+                            className={`_fu1 ${heroTitleClass} text-fg-b`}
+                            style={heroTitleSizeLg}
                         >
                             {c.headline.map((line, i) => (
                                 <span key={i} className={`block ${i === c.accentLine ? "text-green" : ""}`}>
@@ -447,7 +455,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                         </div>
                     </div>
 
-                    {/* Molecule overlay — right side */}
+                    {/* Molecule overlay right side */}
                     <div className="absolute top-0 right-0 w-[42%] h-full pointer-events-none hidden lg:block opacity-35">
                       <MoleculeCanvas />
                     </div>
@@ -465,7 +473,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                 </section>
 
                 {/* ══════════════════════════════════════════════════
-            §2 PRODUCTS — unchanged
+            §2 PRODUCTS unchanged
         ══════════════════════════════════════════════════ */}
                 <section className="relative bg-bg2 border-b border-border" style={{ minHeight: "100svh" }}>
                     <div className="max-w-[1160px] mx-auto w-full px-5 lg:px-8 py-12 md:py-16 lg:py-24">
@@ -474,7 +482,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                                 <p id="our-range" className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">
                                     {c.productsEyebrow ?? "Our Range"}
                                 </p>
-                                <h2 className="font-sans font-bold text-fg-b leading-[1]" style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}>
+                                <h2 className={sectionTitleClass} style={sectionTitleSizeProduct}>
                                     {c.productsTitle ?? "SELZYME Products"}
                                 </h2>
                             </div>
@@ -500,7 +508,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                 </section>
 
                 {/* ══════════════════════════════════════════════════
-            §3 PROCESS — unchanged
+            §3 PROCESS unchanged
         ══════════════════════════════════════════════════ */}
                 <section className="relative flex flex-col overflow-hidden" style={{ minHeight: "100svh" }}>
                     <div
@@ -516,7 +524,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                             <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-2">
                                 {c.processEyebrow ?? "How It Works"}
                             </p>
-                            <h2 className="font-sans font-bold text-fg-b leading-[1]" style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}>
+                            <h2 className={sectionTitleClass} style={sectionTitleSizeProduct}>
                                 {c.processTitle ?? "The Enzymatic Process"}
                             </h2>
                         </div>
@@ -577,7 +585,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                 </section>
 
                 {/* ══════════════════════════════════════════════════
-            §4 BACKGROUND — unchanged
+            §4 BACKGROUND unchanged
         ══════════════════════════════════════════════════ */}
                 <section
                     className="relative border-t border-border overflow-hidden"
@@ -593,7 +601,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                         <div className="_rev mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
                             <div>
                                 <p className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">Background</p>
-                                <h2 className="font-sans font-bold text-fg-b leading-[1.02]" style={{ fontSize: "clamp(1.9rem, 3.5vw, 3.2rem)" }}>{c.aboutTitle}</h2>
+                                <h2 className={sectionTitleClass} style={sectionTitleSize}>{c.aboutTitle}</h2>
                             </div>
                             <CtaButton href="/contact" variant="text" className="hidden lg:inline-flex flex-shrink-0 text-[0.62rem] tracking-[0.12em]">
                                 Request our enzyme guide →
@@ -648,15 +656,15 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                 </section>
 
                 {/* ══════════════════════════════════════════════════
-            §5 CTA BAND — short ending (Textile format)
+            §5 CTA BAND short ending (Textile format)
         ══════════════════════════════════════════════════ */}
                 <section
                     className="relative py-12 md:py-16 border-t border-border overflow-hidden"
                     style={{ background: "radial-gradient(ellipse at 50% 110%, rgba(106,178,32,0.09), transparent 55%)" }}
                 >
                     <div className="relative z-10 max-w-[700px] mx-auto px-5 lg:px-8 text-center">
-                        <p className="_rev font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">Ready to Optimise?</p>
-                        <h2 className="_rev _d1 font-sans font-bold text-fg-b leading-[1.05] mb-3 whitespace-pre-line" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}>{c.ctaTitle}</h2>
+                        <p className={`_rev ${ctaBandEyebrowClass}`}>Ready to Optimise?</p>
+                        <h2 className={`_rev _d1 ${ctaBandTitleClass}`}>{c.ctaTitle}</h2>
                         <p className="_rev _d2 font-sans font-light text-fg-m text-[0.95rem] leading-[1.75] mb-6 max-w-[460px] mx-auto">{c.ctaBody}</p>
                         <div className="_rev _d3 flex flex-wrap gap-3 justify-center">
                             <CtaButton href="/contact">
@@ -679,7 +687,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
 }
 
 /* ─────────────────────────────────────────
-   ProductCard — unchanged
+   ProductCard unchanged
 ───────────────────────────────────────── */
 function ProductCard({
     product,

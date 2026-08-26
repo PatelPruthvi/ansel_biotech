@@ -1,7 +1,7 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 /**
- * Food Enzymes — client PDF §13.
+ * Food Enzymes client PDF §13.
  * Only Bakery and Dairy are detailed in the PDF.
  * Enzyme ↔ application mapping is not 1:1 in the PDF; shared application lists are used.
  * Chymosin/rennet is listed with PDF note "if part of your actual portfolio".
@@ -18,7 +18,7 @@ const content: IndustryPageContent = {
   headline: ["Food", "Industry"],
   accentLine: 1,
   subtitle:
-    "Enzyme solutions for food manufacturers — improve processing efficiency, texture, stability, yield and product quality.",
+    "Enzyme solutions for food manufacturers improve processing efficiency, texture, stability, yield and product quality.",
   imageUrl: "/assets/products/FoodEnzyme.png",
   imageAlt: "Food processing enzymes",
   slug: "food",
@@ -111,8 +111,8 @@ const content: IndustryPageContent = {
   aboutSub:
     "Enzymes are naturally occurring biological catalysts that help food manufacturers improve processing efficiency, texture, stability, yield and product quality.",
   aboutBody: [
-    "Bakery — potential enzymes: Amylase, Xylanase, Protease, Lipase. Applications: dough handling, bread volume, crumb softness, dough stability, shelf-life support.",
-    "Dairy — potential enzymes: Lactase, Chymosin/rennet, Protease, Lipase. Applications: lactose reduction, cheese processing, dairy texture, processing optimization.",
+    "Bakery potential enzymes: Amylase, Xylanase, Protease, Lipase. Applications: dough handling, bread volume, crumb softness, dough stability, shelf-life support.",
+    "Dairy potential enzymes: Lactase, Chymosin/rennet, Protease, Lipase. Applications: lactose reduction, cheese processing, dairy texture, processing optimization.",
   ],
   aboutItems: [
     {

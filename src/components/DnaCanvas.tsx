@@ -231,7 +231,7 @@ export function DnaCanvas({ className = "" }: { className?: string }) {
         particles.push({ mesh: p, vel: outDir, life: 0, maxLife: 2 + Math.random() * 1.5 });
       }
 
-      // Update particles — fade + slow down
+      // Update particles fade + slow down
       for (let i = particles.length - 1; i >= 0; i--) {
         const pp = particles[i];
         pp.life += dt;

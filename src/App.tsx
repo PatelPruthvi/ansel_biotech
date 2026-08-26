@@ -1,4 +1,5 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,21 +19,30 @@ import NotFound from "@/pages/not-found";
 
 import ProbioticsProducts from "@/pages/products/ProbioticsProducts";
 import EnzymesProducts from "@/pages/products/EnzymesProducts";
-import AnimalHealthcareProducts from "@/pages/products/AnimalHealthcareProducts";
-import TextileProducts from "@/pages/products/TextileProducts";
-import DetergentProducts from "@/pages/products/DetergentProducts";
-import LeatherProducts from "@/pages/products/LeatherProducts";
-import FoodProducts from "@/pages/products/FoodProducts";
-import AnimalFeedProducts from "@/pages/products/AnimalProducts";
-import SugarProducts from "@/pages/products/SugarProducts";
-import DistilleryProducts from "@/pages/products/DistilleryProducts";
-import StarchProducts from "@/pages/products/StarchProducts";
-import BreweryProducts from "@/pages/products/BreweryProducts";
-import PharmaProducts from "@/pages/products/PharmaProducts";
-import WasteWaterProducts from "@/pages/products/WasteWaterProducts";
-import PaperPulpProducts from "@/pages/products/PaperProducts";
+import AnimalHealthcareProducts from "@/pages/industries/AnimalHealthcareProducts";
+import TextileProducts from "@/pages/industries/TextileProducts";
+import DetergentProducts from "@/pages/industries/DetergentProducts";
+import LeatherProducts from "@/pages/industries/LeatherProducts";
+import FoodProducts from "@/pages/industries/FoodProducts";
+import AnimalFeedProducts from "@/pages/industries/AnimalProducts";
+import SugarProducts from "@/pages/industries/SugarProducts";
+import DistilleryProducts from "@/pages/industries/DistilleryProducts";
+import StarchProducts from "@/pages/industries/StarchProducts";
+import BreweryProducts from "@/pages/industries/BreweryProducts";
+import PharmaProducts from "@/pages/industries/PharmaProducts";
+import WasteWaterProducts from "@/pages/industries/WasteWaterProducts";
+import PaperPulpProducts from "@/pages/industries/PaperProducts";
 
 const queryClient = new QueryClient();
+
+/** Soft redirect for legacy /products/* industry URLs */
+function Redirect({ to }: { to: string }) {
+  const [, setLocation] = useLocation();
+  useEffect(() => {
+    setLocation(to, { replace: true });
+  }, [to, setLocation]);
+  return null;
+}
 
 function Router() {
   return (
@@ -51,24 +61,61 @@ function Router() {
             <Route path="/products/probiotics" component={ProbioticsProducts} />
             <Route path="/products/enzymes" component={EnzymesProducts} />
 
-            <Route
-              path="/products/animal-healthcare"
-              component={AnimalHealthcareProducts}
-            />
-            <Route path="/products/textile" component={TextileProducts} />
-            <Route path="/products/detergent" component={DetergentProducts} />
-            <Route path="/products/leather" component={LeatherProducts} />
-            <Route path="/products/food" component={FoodProducts} />
+            <Route path="/industries/animal-healthcare" component={AnimalHealthcareProducts} />
+            <Route path="/industries/textile" component={TextileProducts} />
+            <Route path="/industries/detergent" component={DetergentProducts} />
+            <Route path="/industries/leather" component={LeatherProducts} />
+            <Route path="/industries/food" component={FoodProducts} />
 
-            <Route path="/products/feed" component={AnimalFeedProducts} />
+            <Route path="/industries/feed" component={AnimalFeedProducts} />
+            <Route path="/industries/sugar" component={SugarProducts} />
+            <Route path="/industries/distillery" component={DistilleryProducts} />
+            <Route path="/industries/starch" component={StarchProducts} />
+            <Route path="/industries/brewery" component={BreweryProducts} />
+            <Route path="/industries/pharma" component={PharmaProducts} />
+            <Route path="/industries/wastewater" component={WasteWaterProducts} />
+            <Route path="/industries/paper" component={PaperPulpProducts} />
 
-            <Route path="/products/sugar" component={SugarProducts} />
-            <Route path="/products/distillery" component={DistilleryProducts} />
-            <Route path="/products/starch" component={StarchProducts} />
-            <Route path="/products/brewery" component={BreweryProducts} />
-            <Route path="/products/pharma" component={PharmaProducts} />
-            <Route path="/products/wastewater" component={WasteWaterProducts} />
-            <Route path="/products/paper" component={PaperPulpProducts} />
+            {/* Legacy /products/* industry paths → /industries/* */}
+            <Route path="/products/animal-healthcare">
+              {() => <Redirect to="/industries/animal-healthcare" />}
+            </Route>
+            <Route path="/products/textile">
+              {() => <Redirect to="/industries/textile" />}
+            </Route>
+            <Route path="/products/detergent">
+              {() => <Redirect to="/industries/detergent" />}
+            </Route>
+            <Route path="/products/leather">
+              {() => <Redirect to="/industries/leather" />}
+            </Route>
+            <Route path="/products/food">
+              {() => <Redirect to="/industries/food" />}
+            </Route>
+            <Route path="/products/feed">
+              {() => <Redirect to="/industries/feed" />}
+            </Route>
+            <Route path="/products/sugar">
+              {() => <Redirect to="/industries/sugar" />}
+            </Route>
+            <Route path="/products/distillery">
+              {() => <Redirect to="/industries/distillery" />}
+            </Route>
+            <Route path="/products/starch">
+              {() => <Redirect to="/industries/starch" />}
+            </Route>
+            <Route path="/products/brewery">
+              {() => <Redirect to="/industries/brewery" />}
+            </Route>
+            <Route path="/products/pharma">
+              {() => <Redirect to="/industries/pharma" />}
+            </Route>
+            <Route path="/products/wastewater">
+              {() => <Redirect to="/industries/wastewater" />}
+            </Route>
+            <Route path="/products/paper">
+              {() => <Redirect to="/industries/paper" />}
+            </Route>
 
             <Route path="/contact" component={Contact} />
             <Route path="/contacts" component={Contact} />

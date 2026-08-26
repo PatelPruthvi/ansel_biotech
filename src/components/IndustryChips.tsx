@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { industriesWeServe, industryChipClassName } from "@/data/siteStructure";
 import { cn } from "@/lib/utils";
 
-/** Shared Industries We Serve chips — Products hero (and reusable elsewhere). */
+/** Shared Industries We Serve chips Products hero (and reusable elsewhere). */
 export function IndustryChips({
   className,
   chipClassName,

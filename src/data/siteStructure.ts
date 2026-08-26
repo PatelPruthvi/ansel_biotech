@@ -1,5 +1,5 @@
 /**
- * Shared site structure — Products categories & Industries We Serve.
+ * Shared site structure Products categories & Industries We Serve.
  * Single source for Home marquee, Products chips, Footer, and hubs.
  */
 
@@ -28,41 +28,46 @@ export const industriesWeServe: IndustryLink[] = [
   {
     id: "animal-healthcare",
     name: "Animal Healthcare",
-    href: "/products/animal-healthcare",
+    href: "/industries/animal-healthcare",
     emoji: "🐔",
-    blurb: "Poultry, Aqua and Ruminant feed solutions.",
+    blurb:
+      "Probiotics and feed enzymes for poultry, aquaculture and ruminant nutrition.",
     imageUrl: "/assets/products/AnimalFeedEnzyme.png",
   },
   {
     id: "textile",
-    name: "Textile",
-    href: "/products/textile",
+    name: "Textile Processing",
+    href: "/industries/textile",
     emoji: "🧵",
-    blurb: "Desizing to biowashing, enzyme by step.",
+    blurb:
+      "Desizing, bio-scouring, biopolishing and other enzyme-based textile processes.",
     imageUrl: "/assets/products/textile_1.png",
   },
   {
     id: "detergent",
-    name: "Detergent",
-    href: "/products/detergent",
+    name: "Detergent & Cleaning",
+    href: "/industries/detergent",
     emoji: "🧴",
-    blurb: "Stain enzymes and custom detergent blends.",
+    blurb:
+      "Protease, amylase, lipase and cellulase solutions for detergent formulations.",
     imageUrl: "/assets/products/Detergent.png",
   },
   {
     id: "leather",
-    name: "Leather",
-    href: "/products/leather",
+    name: "Leather Processing",
+    href: "/industries/leather",
     emoji: "👜",
-    blurb: "Soaking, dehairing, bating and degreasing.",
-    imageUrl: "/assets/products/Detergent.png",
+    blurb:
+      "Enzyme solutions for soaking, dehairing, bating, degreasing and related processes.",
+    imageUrl: "/assets/products/LeatherEnzyme.png",
   },
   {
     id: "food",
-    name: "Food",
-    href: "/products/food",
+    name: "Food Processing",
+    href: "/industries/food",
     emoji: "🍞",
-    blurb: "Bakery and dairy processing enzymes.",
+    blurb:
+      "Enzyme solutions for bakery, dairy and food-processing applications.",
     imageUrl: "/assets/products/FoodEnzyme.png",
   },
 ];
@@ -79,7 +84,7 @@ export const productCategories: ProductCategoryLink[] = [
     tag: "Organism groups",
     desc: "Strains by genus: Bacillus, Lactobacillus, Yeast, Bifidobacterium, Streptococcus / Enterococcus.",
     icon: "🦠",
-    imageUrl: "/assets/products/AnimalFeedEnzyme.png",
+    imageUrl: "/assets/probiotics/bacillus.jpg",
   },
   {
     id: "enzymes",

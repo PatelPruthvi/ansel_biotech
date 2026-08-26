@@ -4,14 +4,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * Brand CTA system — visual reference: Home hero buttons.
+ * Brand CTA system visual reference: Home hero buttons.
  * Primary = filled green + shimmer; Secondary = outline + indigo hover.
  */
 export const ctaButtonVariants = cva(
   [
     "inline-flex items-center justify-center gap-2",
     "font-sans text-[0.7rem] font-normal tracking-[0.14em] uppercase",
-    "px-7 py-3 rounded-[3px] border-[1.5px]",
+    "px-7 py-3 rounded-[3px]",
     "transition-all duration-200",
     "disabled:opacity-50 disabled:pointer-events-none disabled:hover:shadow-none",
     "active:scale-[0.98]",
@@ -21,13 +21,13 @@ export const ctaButtonVariants = cva(
     variants: {
       variant: {
         primary:
-          "btn-p relative overflow-hidden text-white border-green bg-green hover:shadow-[0_4px_18px_rgba(106,178,32,0.28)]",
+          "btn-p relative overflow-hidden text-white border-[1.5px] border-green bg-green hover:shadow-[0_4px_18px_rgba(106,178,32,0.28)]",
         secondary:
-          "bg-transparent text-fg-m border-border-m hover:border-indigo-l hover:text-indigo-l",
-        /** Outline CTA on dark / image heroes — border matches label color */
+          "bg-transparent text-fg-b border border-current hover:text-indigo-l",
+        /** Outline CTA on dark / image heroes border matches label color */
         secondaryDark:
           "bg-transparent text-[#f0f0ee] border-[1.5px] border-solid border-[#f0f0ee] hover:bg-[rgba(240,240,238,0.12)] hover:text-white hover:border-white",
-        /** Compact text CTA — not an underline novelty link */
+        /** Compact text CTA not an underline novelty link */
         text: "border-transparent bg-transparent text-green px-0 py-1 rounded-none hover:text-green-l hover:shadow-none active:scale-100",
       },
       size: {

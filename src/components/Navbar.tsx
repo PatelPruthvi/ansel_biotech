@@ -15,7 +15,7 @@ const productHrefs = new Set([
 ]);
 
 function isIndustryPath(path: string) {
-  return industryHrefs.has(path) || path.startsWith("/products/animal-healthcare");
+  return path === "/industries" || path.startsWith("/industries/") || industryHrefs.has(path);
 }
 
 function isProductPath(path: string) {

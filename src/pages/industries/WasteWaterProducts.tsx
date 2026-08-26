@@ -41,7 +41,7 @@ const content: IndustryPageContent = {
 
     products: [
         {
-            code: "SELZYME – AEROBE",
+            code: "SELZYME AEROBE",
             enzyme: "Enzyme & Microbe Blend",
             application: "Aerobic Secondary Treatment",
             purpose:
@@ -49,7 +49,7 @@ const content: IndustryPageContent = {
             tags: ["Aerobic", "Sludge Oxidation", "Odour Control"],
         },
         {
-            code: "SELZYME – ANAEROBE",
+            code: "SELZYME ANAEROBE",
             enzyme: "Enzyme & Microbe Blend",
             application: "Anaerobic Secondary Treatment",
             purpose:
@@ -64,7 +64,7 @@ const content: IndustryPageContent = {
         "Water is the world's most critical natural resource, yet surface water remains highly vulnerable to municipal and industrial pollution. Traditional physical and chemical technologies often involve prohibitive costs and complex infrastructure.",
         "Ansel Biotech provides a biological alternative that has gained significant attention for its ability to completely oxidize toxic impurities. Our methods utilize nature's own catalysts to achieve superior results with simpler equipment and lower energy requirements.",
         "Our SELZYME treatment range contains specially selected enzymes and bacteria strains that start acting immediately upon application. By targeting organic waste at a molecular level, these products improve the quality of wastewater effluent without relying on harsh chemicals.",
-        "Whether managing municipal wastewater or industrial runoff, our solutions focus on long-term system health—reducing sludge buildup, eliminating odors, and ensuring that treated water meets the highest environmental safety standards.",
+        "Whether managing municipal wastewater or industrial runoff, our solutions focus on long-term system health, reducing sludge buildup, eliminating odors, and ensuring that treated water meets the highest environmental safety standards.",
     ],
 
     ctaTitle: "Optimize your\ntreatment plant",

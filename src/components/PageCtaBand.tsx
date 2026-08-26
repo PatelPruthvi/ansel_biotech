@@ -1,8 +1,15 @@
 import type { ReactNode } from "react";
 import { CtaButton } from "@/components/CtaButton";
 
+
+export const ctaBandEyebrowClass =
+  "font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3";
+
+export const ctaBandTitleClass =
+  "font-sans text-[clamp(1.15rem,2.8vw,2rem)] tracking-[0.06em] uppercase text-fg-b font-semibold leading-[1.35] mb-3 whitespace-pre-line";
+
 type PageCtaBandProps = {
-  /** Small green eyebrow — default matches Textile */
+  /** Small green eyebrow default matches Textile */
   eyebrow?: string;
   title: ReactNode;
   body: ReactNode;
@@ -15,7 +22,7 @@ type PageCtaBandProps = {
 };
 
 /**
- * Shared ending CTA — Textile format.
+ * Shared ending CTA Textile format.
  * Label + title + body + two buttons. Short band, not full viewport.
  */
 export function PageCtaBand({
@@ -37,15 +44,8 @@ export function PageCtaBand({
       }}
     >
       <div className="relative z-10 max-w-[700px] mx-auto px-5 lg:px-8 text-center">
-        <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
-          {eyebrow}
-        </p>
-        <h2
-          className="font-sans font-bold text-fg-b leading-[1.05] mb-3 whitespace-pre-line"
-          style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
-        >
-          {title}
-        </h2>
+        <p className={ctaBandEyebrowClass}>{eyebrow}</p>
+        <h2 className={ctaBandTitleClass}>{title}</h2>
         <p className="font-sans font-light text-fg-m text-[0.95rem] leading-[1.75] mb-6 max-w-[460px] mx-auto">
           {body}
         </p>

@@ -25,7 +25,7 @@ export type EnzymeItem = {
   description: string;
 };
 
-/** PDF §3 — Probiotic Strains by organism group */
+/** PDF §3 Probiotic Strains by organism group */
 export const probioticGroups: ProbioticGroup[] = [
   {
     id: "bacillus",
@@ -129,7 +129,7 @@ export const probioticGroups: ProbioticGroup[] = [
   },
 ];
 
-/** PDF §4 — Our Enzyme Portfolio */
+/** PDF §4 Our Enzyme Portfolio */
 export const enzymePortfolio: EnzymeItem[] = [
   {
     id: "amylase",

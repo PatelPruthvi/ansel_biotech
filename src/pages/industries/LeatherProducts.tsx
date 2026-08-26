@@ -1,7 +1,7 @@
 import { IndustryProductPage, type IndustryPageContent } from "@/components/IndustryProductPage";
 
 /**
- * Leather Processing — client PDF §12.
+ * Leather Processing client PDF §12.
  * Key applications: Soaking, Dehairing, Bating, Degreasing.
  * Product names/benefits preserved from PDF (Unhairing = Dehairing stage).
  */
@@ -11,7 +11,7 @@ const content: IndustryPageContent = {
   accentLine: 1,
   subtitle:
     "Our leather processing enzymes replace harsh chemicals in traditional tanning processes, improving leather quality while reducing environmental impact.",
-  imageUrl: "/assets/products/Detergent.png",
+  imageUrl: "/assets/products/LeatherEnzyme.png",
   imageAlt: "Leather processing",
   slug: "leather",
 

@@ -4,6 +4,7 @@ import { CtaButton } from "@/components/CtaButton";
 import { PageCtaBand } from "@/components/PageCtaBand";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { industriesWeServe } from "@/data/siteStructure";
+import { sectionTitleClass, sectionTitleSize } from "@/lib/typography";
 
 const DnaCanvas = lazy(() =>
   import("@/components/DnaCanvas").then((m) => ({ default: m.DnaCanvas }))
@@ -68,12 +69,12 @@ export default function Home() {
 
         <div className="relative z-10 flex-1 flex items-center px-[6vw] md:px-[9vw] pt-[88px] md:pt-0">
           <div className="flex flex-col gap-5 md:gap-7 max-w-full md:max-w-[560px] w-full">
-            <p className="font-sans text-[0.62rem] md:text-[0.72rem] tracking-[0.22em] uppercase text-fg-m animate-[fadeUp_0.8s_ease-out_both]">
+            <p className="font-sans text-[0.62rem] md:text-[0.72rem] tracking-[0.22em] uppercase text-fg-b animate-[fadeUp_0.8s_ease-out_both]">
               Enzyme Technology • Probiotics • Bioprocess Solutions
             </p>
 
             <h1
-              className="font-serif font-bold leading-[0.91] tracking-[-0.015em] text-fg-b animate-[fadeUp_0.8s_0.1s_ease-out_both]"
+              className="font-section font-bold leading-[0.91] tracking-[-0.015em] text-fg-b animate-[fadeUp_0.8s_0.1s_ease-out_both]"
               style={{
                 perspective: "800px",
                 fontSize: "clamp(2.6rem, 7vw, 5.6rem)",
@@ -104,7 +105,7 @@ export default function Home() {
             </h1>
 
             <p
-              className="font-sans font-light text-fg-m max-w-[400px] animate-[fadeUp_0.8s_0.2s_ease-out_both]"
+              className="font-sans font-light text-fg-b max-w-[400px] animate-[fadeUp_0.8s_0.2s_ease-out_both]"
               style={{
                 fontSize: "clamp(0.95rem, 1.3vw, 1.16rem)",
                 lineHeight: 1.85,
@@ -158,16 +159,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What We Do — full viewport, original kit + marquee */}
+      {/* What We Do full viewport, original kit + marquee */}
       <section className="relative w-full flex items-center bg-background py-16 md:py-[90px]">
         <div className="w-full max-w-[1160px] mx-auto px-5 md:px-10">
           <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3 reveal">
             What We Do
           </p>
           <h2
-            className="font-serif font-semibold text-fg-b leading-[1.02] mb-10 md:mb-12 reveal"
+            className={`${sectionTitleClass} mb-10 md:mb-12 reveal`}
             style={{
-              fontSize: "clamp(1.9rem, 3.2vw, 3rem)",
+              ...sectionTitleSize,
               transitionDelay: "80ms",
             }}
           >
@@ -222,7 +223,7 @@ export default function Home() {
 
       <PageCtaBand
         title={"See the portfolio"}
-        body="Probiotic strains and enzymes organised by application — from animal health to industrial processing."
+        body="Probiotic strains and enzymes organised by application, from animal health to industrial processing."
         primaryLabel="Explore Products →"
         primaryHref="/products"
         secondaryLabel="About Us"

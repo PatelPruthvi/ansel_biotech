@@ -9,27 +9,39 @@ import {
   type AnimalSolution,
   type AquaSolution,
 } from "@/data/animalHealthcareContent";
+import {
+  sectionTitleClass,
+  sectionTitleSizeProduct,
+  heroTitleClass,
+  heroTitleSizeLg,
+} from "@/lib/typography";
 
 type AreaId = "poultry" | "aqua" | "ruminant";
 
 const AREA_VISUAL: Record<
   AreaId,
-  { emoji: string; blurb: string; tone: string }
+  { emoji: string; blurb: string; tone: string; nutritionLabel: string }
 > = {
   poultry: {
     emoji: "🐔",
-    blurb: "Poultry feed optimization with enzyme and probiotic solutions.",
+    blurb:
+      "Enzyme and probiotic solutions for improved feed utilization, gut health and production performance.",
     tone: "rgba(106,178,32,0.10)",
+    nutritionLabel: "Poultry Nutrition",
   },
   aqua: {
     emoji: "🦐",
-    blurb: "Aquaculture solutions for gut, water, soil and pond conditions.",
+    blurb:
+      "Probiotic and enzyme solutions for gut health, water quality, soil management and pond performance.",
     tone: "rgba(58,58,184,0.10)",
+    nutritionLabel: "Aqua Nutrition",
   },
   ruminant: {
     emoji: "🐄",
-    blurb: "Ruminant feed processing with enzyme and probiotic support.",
+    blurb:
+      "Feed enzyme and probiotic solutions supporting fiber utilization, digestion and feed efficiency.",
     tone: "rgba(106,178,32,0.10)",
+    nutritionLabel: "Ruminant Nutrition",
   },
 };
 
@@ -104,11 +116,10 @@ export default function AnimalHealthcareProducts() {
           { label: "Animal Healthcare" },
         ]}
         title={
-          <h1
-            className="font-serif font-bold leading-[0.93] tracking-[-0.015em] text-fg-b"
-            style={{ fontSize: "clamp(2.6rem, 4.6vw, 4.6rem)" }}
-          >
-            Animal Healthcare
+          <h1 className={`${heroTitleClass} text-fg-b`} style={heroTitleSizeLg}>
+            <span className="text-fg-b">Animal</span>
+            <br className="sm:hidden" />{" "}
+            <span className="text-fg-b">Healthcare</span>
             <br />
             <span className="text-green">Industry</span>
           </h1>
@@ -135,15 +146,16 @@ export default function AnimalHealthcareProducts() {
         <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
           Focus Areas
         </p>
-        <h2
-          className="font-sans font-bold text-fg-b leading-[1.02] mb-3"
-          style={{ fontSize: "clamp(1.7rem, 3vw, 2.6rem)" }}
-        >
-          Three areas. One industry.
+        <h2 className={`${sectionTitleClass} mb-3`} style={sectionTitleSizeProduct}>
+          Animal Nutrition Solutions
         </h2>
+        <p className="font-sans font-light text-fg-m text-[0.95rem] leading-[1.75] max-w-[540px] mb-3">
+          Targeted enzyme and probiotic solutions for poultry, aquaculture and
+          ruminant nutrition.
+        </p>
         <p className="font-sans font-light text-fg-m text-[0.95rem] leading-[1.75] max-w-[540px] mb-6 lg:mb-8">
           Choose an area to see matching solutions. Selected content updates right
-          below — no hunting down the page.
+          below, no hunting down the page.
         </p>
 
         {/* ── MOBILE: sticky segment + accordion results ── */}
@@ -179,11 +191,6 @@ export default function AnimalHealthcareProducts() {
               })}
             </div>
             <p className="font-sans text-[0.78rem] text-fg-m leading-[1.5] mt-2.5 mb-0 text-center">
-              Viewing{" "}
-              <span className="text-fg-b font-medium">
-                {animalHealthcareAreas.find((a) => a.id === area)?.label}
-              </span>
-              {" — "}
               {AREA_VISUAL[area].blurb}
             </p>
           </div>
@@ -249,13 +256,12 @@ export default function AnimalHealthcareProducts() {
             <div>
               <div className="mb-8">
                 <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
-                  Aquaculture Solutions
+                  Aqua Nutrition
                 </p>
                 <h2
-                  className="font-sans font-semibold text-fg-b leading-[1.05]"
-                  style={{ fontSize: "clamp(1.5rem, 2.6vw, 2rem)" }}
+                  className={`${sectionTitleClass} text-[clamp(1.35rem,2.4vw,1.85rem)]`}
                 >
-                  Solutions for ponds and feed
+                  Enzymes & Probiotics
                 </h2>
               </div>
 
@@ -281,13 +287,12 @@ export default function AnimalHealthcareProducts() {
           ) : (
             <div>
               <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
-                {area === "poultry" ? "Poultry" : "Ruminant"} Solutions
+                {AREA_VISUAL[area].nutritionLabel}
               </p>
               <h2
-                className="font-sans font-semibold text-fg-b leading-[1.05] mb-8"
-                style={{ fontSize: "clamp(1.5rem, 2.6vw, 2rem)" }}
+                className={`${sectionTitleClass} mb-8 text-[clamp(1.35rem,2.4vw,1.85rem)]`}
               >
-                Enzymes & probiotic blend
+                Enzymes & Probiotics
               </h2>
 
               <div className="grid grid-cols-2 gap-5">
@@ -322,11 +327,10 @@ function MobileSolutionList({
       <div className="flex items-baseline justify-between gap-3 mb-4">
         <div>
           <p className="font-sans text-[0.58rem] tracking-[0.18em] uppercase text-green mb-1">
-            {area === "poultry" ? "Poultry" : "Ruminant"} · {animalHealthcareSolutions.length}{" "}
-            solutions
+            {AREA_VISUAL[area].nutritionLabel}
           </p>
           <h3 className="font-sans text-[1.25rem] font-semibold text-fg-b m-0">
-            Enzymes & probiotic blend
+            Enzymes & Probiotics
           </h3>
         </div>
       </div>
@@ -420,10 +424,10 @@ function MobileAquaList({
       <div className="flex items-center justify-between gap-3 mb-4">
         <div>
           <p className="font-sans text-[0.58rem] tracking-[0.18em] uppercase text-green mb-1">
-            Aquaculture · {aquaSolutions.length} solutions
+            Aqua Nutrition
           </p>
           <h3 className="font-sans text-[1.25rem] font-semibold text-fg-b m-0">
-            Ponds and feed
+            Enzymes & Probiotics
           </h3>
         </div>
       </div>

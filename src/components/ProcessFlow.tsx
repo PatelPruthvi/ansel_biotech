@@ -1,18 +1,50 @@
 import { useEffect, useRef, useState } from "react";
+import { sectionTitleClass, sectionTitleSizeProcess } from "@/lib/typography";
 
 const STEPS = [
-  { label: "Raw Materials", title: "Sourcing & QC", visual: "inspect", blurb: "Incoming lots screened for purity, potency and microbial load." },
-  { label: "Fermentation", title: "Precision Scale", visual: "checklist", blurb: "Controlled culture at commercial pH, temperature and duration." },
-  { label: "Processing", title: "Downstream", visual: "layout", blurb: "Extraction and purification tuned for consistent yield." },
-  { label: "Formulation", title: "Custom Blending", visual: "bars", blurb: "Enzyme, probiotic and carrier ratios built for the application." },
-  { label: "Delivery", title: "QA & Dispatch", visual: "dispatch", blurb: "Final QA, packing and dispatch to the facility that needs it." },
+  {
+    label: "Raw Materials & Seed",
+    title: "Sourcing & Seed Development",
+    visual: "raw-seed" as const,
+    items: ["Purity", "Potency", "Viability"],
+    blurb:
+      "Incoming materials and seed culture screened for purity, potency and viability.",
+  },
+  {
+    label: "Upstream",
+    title: "Controlled Fermentation",
+    visual: "upstream" as const,
+    items: ["Seed expansion", "Fermentation"],
+    blurb: "Seed expansion into controlled fermentation at commercial scale.",
+  },
+  {
+    label: "Downstream",
+    title: "Filtration & Ultrafiltration",
+    visual: "downstream" as const,
+    items: ["Biomass removal", "Concentration", "Purification"],
+    blurb:
+      "Filtration and ultrafiltration for biomass removal, concentration and purification.",
+  },
+  {
+    label: "Formulation",
+    title: "Drying & Formulation",
+    visual: "formulation" as const,
+    items: ["Drying", "Dosing", "Custom blending"],
+    blurb: "Spray or vacuum drying, accurate dosing and custom blending.",
+  },
+  {
+    label: "Final Product",
+    title: "QA, Packaging & Dispatch",
+    visual: "final" as const,
+    items: ["Quality testing", "Packaging", "Delivery"],
+    blurb: "Quality testing, sealed packaging and dispatch.",
+  },
 ] as const;
 
 const N = STEPS.length;
 
-/* Animation timing — continuous motion, no stopping */
-const TRAVERSE = 12000; // total time to go from first to last node
-const TAIL = 2800;      // 2s hold + 0.8s fade at end before loop
+const TRAVERSE = 14000;
+const TAIL = 2600;
 const CYCLE = TRAVERSE + TAIL;
 
 type Phase = { t: number; fade: number };
@@ -23,32 +55,55 @@ function resolvePhase(raw: number): Phase {
     return { t: mod / TRAVERSE, fade: 0 };
   }
   const tailT = mod - TRAVERSE;
-  // Hold for 2s, then fade 0.8s
-  const fade = Math.min(1, Math.max(0, (tailT - 2000) / 800));
+  const fade = Math.min(1, Math.max(0, (tailT - 1800) / 800));
   return { t: 1, fade };
 }
 
 type Pt = { x: number; y: number };
 
-/** Smooth sinusoidal cubic path — control points overshoot on BOTH axes for real curves */
-function buildPath(pts: Pt[], axis: "x" | "y", tension = 0.55) {
-  let d = `M ${pts[0].x},${pts[0].y}`;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const a = pts[i];
-    const b = pts[i + 1];
-    if (axis === "x") {
-      const dx = (b.x - a.x) * tension;
-      // Control points stay at the Y of their own node — creates the S-curve
-      d += ` C ${a.x + dx},${a.y} ${b.x - dx},${b.y} ${b.x},${b.y}`;
-    } else {
-      const dy = (b.y - a.y) * tension;
-      d += ` C ${a.x},${a.y + dy} ${b.x},${b.y - dy} ${b.x},${b.y}`;
-    }
+/** Cubic constant: ~0.55 = circular, higher = rounder / more “puffy” S */
+const K_CURVE = 0.78;
+
+/**
+ * Two quarter-ellipses per hop: leave each card horizontally, meet in the
+ * middle going vertically, arrive at the next card horizontally.
+ * That is a proper S-ribbon, not a taut sine or a polyline.
+ */
+function buildRibbon(nodes: Pt[]) {
+  let d = `M ${nodes[0].x.toFixed(2)},${nodes[0].y.toFixed(2)}`;
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const a = nodes[i];
+    const b = nodes[i + 1];
+    const rx = (b.x - a.x) / 2;
+    const ry = (b.y - a.y) / 2;
+    const mx = a.x + rx;
+    const my = a.y + ry;
+    const kx = K_CURVE * rx;
+    const ky = K_CURVE * ry;
+
+    d += ` C ${(a.x + kx).toFixed(2)},${a.y.toFixed(2)} ${mx.toFixed(2)},${(my - ky).toFixed(2)} ${mx.toFixed(2)},${my.toFixed(2)}`;
+    d += ` C ${mx.toFixed(2)},${(my + ky).toFixed(2)} ${(b.x - kx).toFixed(2)},${b.y.toFixed(2)} ${b.x.toFixed(2)},${b.y.toFixed(2)}`;
   }
   return d;
 }
 
-/** Arc-length position on the path closest to each node */
+function sineNode(i: number, n: number, width: number, midY: number, amp: number, padX: number): Pt {
+  const t = n <= 1 ? 0 : i / (n - 1);
+  return {
+    x: padX + t * (width - padX * 2),
+    y: midY - amp * Math.cos(t * Math.PI * 4),
+  };
+}
+
+function mixRgb(t: number) {
+  const u = Math.max(0, Math.min(1, (t - 0.38) / 0.24));
+  const s = u * u * (3 - 2 * u);
+  const r = Math.round(106 + (114 - 106) * s);
+  const g = Math.round(178 + (114 - 178) * s);
+  const b = Math.round(32 + (216 - 32) * s);
+  return `rgb(${r},${g},${b})`;
+}
+
 function measureNodes(path: SVGPathElement, nodes: Pt[], total: number) {
   const SAMPLES = 700;
   const pts: { l: number; x: number; y: number }[] = [];
@@ -71,15 +126,26 @@ function measureNodes(path: SVGPathElement, nodes: Pt[], total: number) {
   });
 }
 
-/* ── Horizontal geometry (large screens) ── */
-const H_W = 1000;
-const H_H = 420;
-const H_CARD_W = 142;
-const H_NODES: Pt[] = STEPS.map((_, i) => ({
-  x: 40 + i * (920 / (N - 1)),
-  y: i % 2 === 0 ? 95 : 325,
-}));
-const H_PATH = buildPath(H_NODES, "x", 0.75);
+/**
+ * Cards stay on the sine peaks/troughs. The connector is a round S-ribbon
+ * (paired quarter-ellipses), not the taut sampled sine itself.
+ */
+const H_W = 1200;
+const H_H = 500;
+const H_CARD_W = 188;
+const PAD_X = 108;
+const MID_Y = 250;
+const AMP = 148;
+
+const H_NODES: Pt[] = Array.from({ length: N }, (_, i) =>
+  sineNode(i, N, H_W, MID_Y, AMP, PAD_X)
+);
+
+const H_PATH = buildRibbon(H_NODES);
+
+function stepTone(index: number) {
+  return index >= 3 ? "var(--indigo-l)" : "var(--green)";
+}
 
 function useIsWide() {
   const [wide, setWide] = useState(
@@ -94,16 +160,7 @@ function useIsWide() {
   return wide;
 }
 
-function useFlowAnimation(
-  nodes: Pt[],
-  deps: unknown
-): {
-  pathRef: React.RefObject<SVGPathElement | null>;
-  trailRef: React.RefObject<SVGPathElement | null>;
-  dotRef: React.RefObject<SVGGElement | null>;
-  visited: number;
-  current: number;
-} {
+function useFlowAnimation(nodes: Pt[], deps: unknown) {
   const pathRef = useRef<SVGPathElement | null>(null);
   const trailRef = useRef<SVGPathElement | null>(null);
   const dotRef = useRef<SVGGElement | null>(null);
@@ -124,6 +181,7 @@ function useFlowAnimation(
       trail.setAttribute("stroke-dashoffset", "0");
       const end = path.getPointAtLength(total);
       dot.setAttribute("transform", `translate(${end.x} ${end.y})`);
+      dot.style.setProperty("--dot-color", mixRgb(1));
       setState({ visited: N, current: N - 1 });
       return;
     }
@@ -141,17 +199,14 @@ function useFlowAnimation(
 
       const ph = resolvePhase(elapsed);
       const len = ph.t * total;
-
       const p = path.getPointAtLength(len);
+
       dot.setAttribute("transform", `translate(${p.x} ${p.y})`);
       dot.setAttribute("opacity", String(1 - ph.fade));
-      // Dot color matches line: green up to 60%, then transitions to blue
-      const colorT = Math.max(0, Math.min(1, (ph.t - 0.5) / 0.18));
-      dot.style.setProperty("--dot-color", colorT < 1 ? "var(--green)" : "var(--indigo-l)");
+      dot.style.setProperty("--dot-color", mixRgb(ph.t));
       trail.setAttribute("stroke-dashoffset", String(total - len));
       trail.setAttribute("opacity", String(1 - ph.fade * 0.9));
 
-      // Determine which node is closest to current position
       let current = 0;
       for (let i = 0; i < lens.length; i++) {
         if (len >= lens[i] - 5) current = i;
@@ -177,13 +232,12 @@ function useFlowAnimation(
       cancelAnimationFrame(raf);
     };
 
-    // Only burn frames while the section is actually on screen
     const host = path.ownerSVGElement?.parentElement;
     let io: IntersectionObserver | undefined;
     if (host) {
       io = new IntersectionObserver(
         ([entry]) => (entry.isIntersecting ? play() : pause()),
-        { threshold: 0.12 }
+        { threshold: 0.1 }
       );
       io.observe(host);
     } else {
@@ -199,113 +253,160 @@ function useFlowAnimation(
   return { pathRef, trailRef, dotRef, ...state };
 }
 
-function CardVisual({ type, active }: { type: string; active: boolean }) {
-  const ac = active ? "var(--green)" : "var(--fg-m)";
-  const dim = "var(--fg-m)";
-  const sm = "text-[0.52rem] font-sans leading-tight";
-
-  if (type === "inspect") {
-    // Raw material QC — pass/fail badges
-    const items = [
-      { label: "Purity", pass: true },
-      { label: "Potency", pass: true },
-      { label: "Microbial", pass: false },
-    ];
-    return (
-      <div className="flex flex-wrap gap-1.5">
-        {items.map((it, i) => (
-          <span key={i} className={`${sm} px-1.5 py-0.5 rounded-md border`}
-            style={{
-              borderColor: active && it.pass ? "rgba(106,178,32,0.4)" : "var(--bdr)",
-              color: active && it.pass ? "var(--green)" : dim,
-              background: active && it.pass ? "rgba(106,178,32,0.06)" : "transparent",
-            }}>
-            {it.pass ? "✓" : "…"} {it.label}
-          </span>
-        ))}
-      </div>
-    );
-  }
-  if (type === "checklist") {
-    // Fermentation — mini metric rows
-    const rows = [
-      { label: "pH Level", val: "6.8" },
-      { label: "Temp", val: "37°C" },
-      { label: "Duration", val: "48h" },
-    ];
-    return (
-      <div className="flex flex-col gap-1">
-        {rows.map((r, i) => (
-          <div key={i} className="flex items-center justify-between">
-            <span className={sm} style={{ color: dim, opacity: 0.7 }}>{r.label}</span>
-            <span className={`${sm} font-semibold tabular-nums`} style={{ color: active ? ac : dim }}>{r.val}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-  if (type === "layout") {
-    // Downstream — extraction yield bar
-    const pct = 92;
-    return (
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between">
-          <span className={sm} style={{ color: dim, opacity: 0.7 }}>Yield</span>
-          <span className={`${sm} font-semibold tabular-nums`} style={{ color: active ? "var(--indigo-l)" : dim }}>{pct}%</span>
-        </div>
-        <div className="h-[6px] w-full rounded-full overflow-hidden" style={{ background: "var(--bdr)" }}>
-          <div className="h-full rounded-full" style={{
-            width: `${pct}%`,
-            background: active ? "var(--indigo-l)" : "var(--fg-m)",
-            opacity: active ? 1 : 0.25,
-            transition: "all .4s var(--ease)",
-          }} />
-        </div>
-      </div>
-    );
-  }
-  if (type === "bars") {
-    // Formulation — blend ratio chips
-    const blends = [
-      { label: "Enzyme A", w: "45%" },
-      { label: "Probiotic", w: "30%" },
-      { label: "Carrier", w: "25%" },
-    ];
-    return (
-      <div className="flex flex-col gap-1">
-        {blends.map((b, i) => (
-          <div key={i} className="flex items-center gap-1.5">
-            <div className="h-[6px] rounded-full" style={{
-              width: b.w,
-              background: active ? (i === 0 ? "var(--green)" : i === 1 ? "rgba(106,178,32,0.5)" : "var(--bdr-m)") : "var(--bdr)",
-              transition: "background .4s var(--ease)",
-            }} />
-            <span className={`${sm} shrink-0`} style={{ color: dim, opacity: 0.7 }}>{b.label}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-  // dispatch — QA → Pack → Ship tracker
-  const stages = ["QA", "Pack", "Ship"];
+function DottedList({
+  items,
+  lit,
+  tone,
+}: {
+  items: readonly string[];
+  lit: boolean;
+  tone: string;
+}) {
   return (
-    <div className="flex items-center gap-1">
-      {stages.map((s, i) => (
-        <div key={i} className="flex items-center gap-1">
-          <div className="flex flex-col items-center gap-0.5">
-            <div className="w-[16px] h-[16px] rounded-full flex items-center justify-center text-[0.4rem] font-bold border"
-              style={{
-                borderColor: active && i <= 1 ? "var(--indigo-l)" : "var(--bdr)",
-                background: active && i <= 1 ? "rgba(56,41,149,0.1)" : "transparent",
-                color: active && i <= 1 ? "var(--indigo-l)" : dim,
-              }}>
-              {active && i <= 1 ? "✓" : "·"}
-            </div>
-            <span className={`${sm}`} style={{ color: active && i <= 1 ? "var(--indigo-l)" : dim, opacity: 0.7 }}>{s}</span>
-          </div>
-          {i < 2 && <div className="w-2.5 h-[1.5px] rounded-full mt-[-10px]" style={{ background: active && i === 0 ? "var(--indigo-l)" : "var(--bdr)" }} />}
+    <div className="flex flex-col min-w-0 flex-1">
+      {items.map((item, i) => (
+        <div key={item} className="flex flex-col">
+          <span
+            className="font-sans text-[0.52rem] leading-snug font-medium pf-list-item"
+            style={{
+              color: lit ? "var(--fg-b)" : "var(--fg-m)",
+              animationDelay: `${i * 0.08}s`,
+            }}
+          >
+            {item}
+          </span>
+          {i < items.length - 1 && (
+            <span
+              className="my-[5px] border-b border-dotted w-full"
+              style={{ borderColor: lit ? `${tone}66` : "var(--bdr-m)" }}
+            />
+          )}
         </div>
       ))}
+    </div>
+  );
+}
+
+/** Lucide-inspired line icons with extra parts that animate on hover / arrival */
+function StepIcon({
+  type,
+  lit,
+  tone,
+}: {
+  type: (typeof STEPS)[number]["visual"];
+  lit: boolean;
+  tone: string;
+}) {
+  const c = lit ? tone : "var(--fg-m)";
+
+  if (type === "raw-seed") {
+    return (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden className="pf-icon shrink-0">
+        <path
+          d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"
+          stroke={c}
+          strokeWidth="1.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M8.5 2h7" stroke={c} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M6.45 15h11.1" stroke={c} strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+        <path
+          className="pf-liquid"
+          d="M8.2 17.2c1.4 1.4 6.2 1.4 7.6 0"
+          stroke={c}
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          opacity="0.7"
+        />
+      </svg>
+    );
+  }
+
+  if (type === "upstream") {
+    return (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden className="pf-icon shrink-0">
+        <path
+          d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.77-.42l-4.46 2.84A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.77-.42L9.77 10.92A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"
+          stroke={c}
+          strokeWidth="1.7"
+          strokeLinejoin="round"
+        />
+        <circle className="pf-bubble" cx="8" cy="17.2" r="1.05" fill={c} opacity="0.55" />
+        <circle className="pf-bubble pf-d1" cx="12" cy="16.4" r="0.85" fill={c} opacity="0.45" />
+        <circle className="pf-bubble pf-d2" cx="16" cy="17" r="1" fill={c} opacity="0.5" />
+      </svg>
+    );
+  }
+
+  if (type === "downstream") {
+    return (
+      <svg width="34" height="36" viewBox="0 0 24 26" fill="none" aria-hidden className="pf-icon shrink-0">
+        <path
+          d="M10 20a1 1 0 0 0 .55.9l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .52-1.34L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.74 1.67l7.22 7.99A2 2 0 0 1 10 14z"
+          stroke={c}
+          strokeWidth="1.7"
+          strokeLinejoin="round"
+        />
+        <circle className="pf-drip" cx="12" cy="24.2" r="1.15" fill={c} opacity="0.8" />
+      </svg>
+    );
+  }
+
+  if (type === "formulation") {
+    return (
+      <svg width="36" height="34" viewBox="0 0 24 24" fill="none" aria-hidden className="pf-icon shrink-0">
+        <rect x="15" y="5" width="4" height="4" rx="0.6" stroke={c} strokeWidth="1.6" />
+        <path
+          d="m19 9 2 2v10c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V11l2-2"
+          stroke={c}
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        <path d="m13 14 8-2M13 19 21 17" stroke={c} strokeWidth="1.4" opacity="0.45" />
+        <circle className="pf-spray pf-d0" cx="4" cy="4" r="0.7" fill={c} />
+        <circle className="pf-spray pf-d1" cx="7.2" cy="6" r="0.7" fill={c} />
+        <circle className="pf-spray pf-d2" cx="3.4" cy="8" r="0.65" fill={c} />
+        <circle className="pf-spray pf-d3" cx="6.4" cy="9.6" r="0.6" fill={c} />
+      </svg>
+    );
+  }
+
+  return (
+    <svg width="38" height="28" viewBox="0 0 24 24" fill="none" aria-hidden className="pf-icon shrink-0">
+      <path
+        d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"
+        stroke={c}
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <path d="M15 18H9" stroke={c} strokeWidth="1.6" />
+      <path
+        d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"
+        stroke={c}
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <circle className="pf-wheel" cx="17" cy="18" r="2" stroke={c} strokeWidth="1.6" fill="none" />
+      <circle className="pf-wheel pf-d1" cx="7" cy="18" r="2" stroke={c} strokeWidth="1.6" fill="none" />
+    </svg>
+  );
+}
+
+function CardVisual({
+  step,
+  lit,
+  index,
+}: {
+  step: (typeof STEPS)[number];
+  lit: boolean;
+  index: number;
+}) {
+  const tone = stepTone(index);
+  return (
+    <div className="flex items-start gap-2.5 pf-visual">
+      <StepIcon type={step.visual} lit={lit} tone={tone} />
+      <DottedList items={step.items} lit={lit} tone={tone} />
     </div>
   );
 }
@@ -315,124 +416,115 @@ function StepCard({
   index,
   done,
   active,
-  compact,
 }: {
   step: (typeof STEPS)[number];
   index: number;
   done: boolean;
   active: boolean;
-  compact?: boolean;
 }) {
+  const lit = done || active;
+  const tone = stepTone(index);
+  const border = active
+    ? tone === "var(--indigo-l)"
+      ? "rgba(114,114,216,0.55)"
+      : "rgba(106,178,32,0.5)"
+    : done
+      ? "rgba(106,178,32,0.28)"
+      : "var(--bdr)";
+
   return (
     <div
-      className="relative h-full rounded-2xl border px-4 py-3.5 overflow-hidden will-change-transform"
+      className={`pf-card group relative h-full rounded-[18px] border px-4 py-3.5 ${active ? "pf-active" : ""}`}
       style={{
-        borderColor: active
-          ? "rgba(106,178,32,0.45)"
-          : done
-            ? "rgba(106,178,32,0.22)"
-            : "var(--bdr)",
-        background: "var(--bg2)",
-        boxShadow: active ? "0 10px 34px -12px rgba(106,178,32,0.45)" : "0 2px 8px rgba(0,0,0,0.06)",
-        transition:
-          "border-color .5s var(--ease), box-shadow .5s var(--ease), transform .5s var(--ease)",
-        transform: active ? "translateY(-3px)" : "none",
+        borderColor: border,
+        background: "var(--bg)",
+        boxShadow: active
+          ? `0 14px 38px -14px ${tone === "var(--indigo-l)" ? "rgba(114,114,216,0.38)" : "rgba(106,178,32,0.42)"}`
+          : "0 4px 16px rgba(0,0,0,0.07)",
+        transition: "border-color .45s var(--ease), box-shadow .45s var(--ease), transform .45s var(--ease)",
+        transform: active ? "translateY(-4px) scale(1.02)" : "translateY(0)",
       }}
     >
-      {done && (
+      {lit && (
         <span
-          className="absolute top-2.5 right-2.5 grid place-items-center w-[18px] h-[18px] rounded-full bg-green"
-          style={{ animation: "_pfPop .45s cubic-bezier(.34,1.56,.64,1) both" }}
+          className="absolute top-2.5 right-2.5 grid place-items-center w-[18px] h-[18px] rounded-full"
+          style={{
+            background: tone,
+            animation: active ? "_pfPop .45s cubic-bezier(.34,1.56,.64,1) both" : undefined,
+          }}
         >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
-            <polyline
-              points="2,5.2 4.1,7.2 8,2.8"
-              stroke="#fff"
-              strokeWidth="1.7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden>
+            <polyline points="2,5.2 4.1,7.2 8,2.8" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
       )}
 
-      <div className="flex items-center gap-2 mb-1.5 pr-5">
+      <div className="flex items-center gap-1.5 mb-1.5 pr-5">
         <span
-          className="font-sans text-[0.5rem] font-semibold tabular-nums tracking-[0.08em]"
-          style={{
-            color: done || active ? "var(--green)" : "var(--fg-m)",
-            transition: "color .4s var(--ease)",
-          }}
+          className="font-sans text-[0.5rem] font-semibold tabular-nums tracking-[0.06em]"
+          style={{ color: lit ? tone : "var(--fg-m)" }}
         >
           {String(index + 1).padStart(2, "0")}
         </span>
+        <span className="font-sans text-[0.46rem] text-fg-m opacity-50" aria-hidden>
+          ·
+        </span>
         <span
-          className="font-sans text-[0.5rem] tracking-[0.16em] uppercase truncate"
-          style={{
-            color: done || active ? "var(--green)" : "var(--fg-m)",
-            transition: "color .4s var(--ease)",
-          }}
+          className="font-sans text-[0.46rem] tracking-[0.12em] uppercase truncate"
+          style={{ color: lit ? tone : "var(--fg-m)" }}
         >
           {step.label}
         </span>
       </div>
 
       <h3
-        className={`font-serif font-bold leading-[1.15] mb-2.5 ${compact ? "text-[0.95rem]" : "text-[1.02rem]"}`}
-        style={{
-          color: done || active ? "var(--fg-b)" : "var(--fg-m)",
-          transition: "color .4s var(--ease)",
-        }}
+        className="font-serif font-bold leading-[1.12] mb-2.5 text-[0.98rem]"
+        style={{ color: lit ? "var(--fg-b)" : "var(--fg-m)" }}
       >
         {step.title}
       </h3>
-      <CardVisual type={step.visual} active={done || active} />
+
+      <CardVisual step={step} lit={lit} index={index} />
     </div>
   );
 }
 
-
 function HorizontalFlow() {
-  const { pathRef, trailRef, dotRef, visited, current } = useFlowAnimation(H_NODES, "h");
+  const { pathRef, trailRef, dotRef, visited, current } = useFlowAnimation(H_NODES, "h5");
 
   return (
-    <div className="relative w-full" style={{ aspectRatio: `${H_W} / ${H_H}` }}>
-      {/* SVG curve behind cards */}
+    <div className="relative w-full mx-auto" style={{ aspectRatio: `${H_W} / ${H_H}`, maxWidth: "100%" }}>
       <svg
         viewBox={`0 0 ${H_W} ${H_H}`}
         className="absolute inset-0 w-full h-full overflow-visible"
         fill="none"
         aria-hidden
+        preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          <linearGradient id="pfGradH" x1="0" y1="0" x2="1" y2="0">
+          <linearGradient id="pfTrail" gradientUnits="userSpaceOnUse" x1={PAD_X} y1="0" x2={H_W - PAD_X} y2="0">
             <stop offset="0%" stopColor="var(--green)" />
-            <stop offset="50%" stopColor="var(--green)" />
-            <stop offset="68%" stopColor="var(--indigo-l)" />
+            <stop offset="38%" stopColor="var(--green)" />
+            <stop offset="62%" stopColor="var(--indigo-l)" />
             <stop offset="100%" stopColor="var(--indigo-l)" />
           </linearGradient>
         </defs>
 
-        <path
-          ref={pathRef}
-          d={H_PATH}
-          stroke="var(--bdr-m)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
+        <path ref={pathRef} d={H_PATH} stroke="var(--path-line)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
         <path
           ref={trailRef}
           d={H_PATH}
-          stroke="url(#pfGradH)"
-          strokeWidth="3.5"
+          stroke="url(#pfTrail)"
+          strokeWidth="3.4"
           strokeLinecap="round"
-          strokeDasharray="4000"
-          strokeDashoffset="4000"
+          strokeLinejoin="round"
+          strokeDasharray="5000"
+          strokeDashoffset="5000"
         />
-        {/* Breathing dot that travels along the curve */}
+
         <g ref={dotRef} style={{ "--dot-color": "var(--green)" } as React.CSSProperties}>
           <circle
-            r="18"
+            r="16"
             fill="var(--dot-color)"
             opacity="0.12"
             style={{
@@ -441,15 +533,14 @@ function HorizontalFlow() {
               transformOrigin: "center",
             }}
           />
-          <circle r="8" fill="var(--dot-color)" opacity="0.25" />
-          <circle r="5" fill="var(--dot-color)" />
+          <circle r="7" fill="var(--dot-color)" opacity="0.25" />
+          <circle r="4.5" fill="var(--dot-color)" />
         </g>
       </svg>
 
-      {/* Cards placed directly at node positions — they ARE the nodes */}
       {H_NODES.map((n, i) => (
         <div
-          key={i}
+          key={`${STEPS[i].label}-${STEPS[i].title}`}
           className="absolute z-10"
           style={{
             width: `${(H_CARD_W / H_W) * 100}%`,
@@ -465,73 +556,112 @@ function HorizontalFlow() {
   );
 }
 
-const M_DWELL = 2600;
-const M_HOLD = 2000;
-const M_FADE = 700;
-const M_CYCLE = N * M_DWELL + M_HOLD + M_FADE;
-
 function MobileProcess() {
   const hostRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLElement | null>>([]);
+  const railRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const userTouchRef = useRef(false);
+  const resumeTimer = useRef(0);
   const elapsedRef = useRef(0);
-  const [current, setCurrent] = useState(0);
-  const [visited, setVisited] = useState(1);
-  const [rail, setRail] = useState(0);
+  const progScrollRef = useRef(false);
+  const scrollSyncTimer = useRef(0);
+  const DWELL = 2800;
+  const HOLD = 1800;
+  const FADE = 700;
+  const CYCLE_M = N * DWELL + HOLD + FADE;
+
+  const setRailForStep = (i: number) => {
+    if (railRef.current) {
+      railRef.current.style.width = `${((i + 1) / N) * 100}%`;
+    }
+  };
+
+  const scrollToStep = (i: number, smooth = true) => {
+    const scroller = scrollerRef.current;
+    const card = cardRefs.current[i];
+    if (!scroller || !card) return;
+    progScrollRef.current = true;
+    const left = card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+    scroller.scrollTo({ left: Math.max(0, left), behavior: smooth ? "smooth" : "auto" });
+    window.setTimeout(() => {
+      progScrollRef.current = false;
+    }, smooth ? 450 : 50);
+  };
+
+  const syncToStep = (i: number, opts?: { scroll?: boolean }) => {
+    const idx = Math.max(0, Math.min(N - 1, i));
+    setActive(idx);
+    setRailForStep(idx);
+    elapsedRef.current = idx * DWELL + 80;
+    if (opts?.scroll) scrollToStep(idx, true);
+  };
+
+  const nearestStepFromScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return 0;
+    const mid = scroller.scrollLeft + scroller.clientWidth / 2;
+    let best = 0;
+    let bestDist = Infinity;
+    cardRefs.current.forEach((card, i) => {
+      if (!card) return;
+      const c = card.offsetLeft + card.offsetWidth / 2;
+      const d = Math.abs(c - mid);
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    });
+    return best;
+  };
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      setCurrent(N - 1);
-      setVisited(N);
-      setRail(1);
+      setActive(N - 1);
+      setRailForStep(N - 1);
       return;
     }
 
     let raf = 0;
     let last = 0;
     let running = false;
-
-    let lastCurrent = -1;
-    let lastVisited = -1;
-    let lastRail = -1;
-
-    const apply = (elapsed: number) => {
-      const mod = elapsed % M_CYCLE;
-      let i = 0;
-      let vis = 1;
-      let r = 0;
-      if (mod < N * M_DWELL) {
-        i = Math.min(N - 1, Math.floor(mod / M_DWELL));
-        vis = i + 1;
-        r = mod / (N * M_DWELL);
-      } else if (mod < N * M_DWELL + M_HOLD) {
-        i = N - 1;
-        vis = N;
-        r = 1;
-      } else {
-        const fadeT = (mod - N * M_DWELL - M_HOLD) / M_FADE;
-        r = Math.max(0, 1 - fadeT);
-        if (fadeT > 0.6) {
-          vis = 0;
-          i = 0;
-        } else {
-          i = N - 1;
-          vis = N;
-        }
-      }
-      r = Math.round(r * 50) / 50;
-      if (i === lastCurrent && vis === lastVisited && r === lastRail) return;
-      lastCurrent = i;
-      lastVisited = vis;
-      lastRail = r;
-      setCurrent(i);
-      setVisited(vis);
-      setRail(r);
-    };
+    let lastI = -1;
 
     const frame = (now: number) => {
       if (last) elapsedRef.current += now - last;
       last = now;
-      apply(elapsedRef.current);
+
+      if (userTouchRef.current) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+
+      const mod = elapsedRef.current % CYCLE_M;
+      let i = 0;
+      let progress = 0;
+      if (mod < N * DWELL) {
+        i = Math.min(N - 1, Math.floor(mod / DWELL));
+        progress = ((i + (mod % DWELL) / DWELL) / N) * 100;
+      } else if (mod < N * DWELL + HOLD) {
+        i = N - 1;
+        progress = 100;
+      } else {
+        const fadeT = (mod - N * DWELL - HOLD) / FADE;
+        progress = Math.max(0, 100 * (1 - fadeT));
+        i = fadeT > 0.55 ? 0 : N - 1;
+      }
+
+      if (railRef.current) {
+        railRef.current.style.width = `${progress}%`;
+      }
+
+      if (i !== lastI) {
+        lastI = i;
+        setActive(i);
+        scrollToStep(i, true);
+      }
       raf = requestAnimationFrame(frame);
     };
 
@@ -551,103 +681,176 @@ function MobileProcess() {
     if (host) {
       io = new IntersectionObserver(
         ([entry]) => (entry.isIntersecting ? play() : pause()),
-        { threshold: 0.2 }
+        { threshold: 0.15 }
       );
       io.observe(host);
-    } else {
-      play();
-    }
+    } else play();
 
     return () => {
       io?.disconnect();
       pause();
+      window.clearTimeout(resumeTimer.current);
+      window.clearTimeout(scrollSyncTimer.current);
     };
   }, []);
 
-  const jumpTo = (i: number) => {
-    elapsedRef.current = i * M_DWELL + 40;
-    setCurrent(i);
-    setVisited(i + 1);
-    setRail(i / (N - 1));
+  const onUserInteract = () => {
+    userTouchRef.current = true;
+    window.clearTimeout(resumeTimer.current);
+    resumeTimer.current = window.setTimeout(() => {
+      userTouchRef.current = false;
+    }, 4200);
   };
 
-  const step = STEPS[current];
-  const color = current < 3 ? "var(--green)" : "var(--indigo-l)";
+  const jumpTo = (i: number) => {
+    onUserInteract();
+    syncToStep(i, { scroll: true });
+  };
+
+  const onScrollEndish = () => {
+    if (progScrollRef.current) return;
+    onUserInteract();
+    window.clearTimeout(scrollSyncTimer.current);
+    scrollSyncTimer.current = window.setTimeout(() => {
+      const i = nearestStepFromScroll();
+      syncToStep(i);
+    }, 80);
+  };
+
+  const step = STEPS[active];
+  const pill = stepTone(active);
 
   return (
-    <div ref={hostRef} className="w-full">
-      <div className="relative mb-6 px-1">
-        <div className="absolute left-[10%] right-[10%] top-[15px] h-[2px] rounded-full" style={{ background: "var(--bdr-m)" }} />
+    <div ref={hostRef} className="w-full -mx-1">
+      <div className="flex items-center justify-between gap-3 px-1 mb-3">
+        <p className="font-sans text-[0.62rem] tracking-[0.14em] uppercase text-fg-m m-0">
+          Step{" "}
+          <span className="tabular-nums text-fg-b font-semibold">
+            {String(active + 1).padStart(2, "0")}
+          </span>
+          <span className="opacity-50"> / {String(N).padStart(2, "0")}</span>
+        </p>
+        <p className="font-sans text-[0.62rem] tracking-[0.12em] uppercase m-0 truncate max-w-[55%]" style={{ color: pill }}>
+          {step.label}
+        </p>
+      </div>
+
+      <div className="relative h-[3px] rounded-full mx-1 mb-5 overflow-hidden" style={{ background: "var(--path-line)" }}>
         <div
-          className="absolute left-[10%] top-[15px] h-[2px] rounded-full"
+          ref={railRef}
+          className="absolute inset-y-0 left-0 rounded-full"
           style={{
-            width: `calc(${rail * 80}%)`,
-            background: "linear-gradient(90deg, var(--green), var(--indigo-l))",
-            transition: "width .25s linear",
+            width: `${(1 / N) * 100}%`,
+            background:
+              "linear-gradient(90deg, var(--green) 0%, var(--green) 38%, var(--indigo-l) 62%, var(--indigo-l) 100%)",
+            transition: "width .25s ease, background .4s ease",
           }}
         />
-        <div className="relative flex justify-between">
-          {STEPS.map((s, i) => {
-            const on = i === current;
-            const complete = i < visited && !on;
-            const pill = i < 3 ? "var(--green)" : "var(--indigo-l)";
-            return (
-              <button
-                key={s.label}
-                type="button"
-                onClick={() => jumpTo(i)}
-                className="flex flex-col items-center gap-1.5 min-w-0"
-                aria-current={on ? "step" : undefined}
-              >
-                <span
-                  className="grid place-items-center w-[30px] h-[30px] rounded-full border text-[0.62rem] font-sans font-semibold tabular-nums"
-                  style={{
-                    borderColor: on || complete ? pill : "var(--bdr-m)",
-                    background: on ? pill : complete ? "rgba(106,178,32,0.12)" : "var(--bg2)",
-                    color: on ? "#fff" : complete ? "var(--green)" : "var(--fg-m)",
-                    boxShadow: on ? `0 0 0 4px ${i < 3 ? "rgba(106,178,32,0.16)" : "rgba(114,114,216,0.16)"}` : "none",
-                    transform: on ? "scale(1.08)" : "none",
-                    transition: "all .35s var(--ease)",
-                  }}
-                >
-                  {complete ? (
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
-                      <polyline points="2,5.2 4.1,7.2 8,2.8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  ) : (
-                    String(i + 1).padStart(2, "0")
-                  )}
-                </span>
-                <span
-                  className="font-sans text-[0.52rem] tracking-[0.04em] uppercase truncate max-w-[58px]"
-                  style={{ color: on ? "var(--fg-b)" : "var(--fg-m)" }}
-                >
-                  {s.label.split(" ")[0]}
-                </span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       <div
-        className="rounded-2xl border px-5 py-5 min-h-[198px]"
+        ref={scrollerRef}
+        className="flex gap-3 overflow-x-auto snap-x snap-mandatory px-[8%] pb-2 scrollbar-none"
         style={{
-          background: "var(--bg)",
-          borderColor: current < 3 ? "rgba(106,178,32,0.28)" : "rgba(114,114,216,0.28)",
-          boxShadow: `0 12px 32px -16px ${current < 3 ? "rgba(106,178,32,0.45)" : "rgba(58,58,184,0.35)"}`,
-          transition: "border-color .45s var(--ease), box-shadow .45s var(--ease)",
+          WebkitOverflowScrolling: "touch",
+          scrollSnapType: "x mandatory",
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
         }}
+        onTouchStart={onUserInteract}
+        onPointerDown={onUserInteract}
+        onScroll={onScrollEndish}
       >
-        <div className="flex items-center justify-between gap-3 mb-2">
-          <span className="font-sans text-[0.58rem] tracking-[0.16em] uppercase" style={{ color }}>
-            {String(current + 1).padStart(2, "0")} · {step.label}
-          </span>
-        </div>
-        <h3 className="font-serif font-bold text-[1.35rem] text-fg-b leading-tight mb-2">{step.title}</h3>
-        <p className="font-sans text-[0.88rem] text-fg-m leading-relaxed mb-4">{step.blurb}</p>
-        <CardVisual type={step.visual} active />
+        {STEPS.map((s, i) => {
+          const on = i === active;
+          const done = i < active;
+          const tone = stepTone(i);
+          const border = on
+            ? tone === "var(--indigo-l)"
+              ? "rgba(114,114,216,0.5)"
+              : "rgba(106,178,32,0.48)"
+            : done
+              ? "rgba(106,178,32,0.22)"
+              : "var(--bdr)";
+
+          return (
+            <article
+              key={`${s.label}-${s.title}`}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
+              onClick={() => jumpTo(i)}
+              className={`pf-card snap-center shrink-0 w-[min(78vw,320px)] rounded-[20px] border px-5 py-5 cursor-pointer ${on ? "pf-active" : ""}`}
+              style={{
+                borderColor: border,
+                background: "var(--bg)",
+                boxShadow: on
+                  ? `0 16px 40px -18px ${tone === "var(--indigo-l)" ? "rgba(114,114,216,0.35)" : "rgba(106,178,32,0.42)"}`
+                  : "0 4px 16px rgba(0,0,0,0.06)",
+                transform: on ? "scale(1)" : "scale(0.96)",
+                opacity: on ? 1 : 0.78,
+                transition: "transform .35s var(--ease), opacity .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease)",
+              }}
+            >
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <div>
+                  <span
+                    className="font-sans text-[0.58rem] tracking-[0.16em] uppercase"
+                    style={{ color: on || done ? tone : "var(--fg-m)" }}
+                  >
+                    {String(i + 1).padStart(2, "0")} · {s.label}
+                  </span>
+                  <h3 className="font-serif font-bold text-[1.25rem] text-fg-b leading-tight mt-1.5 m-0">
+                    {s.title}
+                  </h3>
+                </div>
+                {(on || done) && (
+                  <span
+                    className="grid place-items-center w-[22px] h-[22px] rounded-full shrink-0 mt-0.5"
+                    style={{ background: tone }}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 10 10" fill="none" aria-hidden>
+                      <polyline points="2,5.2 4.1,7.2 8,2.8" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                )}
+              </div>
+              <p className="font-sans text-[0.88rem] text-fg-m leading-relaxed mb-4 m-0">{s.blurb}</p>
+              <CardVisual step={s} lit={on || done} index={i} />
+            </article>
+          );
+        })}
       </div>
+
+      <div className="flex items-center justify-center gap-1.5 mt-5 px-2">
+        {STEPS.map((_, i) => {
+          const on = i === active;
+          const done = i < active;
+          const tone = stepTone(i);
+          return (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Go to step ${i + 1}`}
+              onClick={() => jumpTo(i)}
+              className="rounded-full border-0 p-0 transition-all duration-300"
+              style={{
+                width: on ? 18 : 7,
+                height: 7,
+                background: on ? tone : done ? "rgba(106,178,32,0.45)" : "var(--bdr-m)",
+              }}
+            />
+          );
+        })}
+      </div>
+
+      <p className="font-sans text-[0.68rem] text-fg-m text-center mt-3 mb-0 opacity-70">
+        Swipe to explore · auto-advances with the process line
+      </p>
+
+      <style>{`
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+      `}</style>
     </div>
   );
 }
@@ -656,7 +859,7 @@ export function ProcessFlow() {
   const wide = useIsWide();
 
   return (
-    <section className="relative w-full overflow-hidden bg-bg2 py-14 md:py-28">
+    <section className="relative w-full overflow-hidden bg-bg2 py-14 md:py-24">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -665,14 +868,14 @@ export function ProcessFlow() {
         }}
       />
 
-      <div className="relative max-w-[1160px] mx-auto px-5 lg:px-8">
-        <div className="text-center mb-8 lg:mb-16">
+      <div className="relative max-w-[1200px] mx-auto px-4 lg:px-6">
+        <div className="text-center mb-8 lg:mb-12">
           <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
             Our Process
           </p>
           <h2
-            className="font-serif font-bold text-fg-b leading-[1.05]"
-            style={{ fontSize: "clamp(1.9rem, 3.5vw, 3rem)" }}
+            className={sectionTitleClass}
+            style={sectionTitleSizeProcess}
           >
             From Fermentation to <span className="text-green">Formulation</span>
           </h2>
@@ -691,6 +894,65 @@ export function ProcessFlow() {
           0%   { transform: scale(.7); opacity: .5; }
           70%  { transform: scale(1.75); opacity: 0; }
           100% { transform: scale(1.75); opacity: 0; }
+        }
+        @keyframes _pfLiquid {
+          0%, 100% { transform: translateY(0); opacity: .55; }
+          50%      { transform: translateY(-1.5px); opacity: 1; }
+        }
+        @keyframes _pfBubble {
+          0%   { transform: translateY(3px); opacity: .15; }
+          50%  { opacity: .85; }
+          100% { transform: translateY(-7px); opacity: 0; }
+        }
+        @keyframes _pfDrip {
+          0%   { transform: translateY(-2px); opacity: 0; }
+          25%  { opacity: 1; }
+          100% { transform: translateY(5px); opacity: 0; }
+        }
+        @keyframes _pfSpray {
+          0%, 100% { transform: translate(0, 0); opacity: .25; }
+          50%      { transform: translate(-1.5px, -2px); opacity: 1; }
+        }
+        @keyframes _pfWheel {
+          0%   { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes _pfListIn {
+          from { opacity: .4; transform: translateX(-4px); }
+          to   { opacity: 1; transform: none; }
+        }
+        .pf-card:hover,
+        .pf-card.pf-active {
+          z-index: 2;
+        }
+        .pf-card:hover .pf-liquid,
+        .pf-card.pf-active .pf-liquid {
+          animation: _pfLiquid 1.6s ease-in-out infinite;
+        }
+        .pf-card:hover .pf-bubble,
+        .pf-card.pf-active .pf-bubble {
+          animation: _pfBubble 1.8s ease-in-out infinite;
+        }
+        .pf-card:hover .pf-drip,
+        .pf-card.pf-active .pf-drip {
+          animation: _pfDrip 1.4s ease-in infinite;
+        }
+        .pf-card:hover .pf-spray,
+        .pf-card.pf-active .pf-spray {
+          animation: _pfSpray 1.1s ease-in-out infinite;
+        }
+        .pf-card:hover .pf-wheel,
+        .pf-card.pf-active .pf-wheel {
+          animation: _pfWheel 2.2s linear infinite;
+          transform-box: fill-box;
+          transform-origin: center;
+        }
+        .pf-d1 { animation-delay: .28s !important; }
+        .pf-d2 { animation-delay: .55s !important; }
+        .pf-d3 { animation-delay: .8s !important; }
+        .pf-d0 { animation-delay: 0s !important; }
+        .pf-card.pf-active .pf-list-item {
+          animation: _pfListIn .42s ease both;
         }
       `}</style>
     </section>

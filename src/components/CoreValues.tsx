@@ -1,33 +1,34 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { duration, easePremium } from "@/lib/motion";
+import { sectionTitleClass, sectionTitleSize } from "@/lib/typography";
 
 const PRINCIPLES = [
   {
     n: "01",
     title: "Quality",
-    body: "We move quickly without sacrificing quality — consistent output is a feature, not a trade-off.",
+    body: "Quality is built into every stage of our process from raw material selection and manufacturing to testing, packaging and dispatch.",
     visual: "quality" as const,
     accent: "green",
   },
   {
     n: "02",
     title: "Transparency",
-    body: "Clear communication and complete visibility, from the first conversation to dispatch.",
+    body: "Clear communication, reliable documentation and visibility throughout the process from enquiry to dispatch.",
     visual: "transparency" as const,
     accent: "indigo",
   },
   {
     n: "03",
-    title: "Innovation",
-    body: "We challenge assumptions and explore the connections others miss to find a better path.",
+    title: "Application-Driven Innovation",
+    body: "We continuously improve formulations and processes to deliver practical solutions for real-world applications.",
     visual: "innovation" as const,
     accent: "green",
   },
   {
     n: "04",
-    title: "Improvement",
-    body: "Every batch is an opportunity to learn, iterate, and compound progress over time.",
+    title: "Continuous Improvement",
+    body: "We continuously evaluate processes, performance and customer feedback to improve consistency and efficiency.",
     visual: "improvement" as const,
     accent: "indigo",
   },
@@ -109,26 +110,28 @@ export function CoreValues() {
     >
       <div className="max-w-[1160px] mx-auto px-5 md:px-10 w-full flex flex-col items-center lg:max-h-[calc(100svh-120px)]">
         <p className="font-sans text-[0.62rem] tracking-[0.22em] uppercase text-green mb-3">
-          Our Principles
+          Our Commitments
         </p>
         <motion.h2
           id="core-values-heading"
-          className="font-sans font-semibold text-fg-b leading-[1.02] mb-3 text-center"
-          style={{ fontSize: "clamp(1.9rem, 3.2vw, 3rem)" }}
+          className={`${sectionTitleClass} mb-3 text-center`}
+          style={sectionTitleSize}
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.section, ease: easePremium }}
         >
-          Standards we work to
+          Built on Quality.
+          <br />
+          Driven by Consistency.
         </motion.h2>
         <motion.p
-          className="font-sans font-light text-fg-m leading-[1.8] mb-8 lg:mb-9 max-w-[520px] text-center"
+          className="font-sans font-light text-fg-m leading-[1.8] mb-8 lg:mb-9 max-w-[560px] text-center"
           style={{ fontSize: "clamp(0.95rem, 1.15vw, 1.05rem)" }}
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: duration.section, delay: 0.06, ease: easePremium }}
         >
-          Simple rules for how we manufacture, communicate and improve — so the work stays consistent long after a batch leaves Vadodara.
+          Clear standards guide how we manufacture, communicate and continuously improve across every product and every batch.
         </motion.p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-[920px] mx-auto">
@@ -151,7 +154,7 @@ export function CoreValues() {
               >
                 {p.n}
               </span>
-              <h3 className="font-sans text-[1.15rem] md:text-[1.25rem] font-bold text-fg-b leading-tight mb-2 pr-[40%]">
+              <h3 className="font-section text-[1.05rem] md:text-[1.15rem] font-bold text-fg-b leading-tight mb-2 pr-[36%]">
                 {p.title}
               </h3>
               <p className="font-sans text-[0.88rem] font-light text-fg-m leading-[1.65] m-0 max-w-[42ch]">
