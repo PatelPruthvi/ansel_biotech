@@ -21,6 +21,7 @@ const content: IndustryPageContent = {
     "Enzyme solutions for food manufacturers improve processing efficiency, texture, stability, yield and product quality.",
   imageUrl: "/assets/products/FoodEnzyme.png",
   imageAlt: "Food processing enzymes",
+  imagePosition: "50% 40%",
   slug: "food",
 
   quickStats: [

@@ -20,6 +20,8 @@ type PageHeroProps = {
   stats?: HeroStatItem[];
   imageUrl: string;
   imageAlt: string;
+  /** CSS object-position for mobile full-bleed crop (wide images) */
+  imagePosition?: string;
   className?: string;
   scrollHint?: boolean;
 };
@@ -112,10 +114,12 @@ function HeroCrumbs({
 /**
  * Mobile/tablet: full-bleed image hero at ≤100svh (Safari-safe),
  * soft fade into page bg at the bottom, content stacked over the fade.
+ * Breadcrumbs / eyebrow sit with the title (not under the nav).
  */
 function MobileTabletHero({
   imageUrl,
   imageAlt,
+  imagePosition = "50% 42%",
   breadcrumbs,
   eyebrow,
   title,
@@ -126,6 +130,7 @@ function MobileTabletHero({
 }: {
   imageUrl: string;
   imageAlt: string;
+  imagePosition?: string;
   breadcrumbs?: HeroCrumb[];
   eyebrow?: string;
   title: ReactNode;
@@ -151,7 +156,7 @@ function MobileTabletHero({
           alt={imageAlt}
           className="w-full h-full object-cover block"
           style={{
-            objectPosition: "center 32%",
+            objectPosition: imagePosition,
             animation: "_mImgScale 1.1s cubic-bezier(.4,0,.2,1) both",
             filter: "saturate(0.78) contrast(1.06) brightness(0.72)",
           }}
@@ -161,26 +166,11 @@ function MobileTabletHero({
           className="absolute inset-0"
           style={{
             background: [
-              "linear-gradient(to bottom, rgba(7,9,15,0.5) 0%, rgba(7,9,15,0.12) 22%, rgba(7,9,15,0.05) 38%, rgba(7,9,15,0.35) 58%, rgba(7,9,15,0.78) 78%, var(--bg) 100%)",
+              "linear-gradient(to bottom, rgba(7,9,15,0.28) 0%, rgba(7,9,15,0.08) 18%, rgba(7,9,15,0.05) 38%, rgba(7,9,15,0.35) 58%, rgba(7,9,15,0.78) 78%, var(--bg) 100%)",
               "radial-gradient(ellipse 90% 45% at 55% 88%, rgba(106,178,32,0.12), transparent 65%)",
             ].join(","),
           }}
         />
-      </div>
-
-      <div
-        className="absolute top-0 left-0 right-0 z-20 px-5"
-        style={{
-          paddingTop: "max(env(safe-area-inset-top, 0px) + 14px, 52px)",
-        }}
-      >
-        {breadcrumbs?.length ? (
-          <HeroCrumbs breadcrumbs={breadcrumbs} tone="dark" />
-        ) : eyebrow ? (
-          <p className="font-sans text-[0.56rem] tracking-[0.18em] uppercase text-[#8fd43a]">
-            {eyebrow}
-          </p>
-        ) : null}
       </div>
 
       <div
@@ -190,14 +180,21 @@ function MobileTabletHero({
           gap: "clamp(10px, 2.2svh, 18px)",
         }}
       >
-        {eyebrow && breadcrumbs?.length ? (
-          <p
-            className="font-sans text-[0.56rem] tracking-[0.2em] uppercase text-[#8fd43a]"
+        {(breadcrumbs?.length || eyebrow) && (
+          <div
+            className="flex flex-col gap-2"
             style={{ animation: "_mCardUp .55s .04s cubic-bezier(.4,0,.2,1) both" }}
           >
-            {eyebrow}
-          </p>
-        ) : null}
+            {breadcrumbs?.length ? (
+              <HeroCrumbs breadcrumbs={breadcrumbs} tone="dark" />
+            ) : null}
+            {eyebrow ? (
+              <p className="font-sans text-[0.56rem] tracking-[0.18em] uppercase text-[#8fd43a]">
+                {eyebrow}
+              </p>
+            ) : null}
+          </div>
+        )}
 
         <div style={{ animation: "_mCardUp .55s .08s cubic-bezier(.4,0,.2,1) both" }}>
           <div className="text-[#f0f0ee] [&_.text-green]:text-[#8fd43a] [&_.text-fg-b]:text-[#f0f0ee] [&_h1]:font-section [&_h1]:font-bold [&_h1]:leading-[0.9] [&_h1]:tracking-[-0.02em] [&_h1]:text-[clamp(1.85rem,8vw,2.55rem)]">
@@ -303,6 +300,7 @@ export function PageHero({
   stats,
   imageUrl,
   imageAlt,
+  imagePosition,
   className,
   scrollHint = true,
 }: PageHeroProps) {
@@ -332,6 +330,7 @@ export function PageHero({
       <MobileTabletHero
         imageUrl={imageUrl}
         imageAlt={imageAlt}
+        imagePosition={imagePosition}
         breadcrumbs={breadcrumbs}
         eyebrow={eyebrow}
         title={title}

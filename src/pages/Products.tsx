@@ -28,6 +28,7 @@ export default function Products() {
         }
         imageUrl="/assets/products/PharmaEnzyme.png"
         imageAlt="Ansel Biotech products"
+        imagePosition="50% 38%"
       />
 
       <section

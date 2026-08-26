@@ -29,6 +29,7 @@ export default function Industries() {
         }
         imageUrl="/assets/products/textile_1.png"
         imageAlt="Industries we serve"
+        imagePosition="68% 48%"
       />
 
       <section
@@ -57,7 +58,10 @@ export default function Industries() {
                   src={ind.imageUrl}
                   alt={ind.name}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                  style={{ filter: "saturate(0.88) contrast(1.05)" }}
+                  style={{
+                    objectPosition: ind.imagePosition ?? "50% 42%",
+                    filter: "saturate(0.88) contrast(1.05)",
+                  }}
                 />
                 <div
                   className="absolute inset-0"

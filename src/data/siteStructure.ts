@@ -11,6 +11,8 @@ export type IndustryLink = {
   /** Super-short card blurb for hub pages */
   blurb: string;
   imageUrl: string;
+  /** object-position for card/hero crops of landscape images */
+  imagePosition?: string;
 };
 
 export type ProductCategoryLink = {
@@ -33,6 +35,7 @@ export const industriesWeServe: IndustryLink[] = [
     blurb:
       "Probiotics and feed enzymes for poultry, aquaculture and ruminant nutrition.",
     imageUrl: "/assets/products/AnimalFeedEnzyme.png",
+    imagePosition: "50% 40%",
   },
   {
     id: "textile",
@@ -42,6 +45,8 @@ export const industriesWeServe: IndustryLink[] = [
     blurb:
       "Desizing, bio-scouring, biopolishing and other enzyme-based textile processes.",
     imageUrl: "/assets/products/textile_1.png",
+    /** Fabric roll sits mid-right — keep it centered on tall mobile crops */
+    imagePosition: "68% 48%",
   },
   {
     id: "detergent",
@@ -51,6 +56,7 @@ export const industriesWeServe: IndustryLink[] = [
     blurb:
       "Protease, amylase, lipase and cellulase solutions for detergent formulations.",
     imageUrl: "/assets/products/Detergent.png",
+    imagePosition: "50% 45%",
   },
   {
     id: "leather",
@@ -60,6 +66,7 @@ export const industriesWeServe: IndustryLink[] = [
     blurb:
       "Enzyme solutions for soaking, dehairing, bating, degreasing and related processes.",
     imageUrl: "/assets/products/LeatherEnzyme.png",
+    imagePosition: "50% 42%",
   },
   {
     id: "food",
@@ -69,6 +76,7 @@ export const industriesWeServe: IndustryLink[] = [
     blurb:
       "Enzyme solutions for bakery, dairy and food-processing applications.",
     imageUrl: "/assets/products/FoodEnzyme.png",
+    imagePosition: "50% 40%",
   },
 ];
 

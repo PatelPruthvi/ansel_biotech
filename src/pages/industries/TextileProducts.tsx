@@ -9,6 +9,7 @@ const content: IndustryPageContent = {
     "Enzyme support across the textile line: desizing, bioscouring, peroxide removal after bleaching, biopolishing and biowashing.",
   imageUrl: "/assets/products/textile_1.png",
   imageAlt: "Textile fabric manufacturing",
+  imagePosition: "68% 48%",
   slug: "textile",
 
   quickStats: [

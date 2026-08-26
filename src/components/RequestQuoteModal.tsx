@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { CtaButton } from "@/components/CtaButton";
+import { useToast } from "@/hooks/use-toast";
+import { EMAILJS } from "@/lib/emailjs";
 
 /* ─────────────────────────────────────────
    Types
@@ -55,6 +58,7 @@ type Status = "idle" | "submitting" | "success";
    Modal
 ───────────────────────────────────────── */
 export function RequestQuoteModal({ product, onClose }: Props) {
+    const { toast } = useToast();
     const [qty, setQty] = useState("");
     const [details, setDetails] = useState("");
     const [cc, setCc] = useState("+91");
@@ -88,12 +92,10 @@ export function RequestQuoteModal({ product, onClose }: Props) {
 
     if (!product) return null;
 
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.currentTarget;
 
-        // Native validation trigger
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
@@ -101,8 +103,37 @@ export function RequestQuoteModal({ product, onClose }: Props) {
 
         setStatus("submitting");
 
-        await new Promise((r) => setTimeout(r, 1600));
-        setStatus("success");
+        try {
+            const result = await emailjs.send(
+                EMAILJS.quote.serviceId,
+                EMAILJS.quote.templateId,
+                {
+                    subject: `Quote: ${product.enzyme} (${product.code})`,
+                    phone: `${cc} ${phone}`,
+                    code: product.code,
+                    enzyme: product.enzyme,
+                    application: product.application,
+                    quantity: `${qty} kg`,
+                    message: details.trim() || "No additional notes",
+                },
+                EMAILJS.publicKey
+            );
+
+            if (result.text === "OK") {
+                setStatus("success");
+            } else {
+                throw new Error(result.text || "EmailJS send failed");
+            }
+        } catch (error) {
+            console.error("EmailJS Quote Error:", error);
+            setStatus("idle");
+            toast({
+                title: "Failed to Send Quote",
+                description:
+                    "Something went wrong. Please try again or contact us directly.",
+                variant: "destructive",
+            });
+        }
     };
 
     const selectedFlag = COUNTRY_CODES.find((c) => c.code === cc)?.flag ?? "🌐";

@@ -12,6 +12,7 @@ const content: IndustryPageContent = {
     "Enzyme solutions for detergent manufacturing different stains need different enzymes.",
   imageUrl: "/assets/products/Detergent.png",
   imageAlt: "Detergent enzyme applications",
+  imagePosition: "50% 45%",
   slug: "detergent",
 
   quickStats: [

@@ -42,6 +42,7 @@ export default function ProbioticsProducts() {
         }
         imageUrl="/assets/probiotics/bacillus.jpg"
         imageAlt="Bacillus probiotic specimen"
+        imagePosition="50% 35%"
       />
 
       <section

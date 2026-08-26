@@ -52,6 +52,7 @@ export default function EnzymesProducts() {
         }
         imageUrl="/assets/products/PharmaEnzyme.png"
         imageAlt="Enzyme portfolio"
+        imagePosition="50% 38%"
       />
 
       <section

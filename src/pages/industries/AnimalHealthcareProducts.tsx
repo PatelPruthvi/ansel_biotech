@@ -140,6 +140,7 @@ export default function AnimalHealthcareProducts() {
         }
         imageUrl="/assets/products/AnimalFeedEnzyme.png"
         imageAlt="Animal healthcare enzymes and probiotics"
+        imagePosition="50% 40%"
       />
 
       <section id="ah-areas" className="max-w-[1160px] mx-auto px-5 lg:px-8 py-10 md:py-14 lg:py-20">

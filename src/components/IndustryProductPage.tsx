@@ -46,6 +46,8 @@ export interface IndustryPageContent {
     subtitle: string;
     imageUrl: string;
     imageAlt: string;
+    /** Mobile hero object-position for landscape crops */
+    imagePosition?: string;
     quickStats: { val: string; label: string }[];
     aboutTitle: string;
     aboutSub: string;
@@ -203,7 +205,7 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                             alt={c.imageAlt}
                             className="w-full h-full object-cover block"
                             style={{
-                                objectPosition: "center 32%",
+                                objectPosition: c.imagePosition ?? "50% 42%",
                                 filter: "saturate(0.78) contrast(1.06) brightness(0.72)",
                                 animation: "_mImgScale 1.1s cubic-bezier(.4,0,.2,1) both",
                             }}
@@ -212,29 +214,11 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                             className="absolute inset-0"
                             style={{
                                 background: [
-                                    "linear-gradient(to bottom, rgba(7,9,15,0.5) 0%, rgba(7,9,15,0.12) 22%, rgba(7,9,15,0.05) 38%, rgba(7,9,15,0.35) 58%, rgba(7,9,15,0.78) 78%, var(--bg) 100%)",
+                                    "linear-gradient(to bottom, rgba(7,9,15,0.28) 0%, rgba(7,9,15,0.08) 18%, rgba(7,9,15,0.05) 38%, rgba(7,9,15,0.35) 58%, rgba(7,9,15,0.78) 78%, var(--bg) 100%)",
                                     "radial-gradient(ellipse 90% 45% at 55% 88%, rgba(106,178,32,0.12), transparent 65%)",
                                 ].join(","),
                             }}
                         />
-                    </div>
-
-                    <div
-                        className="absolute top-0 left-0 right-0 z-20 px-5"
-                        style={{
-                            paddingTop: "max(env(safe-area-inset-top, 0px) + 14px, 52px)",
-                        }}
-                    >
-                        <nav className="flex items-center gap-1.5 font-sans text-[0.56rem] tracking-[0.14em] uppercase">
-                            <Link
-                                href="/industries"
-                                className="text-white/55 hover:text-white/85 transition-colors"
-                            >
-                                Industries
-                            </Link>
-                            <span className="text-white/25">/</span>
-                            <span style={{ color: "#8fd43a" }}>{c.industry}</span>
-                        </nav>
                     </div>
 
                     <div
@@ -244,6 +228,20 @@ export function IndustryProductPage({ c }: { c: IndustryPageContent }) {
                             gap: "clamp(10px, 2.2svh, 18px)",
                         }}
                     >
+                        <nav
+                            className="flex items-center gap-1.5 font-sans text-[0.56rem] tracking-[0.14em] uppercase"
+                            style={{ animation: "_mCardUp .55s .04s cubic-bezier(.4,0,.2,1) both" }}
+                        >
+                            <Link
+                                href="/industries"
+                                className="text-white/55 hover:text-white/85 transition-colors"
+                            >
+                                Industries
+                            </Link>
+                            <span className="text-white/25">/</span>
+                            <span style={{ color: "#8fd43a" }}>{c.industry}</span>
+                        </nav>
+
                         <div style={{ animation: "_mCardUp .55s .08s cubic-bezier(.4,0,.2,1) both" }}>
                             <h1
                                 className={heroTitleClass}
